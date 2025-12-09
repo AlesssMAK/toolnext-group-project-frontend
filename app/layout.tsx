@@ -3,6 +3,10 @@ import type { Metadata } from 'next';
 import { Work_Sans, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import 'normalize.css';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 
 const workSans = Work_Sans({
   variable: '--font-work_sans',
@@ -11,7 +15,7 @@ const workSans = Work_Sans({
 
 const nunitoSans = Nunito_Sans({
   variable: '--font-nunito-sans',
-  subsets: ['latin'],
+  subsets: ['cyrillic'],
 });
 
 export const metadata: Metadata = {
@@ -31,14 +35,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  // twitter: {
-  //   card: '',
-  //   site: '',
-  //   title: 'ToolNext',
-  //   description:
-  //     'Відкрийте для себе широкий вибір якісних товарів у нашому онлайн-магазині. Швидка доставка, безпечна оплата та зручний шопінг.',
-  //   images: [],
-  // },
 };
 
 export default function RootLayout({
@@ -49,7 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.variable} ${nunitoSans.variable}`}>
-        {children}
+        <TanStackProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+            <Footer />
+          </AuthProvider>
+        </TanStackProvider>
       </body>
     </html>
   );
