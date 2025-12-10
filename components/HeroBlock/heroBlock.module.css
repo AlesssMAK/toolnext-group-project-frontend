@@ -1,0 +1,30 @@
+.hero {
+  width: 100vw;
+  padding: 45px 20px;
+
+  background-image: linear-gradient(#00000080, #00000080), url('/images/main_page/heroBlock/heroBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media screen and (min-width: 768px) {
+    padding: 100px 32px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    padding: 188px 64px;
+  }
+}
+
+.title {
+  margin-bottom: 32px;
+
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 120%;
+  color: var(--color-white);
+
+  @media screen and (min-width: 1440px) {
+    font-size: 56px;
+  }
+}
