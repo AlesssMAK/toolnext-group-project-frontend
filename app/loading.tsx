@@ -1,7 +1,7 @@
-import Text from '@/components/Text/Text';
+// import Text from '@/components/Text/Text';
 
 const Loading = () => {
-  return <Text marginBottom="150px">Loading, please wait...</Text>;
+  return <>Loading, please wait...</>;
 };
 
 export default Loading;
