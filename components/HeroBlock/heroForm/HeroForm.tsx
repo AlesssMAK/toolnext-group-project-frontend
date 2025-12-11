@@ -3,6 +3,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styles from './HeroForm.module.css';
+import { useRouter } from 'next/navigation';
 
 const validationSchema = Yup.object({
   search: Yup.string()
@@ -12,13 +13,14 @@ const validationSchema = Yup.object({
 });
 
 const HeroForm = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       search: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log('Form submitted:', values);
+    onSubmit: values => {
+      router.push('/tools?search=' + values.search);
     },
   });
 
@@ -34,7 +36,9 @@ const HeroForm = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           className={`${styles.input} ${
-            formik.touched.search && formik.errors.search ? styles.inputError : ''
+            formik.touched.search && formik.errors.search
+              ? styles.inputError
+              : ''
           }`}
         />
         {formik.touched.search && formik.errors.search && (
