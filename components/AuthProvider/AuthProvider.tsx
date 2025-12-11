@@ -1,19 +1,19 @@
-'use client';
+// 'use client';
 
 
-import { checkServerSession, getServerMe } from '@/lib/api/serverApi';
-import { useAuthStore } from '@/lib/store/authStore';
-import { useEffect } from 'react';
+// import { checkServerSession, getServerMe } from '@/lib/api/serverApi';
+// import { useAuthStore } from '@/lib/store/authStore';
+// import { useEffect } from 'react';
 
-type Props = {
-  children: React.ReactNode;
-};
+// type Props = {
+//   children: React.ReactNode;
+// };
 
-const AuthProvider = ({ children }: Props) => {
-  // const setUser = useAuthStore((state) => state.setUser);
-  // const clearIsAuthenticated = useAuthStore(
-  //   (state) => state.clearIsAuthenticated
-  // );
+// const AuthProvider = ({ children }: Props) => {
+//   // const setUser = useAuthStore((state) => state.setUser);
+//   // const clearIsAuthenticated = useAuthStore(
+//   //   (state) => state.clearIsAuthenticated
+//   // );
 
   // useEffect(() => {
   //   const fetchUser = async () => {
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }: Props) => {
   //   fetchUser();
   // }, [setUser, clearIsAuthenticated]);
 
-  return children;
-};
+//   return children;
+// };
 
-export default AuthProvider;
+// export default AuthProvider;
