@@ -5,7 +5,7 @@ import './globals.css';
 import 'normalize.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import AuthProvider from '@/components/AuthProvider/AuthProvider';
+// import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 
 const workSans = Work_Sans({
@@ -46,11 +46,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.variable} ${nunitoSans.variable}`}>
         <TanStackProvider>
-          <AuthProvider>
+          {/* <AuthProvider> */}
             <Header />
             {children}
             <Footer />
-          </AuthProvider>
+          {/* </AuthProvider> */}
         </TanStackProvider>
       </body>
     </html>
