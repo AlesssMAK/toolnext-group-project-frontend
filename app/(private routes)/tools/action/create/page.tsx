@@ -1,4 +1,3 @@
-import NoteForm from '@/components/NoteForm/NoteForm';
 import { Metadata } from 'next';
 import css from './CreateNote.module.css';
 
@@ -27,7 +26,7 @@ const CreateNote = () => {
       <main className={css.main}>
         <div className={css.container}>
           <h1 className={css.title}>Create note</h1>
-          <NoteForm />
+          {/* <NoteForm /> */}
         </div>
       </main>
     </div>
