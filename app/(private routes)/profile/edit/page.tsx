@@ -8,7 +8,7 @@
 // import { useRouter } from 'next/navigation';
 // import { useAuthStore } from '@/lib/store/authStore';
 
-// const EditProfilePage = () => {
+const EditProfilePage = () => {
 //   const [userName, setUserName] = useState<string>('');
 //   const [email, setEmail] = useState<string>('');
 //   const setUser = useAuthStore((state) => state.setUser);
@@ -45,7 +45,7 @@
 //     }
 //   };
 
-//   return (
+   return (
 //     <main className={css.mainContent}>
 //       <div className={css.profileCard}>
 //         <h1 className={css.formTitle}>Edit Profile</h1>
@@ -94,7 +94,7 @@
 //       </div>
 //       <Toaster />
 //     </main>
-//   );
-// };
+     );
+ };
 
-// export default EditProfilePage;
+ export default EditProfilePage;
