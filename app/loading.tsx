@@ -1,7 +1,5 @@
-// import Text from '@/components/Text/Text';
+import css from "./loading.module.css";
 
-const Loading = () => {
-  return <>Loading, please wait...</>;
-};
-
-export default Loading;
+export default function LoadingIndicator(){
+    return <p className={css.text}>Loading, please wait...</p>
+}

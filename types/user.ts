@@ -1,5 +1,8 @@
 export interface User {
+  id: string;
   email: string;
-  username: string;
-  avatar: string;
+  username?: string;
+  photoUrl?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
