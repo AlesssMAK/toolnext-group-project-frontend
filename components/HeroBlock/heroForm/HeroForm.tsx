@@ -45,7 +45,11 @@ const HeroForm = () => {
           <div className={styles.error}>{formik.errors.search}</div>
         )}
       </div>
-      <button type="submit" className={styles.button}>
+      <button
+        type="submit"
+        disabled={!!formik.errors.search}
+        className={styles.button}
+      >
         Пошук
       </button>
     </form>

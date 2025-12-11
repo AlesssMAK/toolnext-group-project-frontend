@@ -1,5 +1,4 @@
 .form {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -9,6 +8,10 @@
     flex-direction: row;
     gap: 32px;
   }
+}
+
+.inputWrapper {
+  position: relative;
 }
 
 .input {
@@ -53,20 +56,36 @@
 .button {
   padding: 10px 24px;
   background: var(--color-electric-violet);
-  border: none;
+  border: 2px solid var(--color-electric-violet-dark);
   color: var(--color-white);
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
+  
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
 }
 
-.button:hover {
-  background: var(--color-electric-violet-dark);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: var(--color-white);
+    border: 2px solid var(--color-electric-violet-dark);
+    color: var(--color-neutral-darkest);
+  }
 }
 
 .button:active {
-  transform: translateY(0);
+  background: var(--color-electric-violet-lighter);
+  border: 2px solid var(--color-electric-violet-dark);
+  color: var(--color-neutral-darkest);
+}
+
+.button:disabled {
+  background: var(--color-electric-violet-lighter);
+  border: 2px solid var(--color-electric-violet-lighter);
+  color: var(--color-white);
+  cursor: default;
 }
 
 .error {
