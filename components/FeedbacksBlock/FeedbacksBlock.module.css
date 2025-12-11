@@ -1,0 +1,42 @@
+.section {
+    padding: 64px 20px;
+}
+
+.title {
+    font-weight: 700;
+    font-style: 36px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 80px;
+}
+
+.text {
+    font-weight: 400;
+    font-style: 18px;
+    line-height: 1.5;
+}
+
+.author {
+    font-weight: 600;
+    font-style: 14px;
+    line-height: 1.5;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+
+
+
+
+
+:global(.swiper-pagination) {
+    bottom: 8px;
+    left: 0;
+    text-align: left;
+}
+
