@@ -1,6 +1,6 @@
 import 'normalize.css';
 import type { Metadata } from 'next';
-import { Work_Sans, Nunito_Sans } from 'next/font/google';
+import { Inter, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import 'normalize.css';
 import Header from '@/components/Header/Header';
@@ -8,8 +8,8 @@ import Footer from '@/components/Footer/Footer';
 // import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 
-const workSans = Work_Sans({
-  variable: '--font-work_sans',
+const inter = Inter({
+  variable: '--font-Inter',
   subsets: ['latin'],
 });
 
@@ -44,12 +44,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable} ${nunitoSans.variable}`}>
+      <body className={`${inter.variable} ${nunitoSans.variable}`}>
         <TanStackProvider>
           {/* <AuthProvider> */}
-            <Header />
-            {children}
-            <Footer />
+          <Header />
+          {children}
+          <Footer />
           {/* </AuthProvider> */}
         </TanStackProvider>
       </body>
