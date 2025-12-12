@@ -1,10 +1,23 @@
+.wrapper {
+  width: 100%;
+}
+
+.imageSection {
+  display: none;
+}
+
+.formSection {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
 .mainContent {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   background-color: #fff;
-  margin: 72px 20px;
 }
 .form {
   width: 335px;
@@ -79,7 +92,6 @@
   color: #c40202;
 }
 
-
 .submitButton {
   border: 1px solid #8808cc;
   background-color: #8808cc;
@@ -92,7 +104,6 @@
   padding: 10px 24px;
   width: 166px;
   height: 41px;
-  cursor: pointer;
   transition: background-color 0.3s ease;
   margin-bottom: 24px;
 }
@@ -121,4 +132,86 @@
 .loginLink a {
   text-decoration: underline;
   text-decoration-skip-ink: none;
+}
+
+/* Styles for Tablet devices */
+@media screen and (min-width: 768px) {
+
+  .mainContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+  }
+  .form {
+    width: 704px;
+    height: 756px;
+  }
+
+  .input {
+    width: 704px;
+    height: 77px;
+  }
+
+  .input:focus {
+    width: 704px;
+    height: 77px;
+  }
+
+  .error {
+    width: 704px;
+    height: 77px;
+  }
+}
+
+/* Styles for Desktop devices */
+@media screen and (min-width: 1440px) {
+
+  .wrapper {
+    display: flex;
+    height: 100vh;
+  }
+
+  .formSection {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 32px;
+  }
+
+  .imageSection {
+    flex: 1;
+    display: block;
+    background-image: url('/public/images/register_login_form/register_image.png');
+    background-size: cover;
+    background-position: center;
+  }
+  .mainContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+  }
+  .form {
+    width: 704px;
+    height: 756px;
+  }
+
+  .input {
+    width: 704px;
+    height: 77px;
+  }
+
+  .input:focus {
+    width: 704px;
+    height: 77px;
+  }
+
+  .error {
+    width: 704px;
+    height: 77px;
+  }
 }
