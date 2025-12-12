@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { getTools } from "@/lib/api/tools";
 import { Tool } from "../../types/tool";
 import { ToolCard } from "../ToolCard/ToolCard";
 import styles from "./FeaturedToolsBlock.module.css";
@@ -9,20 +10,16 @@ export const FeaturedToolsBlock: React.FC = () => {
   const [tools, setTools] = useState<Tool[]>([]);
 
   useEffect(() => {
-    const fetchTools = async () => {
+    const load = async () => {
       try {
-        const res = await fetch("https://toolnext-group-project-backend.onrender.com/api/tools");
-        const data = await res.json();
-
-        const toolsArray = data.tools || [];
-
+        const toolsArray = await getTools();
         setTools(toolsArray.slice(0, 8));
-      } catch (error) {
-        console.log("Error loading tools", error);
+      } catch (err) {
+        console.log("Error loading tools", err);
       }
     };
 
-    fetchTools();
+    load();
   }, []);
 
   return (

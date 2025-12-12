@@ -1,6 +1,7 @@
 /*MOBILE FIRST (375px)*/
 .tool_card {
-  width: 335px;
+  max-width: 335px;
+  min-width: 280px;
   height: 596.86px;
   background: #f2f2f2;
   border-radius: 16px;
