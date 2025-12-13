@@ -17,9 +17,7 @@ export default function RegistrationForm() {
 
   // Yup схема валідації
   const validationSchema = Yup.object({
-    username: Yup.string()
-      .min(2, 'Мінімум 2 символи')
-      .required('Ім’я обов’язкове'),
+    name: Yup.string().min(2, 'Мінімум 2 символи').required('Ім’я обов’язкове'),
 
     email: Yup.string()
       .email('Невірний формат email')
@@ -37,7 +35,7 @@ export default function RegistrationForm() {
   // Formik
   const formik = useFormik({
     initialValues: {
-      username: '',
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -45,10 +43,9 @@ export default function RegistrationForm() {
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const { username, email, password } = values;
+        const { email, password } = values;
 
         const payload: RegisterRequest = {
-          username,
           email,
           password,
         };
@@ -56,8 +53,11 @@ export default function RegistrationForm() {
         const res = await register(payload);
 
         setUser(res);
-        toast.success(`Вітаю, ${res.username}! Аккаунт створено 🎉`);
-        router.push('/');
+        toast.success(`Вітаю! Аккаунт створено 🎉`);
+
+        setTimeout(() => {
+          router.push('/');
+        }, 1200);
       } catch (err) {
         const msg =
           (err as ApiError).response?.data?.error ??
@@ -74,26 +74,26 @@ export default function RegistrationForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className="container">
-        <div className={css.wrapper}>
-          <div className={css.formSection}>
+      <div className={css.wrapper}>
+        <div className={css.formSection}>
+          <div className="container">
             <form onSubmit={formik.handleSubmit} className={css.form}>
               <h1 className={css.formTitle}>Реєстрація</h1>
 
               <div className={css.formGroup}>
-                <label htmlFor="username">Імʼя</label>
+                <label htmlFor="name">Імʼя</label>
                 <input
-                  id="username"
+                  id="name"
                   type="text"
-                  name="username"
-                  className={`${css.input} ${formik.touched.username && formik.errors.username ? css.error : ''}`}
-                  value={formik.values.username}
+                  name="name"
+                  className={`${css.input} ${formik.touched.name && formik.errors.name ? css.error : ''}`}
+                  value={formik.values.name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ваше імʼя"
                 />
-                {formik.touched.username && formik.errors.username && (
-                  <p className={css.errorText}>{formik.errors.username}</p>
+                {formik.touched.name && formik.errors.name && (
+                  <p className={css.errorText}>{formik.errors.name}</p>
                 )}
               </div>
 

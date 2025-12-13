@@ -4,7 +4,7 @@ import nextServer from "./api";
 export type RegisterRequest = {
   email: string;
   password: string;
-  username: string;
+  // name: string;
 };
 
 export const register = async (data: RegisterRequest) => {
