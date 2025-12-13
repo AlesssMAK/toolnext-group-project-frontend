@@ -1,0 +1,120 @@
+/*MOBILE FIRST (375px)*/
+.tool_card {
+  max-width: 335px;
+  min-width: 280px;
+  height: 596.86px;
+  background: #f2f2f2;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.25s ease;
+  margin-bottom: 0;
+}
+
+
+
+.tool_card_image {
+  width: 100%;
+  min-height: 412.86px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.tool_card_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tool_card_content {
+    display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  gap: 8px;
+}
+
+.tool_card_rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.tool_card_reviews {
+  color: #6b6b6b;
+  font-size: 18px;
+}
+
+.tool_card_title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool_card_price {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.tool_card_bottom{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tool_card_btn {
+  padding: 9.2px 0;
+  border: 2px solid #000;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.tool_card_btn:hover {
+  background: #E7CDF4;
+}
+
+.tool_card_btn:active {
+    background: #8808CC;
+    color: #fff;
+    border-color: #8808CC;
+}
+
+/*TABLET ≥ 768*/
+@media (min-width: 768px) {
+  .tool_card {
+    width: 336px;
+  }
+
+  .tool_card_image {
+
+    min-height: 414.1px;
+  }
+}
+
+/*DESKTOP ≥ 1440*/
+@media (min-width: 1440px) {
+  .tool_card {
+    width: 304px;
+    height: 561.66px;
+  }
+
+  .tool_card_image {
+    min-height: 374.66px;
+  }
+}
