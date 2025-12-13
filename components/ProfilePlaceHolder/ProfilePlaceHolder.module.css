@@ -1,0 +1,98 @@
+/* Styles for Mobile devices */
+
+.section {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 48px;
+
+  /* line-height: 58px; */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 32px;
+}
+
+.text {
+  font-weight: 700;
+  font-size: 24px;
+
+  /* line-height: 34px; */
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-scheme-1-text);
+}
+
+.subtext {
+  font-weight: 400;
+  font-size: 18px;
+
+  /* line-height: 27px; */
+  line-height: 1.5;
+  color: var(--color-scheme-1-text);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 335px;
+padding: 8px 20px;
+  border-radius: 6px;
+
+  background: var(--color-electric-violet);
+
+  font-weight: 500;
+  font-size: 16px;
+
+  /* line-height: 24px; */
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+.button:hover,
+.button:focus {
+  border: 2px solid var(--color-electric-violet);
+  background: transparent;
+  color: var(--color-scheme-1-text);
+}
+
+.button:active {
+  border: 2px solid var(--color-electric-violet);
+  background: var(--color-electric-violet-lighter);
+  color: var(--color-scheme-1-text);
+}
+
+.button:disabled {
+  border: 1px solid var(--color-electric-violet);
+  background: var(--color-electric-violet);
+  opacity: 0.4;
+}
+
+/* Styles for Tablet devices */
+
+@media only screen and (min-width: 768px) {
+
+    .button {
+        width: auto;
+        max-width: max-content;
+        padding: 8px 20px;
+    }
+}
+
+/* Styles for Desktop devices */
+
+@media only screen and (min-width: 1440px) {
+        .section {
+            padding-bottom: 112px;
+        }
+}

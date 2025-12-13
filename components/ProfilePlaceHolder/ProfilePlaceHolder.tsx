@@ -1,0 +1,36 @@
+import css from './ProfilePlaceHolder.module.css';
+import Link from 'next/link';
+
+interface ProfilePlaceHolderProps {
+  isOwner: boolean;
+}
+
+const ProfilePlaceHolder = ({ isOwner }: ProfilePlaceHolderProps) => {
+  const buttonPath = isOwner ? '/tools/new' : '/';
+  const buttonText = isOwner ? 'Опублікувати інструмент' : 'Всі інстументи';
+
+  return (
+    <section className={css.section}>
+      <div className='container'>
+        <h2 className={css.title}>Інструменти</h2>
+        <div className={css.wrapper}>
+          <p className={css.text}>
+            {isOwner
+              ? 'У вас ще не опубліковано жодного інструменту'
+              : 'У цього користувача ще не опубліковано жодного інструменту'}
+          </p>
+          <p className={css.subtext}>
+            {isOwner
+              ? 'Мерщій обулікуйте своє перше оголошення, щоб почати отримувати пасивний дохід'
+              : 'У нас є великий вибір інструментів від інших користувачів'}
+          </p>
+          <Link href={buttonPath} className={css.button}>
+            {buttonText}
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProfilePlaceHolder;
