@@ -18,7 +18,7 @@ const Footer = () => {
                 <a href="./">Головна</a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./">Інструменти</a>
+                <a href="./tools">Інструменти</a>
               </li>
               <li className={css.nav_list_item}>
                 <a href="./auth/login">Увійти</a>
@@ -29,35 +29,37 @@ const Footer = () => {
             </ul>
           </nav>
           <ul className={css.social_links}>
-            <li>
+            <li className={css.social_list_item}>
               <Link
                 href="https://www.facebook.com"
                 aria-label="facebook"
                 target="_blank"
-                className={css.socialLinks}
+                className={css.social_link_item}
               >
-                <svg width="24" height="24" aria-hidden="true">
+                <svg className={css.social_icon} aria-hidden="true">
                   <use href="/sprite.svg#facebook"></use>
                 </svg>
               </Link>
             </li>
-            <li>
+            <li className={css.social_list_item}>
               <Link
                 href="https://www.instagram.com"
                 aria-label="instagram"
                 target="_blank"
-                className={css.socialLinks}
+                className={css.social_link_item}
               >
-                <svg width="24" height="24" aria-hidden="true">
+                <svg className={css.social_icon} aria-hidden="true">
                   <use href="/sprite.svg#instagram"></use>
                 </svg>
               </Link>
             </li>
           </ul>
         </div>
-        <p className={css.footer_text}>
-          © {currentYear} ToolNext. Всі права захищені.
-        </p>
+        <div className={css.text_container}>
+          <p className={css.footer_text}>
+            © {currentYear} ToolNext. Всі права захищені.
+          </p>
+        </div>
       </div>
     </footer>
   );
