@@ -39,7 +39,7 @@ export default function LoginForm() {
         };
         const user = await login(payload);
         setUser(user);
-        toast.success(`Вітаю, ${user.username}! Ви увійшли 👌`);
+        toast.success('Вітаю, Ви увійшли 👌');
         const redirectTo = searchParams.get('redirectTo') || '/';
         router.push(redirectTo);
       } catch (err) {
@@ -57,9 +57,9 @@ export default function LoginForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className="container">
-        <div className={css.wrapper}>
-          <div className={css.formSection}>
+      <div className={css.wrapper}>
+        <div className={css.formSection}>
+          <div className="container">
             <form onSubmit={formik.handleSubmit} className={css.form}>
               <h1 className={css.formTitle}>Вхід</h1>
 

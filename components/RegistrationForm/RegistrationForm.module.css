@@ -1,15 +1,22 @@
 .wrapper {
+  display: flex;
+  min-height: 100vh;
   width: 100%;
-}
-
-.imageSection {
-  display: none;
 }
 
 .formSection {
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageSection {
+  flex: 1;
+  background-image: url('/images/register_login_form/register-image.png');
+  background-size: cover;
+  background-position: center;
+  display: none;
 }
 
 .mainContent {
@@ -20,8 +27,6 @@
   background-color: #fff;
 }
 .form {
-  width: 335px;
-  height: 756px;
   background-color: #fff;
   padding: 24px;
   display: flex;
@@ -57,7 +62,7 @@
   border: 2px solid #000;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 335px;
+  max-width: 320px;
   height: 48px;
   font-family: var(--font-family);
   font-weight: 400;
@@ -70,8 +75,6 @@
   border: 2px solid #8808cc;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 335px;
-  height: 48px;
   outline: none;
 }
 
@@ -80,8 +83,6 @@
   color: #c40202;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 335px;
-  height: 48px;
 }
 
 .errorText {
@@ -136,7 +137,6 @@
 
 /* Styles for Tablet devices */
 @media screen and (min-width: 768px) {
-
   .mainContent {
     display: flex;
     justify-content: center;
@@ -144,34 +144,14 @@
     min-height: 100vh;
     background-color: #fff;
   }
-  .form {
-    width: 704px;
-    height: 756px;
-  }
-
   .input {
-    width: 704px;
-    height: 77px;
-  }
-
-  .input:focus {
-    width: 704px;
-    height: 77px;
-  }
-
-  .error {
-    width: 704px;
-    height: 77px;
+    min-width: 704px;
   }
 }
 
 /* Styles for Desktop devices */
 @media screen and (min-width: 1440px) {
-
-  .wrapper {
-    display: flex;
-    height: 100vh;
-  }
+  
 
   .formSection {
     flex: 1;
@@ -180,38 +160,15 @@
     align-items: center;
     padding-right: 32px;
   }
-
   .imageSection {
-    flex: 1;
     display: block;
-    background-image: url('/public/images/register_login_form/register_image.png');
-    background-size: cover;
-    background-position: center;
   }
+
   .mainContent {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: #fff;
-  }
-  .form {
-    width: 704px;
-    height: 756px;
-  }
-
-  .input {
-    width: 704px;
-    height: 77px;
-  }
-
-  .input:focus {
-    width: 704px;
-    height: 77px;
-  }
-
-  .error {
-    width: 704px;
-    height: 77px;
   }
 }
