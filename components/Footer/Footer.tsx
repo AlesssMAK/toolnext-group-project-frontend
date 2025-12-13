@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import css from './Footer.module.css';
-import Container from '../Container/Container';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className={css.footer}>
-      <Container>
+      <div className="container">
         <div className={css.footer_container}>
           <a href="" aria-label="На головну" className={css.logo}>
             <svg className={css.logo_icon} aria-hidden="true">
@@ -22,10 +21,10 @@ const Footer = () => {
                 <a href="./">Інструменти</a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./">Увійти</a>
+                <a href="./auth/login">Увійти</a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./">Зареєствуватися</a>
+                <a href="./auth/register">Зареєствуватися</a>
               </li>
             </ul>
           </nav>
@@ -59,7 +58,7 @@ const Footer = () => {
         <p className={css.footer_text}>
           © {currentYear} ToolNext. Всі права захищені.
         </p>
-      </Container>
+      </div>
     </footer>
   );
 };
