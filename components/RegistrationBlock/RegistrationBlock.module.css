@@ -1,5 +1,4 @@
 .registBox {
-  font-family: 'Work Sans', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,6 +80,7 @@
 }
 
 .registImage {
+  display: block;
   width: 100%;
   height: auto;
   border-radius: 10px;
@@ -114,7 +114,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     max-width: 1440px;
     padding: 0 64px;
   }
