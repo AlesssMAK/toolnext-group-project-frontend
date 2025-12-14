@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHolder';
 
-// import { getUserById } from '@/lib/api/clientApi';
+import { getUserById } from '@/lib/api/serverApi';
 
 export const metadata: Metadata = {
   title: 'User Profile',
@@ -23,20 +23,23 @@ export const metadata: Metadata = {
   },
 };
 
-const ProfilePagePublic = async () => {
-  // const { id } = params;
 
-  // const user = await getUserById(id);
+type Props = {
+  params: Promise<{ userId: string }>;
+};
 
-  const id = '123';
-  const user = { username: 'Антон Петренко' };
+const PublicProfile = async ({ params }: Props) => {
+  const { userId } = await params;
+
+  const user = await getUserById(userId);
 
   return (
     <main>
-        <UserProfile username={user.username} />
+        <UserProfile name={user.name} avatar={user.avatar} />
         <ProfilePlaceHolder isOwner={false} />
     </main>
   );
 };
 
-export default ProfilePagePublic;
+export default PublicProfile;
+

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-// import { getServerMe } from '@/lib/api/serverApi';
+import { getServerMe } from '@/lib/api/serverApi';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHolder';
 
@@ -22,21 +22,15 @@ export const metadata: Metadata = {
   },
 };
 
-async function getServerMe() {
-  return {
-    id: "123",
-    username: "Антон Петренко",
-    email: "test@example.com",
-  };
-}
 
 const Profile = async () => {
 
   const user = await getServerMe();
+  console.log("PROFILE USER:", user);
 
   return (
       <main>
-        <UserProfile username={user.username} />
+        <UserProfile name={user.name} avatar={user.avatar} />
         <ProfilePlaceHolder isOwner={true} />
       </main>
   );
