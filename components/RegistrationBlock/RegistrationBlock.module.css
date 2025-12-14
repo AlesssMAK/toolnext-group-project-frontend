@@ -110,6 +110,11 @@
 }
 
 @media screen and (min-width: 1440px) {
+  .registBox {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+
   .registWrapper {
     display: flex;
     justify-content: space-between;
