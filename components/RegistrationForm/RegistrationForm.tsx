@@ -9,6 +9,7 @@ import { ApiError } from '@/app/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
 import { register, RegisterRequest } from '@/lib/api/clientApi';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 export default function RegistrationForm() {
   const router = useRouter();
@@ -43,11 +44,13 @@ export default function RegistrationForm() {
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const { email, password } = values;
+        const { name, email, password,confirmPassword } = values;
 
         const payload: RegisterRequest = {
+          name,
           email,
           password,
+          confirmPassword,
         };
 
         const res = await register(payload);
@@ -74,9 +77,9 @@ export default function RegistrationForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className={css.wrapper}>
-        <div className={css.formSection}>
-          <div className="container">
+      <div className="container">
+        <div className={css.wrapper}>
+          <div className={css.formSection}>
             <form onSubmit={formik.handleSubmit} className={css.form}>
               <h1 className={css.formTitle}>Реєстрація</h1>
 
@@ -170,7 +173,13 @@ export default function RegistrationForm() {
               {error && <p className={css.error}>{error}</p>}
             </form>
           </div>
-          <div className={css.imageSection}></div>
+          <Image
+            src="/images/register_login_form/register-image.png"
+            alt="Інструменти"
+            width={704}
+            height={900}
+            className={css.imageSection}
+          />
         </div>
       </div>
     </main>
