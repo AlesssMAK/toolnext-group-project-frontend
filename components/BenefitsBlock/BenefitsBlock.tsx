@@ -2,7 +2,7 @@ import styles from './benefitsBlock.module.css';
 
 const BenefitsBlock = () => {
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} container`}>
       <div className={styles.headerBlock}>
       <h2 className={styles.title}>ToolNext — платформа для швидкої та зручної оренди інструментів</h2>
 <p className={styles.description}>ToolNext допомагає знайти потрібний інструмент у декілька кліків.
@@ -11,7 +11,9 @@ const BenefitsBlock = () => {
       </div>
       <ul className={styles.list}>
         <li className={styles.item}>
-          <img src="/images/main_page/benefitsBlock/benefitsBlock_1.svg" aria-hidden="true" alt=""/>
+          <svg className={styles.item} aria-hidden="true">
+                  <use href="/sprite.svg#service_toolbox"></use>
+                </svg>
           <h3 className={styles.itemTitle}>
             Легкий доступ до інструментів
           </h3>
@@ -20,14 +22,18 @@ const BenefitsBlock = () => {
           </p>
         </li>
         <li className={styles.item}>
-          <img src="/images/main_page/benefitsBlock/benefitsBlock_2.svg" aria-hidden="true" alt=""/>
+          <svg className={styles.item} aria-hidden="true">
+                  <use href="/sprite.svg#checkbook"></use>
+                </svg>
           <h3 className={styles.itemTitle}>Швидке бронювання</h3>
           <p className={styles.itemText}>
             Бронюйте інструменти в кілька кліків. Жодних складних форм чи довгих очікувань — тільки простий та зручний процес.
           </p>
         </li>   
         <li className={styles.item}>
-          <img src="/images/main_page/benefitsBlock/benefitsBlock_3.svg" aria-hidden="true" alt=""/>
+          <svg className={styles.item} aria-hidden="true">
+                  <use href="/sprite.svg#manage_accounts"></use>
+                </svg>
           <h3 className={styles.itemTitle}>Зручне управління</h3>
           <p className={styles.itemText}>
             Додавайте свої інструменти в каталог, редагуйте оголошення та контролюйте оренду. ToolNext допомагає перетворити зайві інструменти на додатковий дохід.
