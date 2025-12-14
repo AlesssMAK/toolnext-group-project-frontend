@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -57,9 +58,9 @@ export default function LoginForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className={css.wrapper}>
-        <div className={css.formSection}>
-          <div className="container">
+      <div className="container">
+        <div className={css.wrapper}>
+          <div className={css.formSection}>
             <form onSubmit={formik.handleSubmit} className={css.form}>
               <h1 className={css.formTitle}>Вхід</h1>
 
@@ -111,7 +112,13 @@ export default function LoginForm() {
               {error && <p className={css.error}>{error}</p>}
             </form>
           </div>
-          <div className={css.imageSection}></div>
+          <Image
+            src="/images/register_login_form/login_image.png"
+            alt="Інструменти"
+            width={704}
+            height={900}
+            className={css.imageSection}
+          />
         </div>
       </div>
     </main>

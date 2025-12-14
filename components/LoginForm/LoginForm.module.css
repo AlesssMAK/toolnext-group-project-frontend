@@ -11,14 +11,6 @@
   align-items: center;
 }
 
-.imageSection {
-  flex: 1;
-  background-image: url('/images/register_login_form/register-image.png');
-  background-size: cover;
-  background-position: center;
-  display: none;
-}
-
 .mainContent {
   display: flex;
   justify-content: center;
@@ -62,7 +54,7 @@
   border: 2px solid #000;
   border-radius: 6px;
   padding: 8px 12px;
-  max-width: 320px;
+  max-width: 375px;
   height: 48px;
   font-family: var(--font-family);
   font-weight: 400;
@@ -135,6 +127,10 @@
   text-decoration-skip-ink: none;
 }
 
+.imageSection {
+  display: none;
+}
+
 /* Styles for Tablet devices */
 @media screen and (min-width: 768px) {
   .mainContent {
@@ -170,5 +166,9 @@
     align-items: center;
     min-height: 100vh;
     background-color: #fff;
+  }
+
+  .input {
+    min-width: 640px;
   }
 }
