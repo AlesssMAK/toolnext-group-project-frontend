@@ -15,23 +15,43 @@
   text-align: left;
 }
 
-
-@media screen and (min-width: 768px){
-    .header {
-        padding: 26px 32px;
-      }
-      
-      .footer {
-        padding: 26px 32px;
-      }
+.imageSection {
+  display: none;
 }
 
-@media screen and (min-width: 1440px){
-    .header {
-        padding: 26px 64px;
-      }
-      
-      .footer {
-        padding: 26px 64px;
-      }
+.mainContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    padding: 26px 32px;
+  }
+
+  .footer {
+    padding: 26px 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .header {
+    padding: 26px 64px;
+  }
+
+  .authContainer {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .footer {
+    padding: 26px 64px;
+  }
+
+  .imageSection {
+    display: block;
+  }
 }

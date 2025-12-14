@@ -45,15 +45,14 @@ export default function LoginForm() {
         router.push(redirectTo);
       } catch (err) {
         const apiError = err as ApiError;
-      
+
         const msg =
           apiError.response?.data?.message ||
           apiError.message ||
           'Сталася помилка';
-      
+
         setError(msg);
         toast.error(msg);
-        
       } finally {
         setSubmitting(false);
       }
@@ -62,69 +61,58 @@ export default function LoginForm() {
 
   return (
     <main className={css.mainContent}>
-      {/* <div className="container"> */}
-        <div className={css.wrapper}>
-          <div className={css.formSection}>
-            <form onSubmit={formik.handleSubmit} className={css.form}>
-              <h1 className={css.formTitle}>Вхід</h1>
+      <div className={css.formSection}>
+        <form onSubmit={formik.handleSubmit} className={css.form}>
+          <h1 className={css.formTitle}>Вхід</h1>
 
-              <div className={css.formGroup}>
-                <label htmlFor="email">Пошта</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  className={`${css.input} ${formik.touched.email && formik.errors.email ? css.error : ''}`}
-                  placeholder="Ваша пошта"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <p className={css.errorText}>{formik.errors.email}</p>
-                )}
-              </div>
-
-              <div className={css.formGroup}>
-                <label htmlFor="password">Пароль</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  className={`${css.input} ${formik.touched.password && formik.errors.password ? css.error : ''}`}
-                  placeholder="*******"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.password && formik.errors.password && (
-                  <p className={css.errorText}>{formik.errors.password}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                className={css.submitButton}
-                disabled={formik.isSubmitting}
-              >
-                {formik.isSubmitting ? 'Завантаження...' : 'Увійти'}
-              </button>
-
-              <p className={css.loginLink}>
-                Не маєте аккаунту? <a href="/auth/register">Реєстрація</a>
-              </p>
-              {error && <p className={css.error}>{error}</p>}
-            </form>
+          <div className={css.formGroup}>
+            <label htmlFor="email">Пошта</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              className={`${css.input} ${formik.touched.email && formik.errors.email ? css.error : ''}`}
+              placeholder="Ваша пошта"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.email && formik.errors.email && (
+              <p className={css.errorText}>{formik.errors.email}</p>
+            )}
           </div>
-          <Image
-            src="/images/register_login_form/login_image.png"
-            alt="Інструменти"
-            width={704}
-            height={900}
-            className={css.imageSection}
-          />
-        </div>
-      {/* </div> */}
+
+          <div className={css.formGroup}>
+            <label htmlFor="password">Пароль</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              className={`${css.input} ${formik.touched.password && formik.errors.password ? css.error : ''}`}
+              placeholder="*******"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.password && formik.errors.password && (
+              <p className={css.errorText}>{formik.errors.password}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className={css.submitButton}
+            disabled={formik.isSubmitting}
+          >
+            {formik.isSubmitting ? 'Завантаження...' : 'Увійти'}
+          </button>
+
+          <p className={css.loginLink}>
+            Не маєте аккаунту? <a href="/auth/register">Реєстрація</a>
+          </p>
+          {error && <p className={css.error}>{error}</p>}
+        </form>
+      </div>
     </main>
   );
 }
