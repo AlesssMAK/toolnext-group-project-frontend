@@ -44,12 +44,16 @@ export default function LoginForm() {
         const redirectTo = searchParams.get('redirectTo') || '/';
         router.push(redirectTo);
       } catch (err) {
+        const apiError = err as ApiError;
+      
         const msg =
-          (err as ApiError).response?.data?.error ??
-          (err as ApiError).message ??
+          apiError.response?.data?.message ||
+          apiError.message ||
           'Сталася помилка';
+      
         setError(msg);
         toast.error(msg);
+        
       } finally {
         setSubmitting(false);
       }
@@ -58,7 +62,7 @@ export default function LoginForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className="container">
+      {/* <div className="container"> */}
         <div className={css.wrapper}>
           <div className={css.formSection}>
             <form onSubmit={formik.handleSubmit} className={css.form}>
@@ -120,7 +124,7 @@ export default function LoginForm() {
             className={css.imageSection}
           />
         </div>
-      </div>
+      {/* </div> */}
     </main>
   );
 }

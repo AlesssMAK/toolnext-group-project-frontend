@@ -1,32 +1,29 @@
 .wrapper {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   min-height: 100vh;
-  width: 100%;
 }
-
 .formSection {
-  flex: 1;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .mainContent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  width: 100%;
   background-color: #fff;
 }
 .form {
-  background-color: #fff;
+  width: 100%;
+  max-width: 335px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
 }
-
 .formTitle {
   text-align: center;
   font-family: var(--font-family);
@@ -34,12 +31,11 @@
   font-size: 36px;
   line-height: 120%;
   letter-spacing: -0.01em;
-  text-align: center;
   color: black;
   margin-bottom: 32px;
 }
-
 .formGroup {
+  width: 100%;
   display: flex;
   flex-direction: column;
   font-family: var(--font-family);
@@ -48,35 +44,30 @@
   line-height: 150%;
   color: black;
 }
-
 .input {
+  width: 100%;
+  box-sizing: border-box;
   margin-top: 8px;
   border: 2px solid #000;
   border-radius: 6px;
   padding: 8px 12px;
-  max-width: 375px;
   height: 48px;
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: #000 60%;
+  color: rgba(0, 0, 0, 0.6);
 }
-
 .input:focus {
   border: 2px solid #8808cc;
-  border-radius: 6px;
-  padding: 8px 12px;
   outline: none;
 }
-
 .error {
   border: 2px solid #c40202;
   color: #c40202;
   border-radius: 6px;
   padding: 8px 12px;
 }
-
 .errorText {
   font-family: var(--font-family);
   font-weight: 400;
@@ -84,7 +75,6 @@
   line-height: 150%;
   color: #c40202;
 }
-
 .submitButton {
   border: 1px solid #8808cc;
   background-color: #8808cc;
@@ -100,19 +90,16 @@
   transition: background-color 0.3s ease;
   margin-bottom: 24px;
 }
-
 .submitButton:hover {
   border: 1px solid #8808cc;
   background-color: #fff;
   color: #000;
 }
-
 .submitButton:focus {
   border: 2px solid #000;
   background-color: #e7cdf4;
   color: black;
 }
-
 .loginLink {
   text-align: center;
   font-family: var(--font-family);
@@ -121,54 +108,36 @@
   line-height: 150%;
   color: black;
 }
-
 .loginLink a {
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
-
 .imageSection {
   display: none;
 }
 
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    max-width: 1440px;
+  }
+}
+
 /* Styles for Tablet devices */
 @media screen and (min-width: 768px) {
-  .mainContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #fff;
-  }
-  .input {
+  .form {
     min-width: 704px;
   }
 }
 
 /* Styles for Desktop devices */
 @media screen and (min-width: 1440px) {
-  
-
-  .formSection {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 32px;
+  .wrapper {
+    max-width: 1440px;
+  }
+  .form {
+    min-width: 640px;
   }
   .imageSection {
     display: block;
-  }
-
-  .mainContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #fff;
-  }
-
-  .input {
-    min-width: 640px;
   }
 }

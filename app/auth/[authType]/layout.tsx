@@ -1,22 +1,6 @@
-// 'use client';
-
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
-
-// type Props = {
-//   children: React.ReactNode;
-// };
-
-// export default function AuthLayout({ children }: Props) {
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     router.refresh();
-//   }, [router]);
-
-//   return <> {children}</>;
-// }
-
+import Image from 'next/image';
+import Link from 'next/link';
+import css from "./AuthLayout.module.css"
 export const dynamic = 'force-static'; // або не треба, якщо нема props
 
 export default function AuthLayout({
@@ -24,5 +8,15 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <div>
+      <header className={css.header}>
+        <Link href={'/'}>
+          <Image src="/logo.svg" alt="ToolNext" width={83} height={15} />
+        </Link>
+      </header>
+      <main>{children}</main>
+      <footer className={css.footer}>© 2025 ToolNext</footer>
+    </div>
+  );
 }

@@ -1,0 +1,37 @@
+.header {
+  padding: 24px 26px;
+  background-color: white;
+}
+
+.footer {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--color-scheme-1-text);
+  padding: 24px 26px;
+  background-color: white;
+  text-align: left;
+}
+
+
+@media screen and (min-width: 768px){
+    .header {
+        padding: 26px 32px;
+      }
+      
+      .footer {
+        padding: 26px 32px;
+      }
+}
+
+@media screen and (min-width: 1440px){
+    .header {
+        padding: 26px 64px;
+      }
+      
+      .footer {
+        padding: 26px 64px;
+      }
+}
