@@ -1,10 +1,3 @@
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  min-height: 100vh;
-}
 .formSection {
   width: 100%;
   display: flex;
@@ -15,13 +8,16 @@
   width: 100%;
   background-color: #fff;
 }
+
 .form {
+  height: 756px;
   width: 100%;
-  max-width: 335px;
+  max-width: 375px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 24px;
 }
 .formTitle {
@@ -46,6 +42,7 @@
 }
 .input {
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   margin-top: 8px;
   border: 2px solid #000;
@@ -88,7 +85,6 @@
   width: 166px;
   height: 41px;
   transition: background-color 0.3s ease;
-  margin-bottom: 24px;
 }
 .submitButton:hover {
   border: 1px solid #8808cc;
@@ -112,32 +108,20 @@
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
-.imageSection {
-  display: none;
-}
 
-@media screen and (min-width: 1440px) {
-  .wrapper {
-    max-width: 1440px;
-  }
-}
-
-/* Styles for Tablet devices */
 @media screen and (min-width: 768px) {
   .form {
-    min-width: 704px;
+    max-width: 768px;
+    width: 768px;
+    height: 756px;
   }
 }
-
-/* Styles for Desktop devices */
 @media screen and (min-width: 1440px) {
   .wrapper {
     max-width: 1440px;
   }
+
   .form {
-    min-width: 640px;
-  }
-  .imageSection {
-    display: block;
+    width: 736px;
   }
 }
