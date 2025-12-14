@@ -1,35 +1,24 @@
-.wrapper {
-  width: 100%;
-}
-
-.imageSection {
-  display: none;
-}
-
 .formSection {
   width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.mainContent {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+}
+.mainContent {
+  width: 100%;
   background-color: #fff;
 }
 .form {
-  width: 335px;
   height: 756px;
-  background-color: #fff;
+  width: 100%;
+  max-width: 375px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 24px;
 }
-
 .formTitle {
   text-align: center;
   font-family: var(--font-family);
@@ -37,12 +26,11 @@
   font-size: 36px;
   line-height: 120%;
   letter-spacing: -0.01em;
-  text-align: center;
   color: black;
   margin-bottom: 32px;
 }
-
 .formGroup {
+  width: 100%;
   display: flex;
   flex-direction: column;
   font-family: var(--font-family);
@@ -51,39 +39,30 @@
   line-height: 150%;
   color: black;
 }
-
 .input {
+  width: 100%;
+  box-sizing: border-box;
   margin-top: 8px;
   border: 2px solid #000;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 335px;
   height: 48px;
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: #000 60%;
+  color: rgba(0, 0, 0, 0.6);
 }
-
 .input:focus {
   border: 2px solid #8808cc;
-  border-radius: 6px;
-  padding: 8px 12px;
-  width: 335px;
-  height: 48px;
   outline: none;
 }
-
 .error {
   border: 2px solid #c40202;
   color: #c40202;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 335px;
-  height: 48px;
 }
-
 .errorText {
   font-family: var(--font-family);
   font-weight: 400;
@@ -91,7 +70,6 @@
   line-height: 150%;
   color: #c40202;
 }
-
 .submitButton {
   border: 1px solid #8808cc;
   background-color: #8808cc;
@@ -107,19 +85,16 @@
   transition: background-color 0.3s ease;
   margin-bottom: 24px;
 }
-
 .submitButton:hover {
   border: 1px solid #8808cc;
   background-color: #fff;
   color: #000;
 }
-
 .submitButton:focus {
   border: 2px solid #000;
   background-color: #e7cdf4;
   color: black;
 }
-
 .loginLink {
   text-align: center;
   font-family: var(--font-family);
@@ -128,90 +103,27 @@
   line-height: 150%;
   color: black;
 }
-
 .loginLink a {
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
-
-/* Styles for Tablet devices */
-@media screen and (min-width: 768px) {
-
-  .mainContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #fff;
-  }
-  .form {
-    width: 704px;
-    height: 756px;
-  }
-
-  .input {
-    width: 704px;
-    height: 77px;
-  }
-
-  .input:focus {
-    width: 704px;
-    height: 77px;
-  }
-
-  .error {
-    width: 704px;
-    height: 77px;
-  }
+.imageSection {
+  display: none;
 }
 
-/* Styles for Desktop devices */
-@media screen and (min-width: 1440px) {
-
-  .wrapper {
-    display: flex;
-    height: 100vh;
-  }
-
-  .formSection {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 32px;
-  }
-
-  .imageSection {
-    flex: 1;
-    display: block;
-    background-image: url('/public/images/register_login_form/register_image.png');
-    background-size: cover;
-    background-position: center;
-  }
-  .mainContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #fff;
-  }
+@media screen and (min-width: 768px) {
   .form {
-    width: 704px;
+    max-width: 768px;
+    width: 768px;
     height: 756px;
   }
-
-  .input {
-    width: 704px;
-    height: 77px;
+}
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    max-width: 1440px;
   }
 
-  .input:focus {
-    width: 704px;
-    height: 77px;
-  }
-
-  .error {
-    width: 704px;
-    height: 77px;
+  .form {
+    width: 736px;
   }
 }

@@ -7,7 +7,7 @@ interface ProfilePlaceHolderProps {
 
 const ProfilePlaceHolder = ({ isOwner }: ProfilePlaceHolderProps) => {
   const buttonPath = isOwner ? '/tools/new' : '/';
-  const buttonText = isOwner ? 'Опублікувати інструмент' : 'Всі інстументи';
+  const buttonText = isOwner ? 'Опублікувати інструмент' : 'Всі інструменти';
 
   return (
     <section className={css.section}>
