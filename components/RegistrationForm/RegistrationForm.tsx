@@ -62,11 +62,13 @@ export default function RegistrationForm() {
           router.push('/');
         }, 1200);
       } catch (err) {
+        const apiError = err as ApiError;
+      
         const msg =
-          (err as ApiError).response?.data?.error ??
-          (err as ApiError).message ??
+          apiError.response?.data?.message ||
+          apiError.message ||
           'Oops... some error';
-
+      
         setError(msg);
         toast.error(msg);
       } finally {
@@ -77,7 +79,7 @@ export default function RegistrationForm() {
 
   return (
     <main className={css.mainContent}>
-      <div className="container">
+      {/* <div className="container"> */}
         <div className={css.wrapper}>
           <div className={css.formSection}>
             <form onSubmit={formik.handleSubmit} className={css.form}>
@@ -181,7 +183,7 @@ export default function RegistrationForm() {
             className={css.imageSection}
           />
         </div>
-      </div>
+      {/* </div> */}
     </main>
   );
 }
