@@ -1,14 +1,15 @@
 import { Metadata } from 'next';
-import { getServerMe } from '@/lib/api/serverApi';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHolder';
 
+import { getUserById } from '@/lib/api/serverApi';
+
 export const metadata: Metadata = {
-  title: 'My Profile',
+  title: 'User Profile',
   description: '',
   icons: '',
   openGraph: {
-    title: 'My Profile',
+    title: 'User Profile',
     description: '',
     url: '',
     images: [
@@ -23,17 +24,22 @@ export const metadata: Metadata = {
 };
 
 
-const Profile = async () => {
+type Props = {
+  params: Promise<{ userId: string }>;
+};
 
-  const user = await getServerMe();
-  console.log("PROFILE USER:", user);
+const PublicProfile = async ({ params }: Props) => {
+  const { userId } = await params;
+
+  const user = await getUserById(userId);
 
   return (
-      <main>
+    <main>
         <UserProfile name={user.name} avatar={user.avatar} />
-        <ProfilePlaceHolder isOwner={true} />
-      </main>
+        <ProfilePlaceHolder isOwner={false} />
+    </main>
   );
 };
 
-export default Profile;
+export default PublicProfile;
+

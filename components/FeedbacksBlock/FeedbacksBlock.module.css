@@ -4,7 +4,7 @@
 
 .title {
     font-weight: 700;
-    font-style: 36px;
+    font-size: 36px;
     line-height: 1.2;
     letter-spacing: -0.01em;
     margin-bottom: 80px;
@@ -12,13 +12,13 @@
 
 .text {
     font-weight: 400;
-    font-style: 18px;
+    font-size: 18px;
     line-height: 1.5;
 }
 
 .author {
     font-weight: 600;
-    font-style: 14px;
+    font-size: 14px;
     line-height: 1.5;
 }
 
@@ -28,15 +28,153 @@
     gap: 32px;
 }
 
+/* ================================
+   SWIPER BASE
+================================ */
 
+.swiper {
+    position: relative;
+    padding-bottom: 96px;
 
-
-
-
-
-:global(.swiper-pagination) {
-    bottom: 8px;
-    left: 0;
-    text-align: left;
+    overflow: hidden;
 }
 
+/* ================================
+   PAGINATION (bottom-left)
+================================ */
+
+.swiper :global(.swiper-pagination) {
+    position: absolute !important;
+    left: 0 !important;
+    bottom: 0 !important;
+
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+
+    width: auto !important;
+    transform: none !important;
+}
+
+.swiper :global(.swiper-pagination-bullets-dynamic) {
+    left: 0 !important;
+    transform: none !important;
+}
+
+/* bullets */
+
+.swiper :global(.swiper-pagination-bullet) {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #000;
+    opacity: 0.2;
+    margin: 0 !important;
+}
+
+.swiper :global(.swiper-pagination-bullet-active) {
+    width: 14px;
+    height: 14px;
+    opacity: 1;
+}
+
+.swiper :global(.swiper-pagination-bullet-active-prev),
+.swiper :global(.swiper-pagination-bullet-active-next) {
+    width: 10px;
+    height: 10px;
+    opacity: 0.2;
+}
+
+/* ================================
+   NAV BUTTONS (bottom-right)
+================================ */
+
+.swiper :global(.swiper-button-prev),
+.swiper :global(.swiper-button-next) {
+    top: auto !important;
+    bottom: 0 !important;
+
+    width: 48px !important;
+    height: 48px !important;
+
+    border: 2px solid #000 !important;
+    border-radius: 4px;
+    background: transparent !important;
+    margin: 0 !important;
+}
+
+/* next button */
+.swiper :global(.swiper-button-next) {
+    right: 0 !important;
+}
+
+/* prev = next + 64px (48 + gap 16) */
+.swiper :global(.swiper-button-prev) {
+    left: auto !important;
+    right: 64px !important;
+}
+
+/* remove default swiper arrows */
+.swiper :global(.swiper-button-prev::after),
+.swiper :global(.swiper-button-next::after) {
+    content: "" !important;
+}
+
+/* custom arrow */
+.swiper :global(.swiper-button-prev::before),
+.swiper :global(.swiper-button-next::before) {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transform: rotate(-45deg);
+}
+
+.swiper :global(.swiper-button-prev::before) {
+    transform: rotate(135deg);
+}
+
+/* disabled state */
+.swiper :global(.swiper-button-disabled) {
+    opacity: 0.3 !important;
+    cursor: default !important;
+}
+
+/* ================================
+   MEDIA QUERIES (ALL AT BOTTOM)
+================================ */
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+
+    .title {
+        font-size: 28px;
+        margin-bottom: 32px;
+    }
+
+    .card {
+        padding: 20px;
+        min-height: 180px;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1200px) {
+    .section {
+        padding: 80px 0;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+}
+
+
+/* SAVE */

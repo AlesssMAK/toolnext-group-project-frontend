@@ -13,9 +13,19 @@ export async function middleware(request: NextRequest) {
   const refreshToken = cookieStore.get('refreshToken')?.value;
 
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
-  const isPrivateRoute = privateRoutes.some(route =>
-    pathname.startsWith(route)
-  );
+
+
+// ВАЖЛИВО:
+// Не можна використовувати `pathname.startsWith('/profile')`.
+// Причина:
+//  - `/profile` — ПРИВАТНА сторінка (профіль поточного користувача)
+//  - `/profile/[userId]` — ПУБЛІЧНА сторінка (профілі інших користувачів)
+
+  // const isPrivateRoute = privateRoutes.some(route =>
+  //   pathname.startsWith(route)
+  // );
+
+ const isPrivateRoute = pathname === '/profile';
 
   if (!accessToken) {
     if (refreshToken) {

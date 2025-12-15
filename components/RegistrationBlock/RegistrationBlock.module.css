@@ -1,0 +1,151 @@
+.registBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.registContent {
+  width: 100%;
+}
+
+.registWrapper {
+  width: 100%;
+}
+
+.registTitle {
+  text-align: left;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #000;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 335px;
+}
+
+.registText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 335px;
+}
+
+.registButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #8808cc;
+  border-radius: 6px;
+  padding: 10px 16px;
+  width: 100%;
+  max-width: 335px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  background-color: #8808cc;
+  margin-bottom: 32px;
+}
+
+.registButton:hover {
+  background: var(--color-white);
+  outline: 1px solid var(--color-electric-violet-dark);
+  color: var(--color-neutral-darkest);
+}
+
+.registButton:active {
+  background: var(--color-electric-violet-lighter);
+  outline: 1px solid var(--color-electric-violet-dark);
+  color: var(--color-neutral-darkest);
+}
+
+.registButton:disabled {
+  background: var(--color-electric-violet-lighter);
+  outline: 1px solid var(--color-electric-violet-lighter);
+  color: var(--color-white);
+  cursor: default;
+}
+
+.registImageWrapper {
+  width: 100%;
+}
+
+.registImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .registWrapper {
+    max-width: 768px;
+  }
+
+  .registTitle {
+    max-width: 704px;
+  }
+
+  .registText {
+    max-width: 704px;
+  }
+
+  .registButton {
+    max-width: 166px;
+  }
+
+  .registImageWrapper {
+    max-width: 704px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .registBox {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+
+  .registWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+
+  .registContent {
+    max-width: 755px;
+  }
+
+  .registTitle {
+    font-size: 48px;
+    max-width: 755px;
+  }
+
+  .registText {
+    font-size: 18px;
+    max-width: 755px;
+  }
+
+  .registButton {
+    max-width: 183px;
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+
+  .registImageWrapper {
+    margin-left: auto;
+    max-width: 525px;
+  }
+}
