@@ -9,7 +9,7 @@
   background-color: #fff;
 }
 .form {
-  height: 756px;
+  height: 100%;
   width: 100%;
   max-width: 375px;
   padding: 24px;
@@ -80,7 +80,6 @@
   line-height: 150%;
   border-radius: 6px;
   padding: 10px 24px;
-  width: 166px;
   height: 41px;
   transition: background-color 0.3s ease;
   margin-bottom: 24px;
@@ -115,7 +114,7 @@
   .form {
     max-width: 768px;
     width: 768px;
-    height: 756px;
+    height: 100%;
   }
 }
 @media screen and (min-width: 1440px) {
