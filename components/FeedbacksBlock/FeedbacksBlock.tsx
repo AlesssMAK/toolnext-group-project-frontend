@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper';
 import { Navigation, Pagination } from "swiper/modules";
 
 import { Rating } from "../RatingIcon/RatingIcon";
@@ -41,6 +42,11 @@ export const FeedbacksBlock = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
+    const prevRef = useRef<HTMLButtonElement | null>(null);
+    const nextRef = useRef<HTMLButtonElement | null>(null);
+
+    const swiperRef = useRef<SwiperType | null>(null);
+
     useEffect(() => {
         const fetchReviews = async () => {
             try {
@@ -73,7 +79,22 @@ export const FeedbacksBlock = () => {
         fetchReviews();
     }, [])
 
-    
+    useEffect(() => {
+        const swiper = swiperRef.current;
+        if (!swiper) return;
+        if (!prevRef.current || !nextRef.current) return;
+
+        swiper.params.navigation = {
+            ...(swiper.params.navigation as any),
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+        };
+
+        swiper.navigation.destroy();
+        swiper.navigation.init();
+        swiper.navigation.update();
+  }, [reviews]); 
+
     return (
         <section className={style.section} id="feedbacks">
             <div className="container">
@@ -93,6 +114,7 @@ export const FeedbacksBlock = () => {
                                     observer
                                     observeParents
                                     updateOnWindowResize
+                                    
                                     //Mobil
                                     slidesPerView={1}
                                     spaceBetween={32}
@@ -101,17 +123,29 @@ export const FeedbacksBlock = () => {
                                         768: {
                                             slidesPerView: 2,
                                         },
-                                        1440: {
+                                        1400: {
                                             slidesPerView: 3,
                                         },
                                     }} 
-                                    
-                                    navigation
                                     pagination={{
                                         clickable: true,
                                         dynamicBullets: true,
                                         dynamicMainBullets: 5,
-                                        
+                                    }}
+
+                                    onSwiper={(swiper) => {
+                                        swiperRef.current = swiper;
+                                    }}
+
+                                    navigation={{
+                                        prevEl: prevRef.current,
+                                        nextEl: nextRef.current,
+                                    }}
+                                      onBeforeInit={(swiper) => {
+                                        // @ts-expect-error
+                                        swiper.params.navigation.prevEl = prevRef.current;
+                                        // @ts-expect-error
+                                        swiper.params.navigation.nextEl = nextRef.current;
                                     }}
                                     className={style.swiper}
                                 >
@@ -120,13 +154,25 @@ export const FeedbacksBlock = () => {
                                             <SwiperSlide key={r.id}>
                                                 <article className={style.card}>
                                                 <Rating value={r.rating} />
-                                                    {/* <div className={style.rating}>{renderStars(reviews.rating)}</div> */}
                                                     <p className={style.text}>{r.text}</p>
                                                     <p className={style.author}>{r.authorName}</p>
                                                 </article>
                                             </SwiperSlide>
                                         ))}
                                 </Swiper>
+                                <div className={style.nav}>
+                                    <button ref={prevRef} className={style.navBtn} aria-label="Previous">
+                                        <svg width="24" height="24">
+                                            <use href="/sprite.svg#arrow_back" />
+                                        </svg>
+                                    </button>
+                                    
+                                    <button ref={nextRef} className={style.navBtn} aria-label="Next">
+                                        <svg width="24" height="24">
+                                            <use href="/sprite.svg#arrow_forward" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         )}            
             </div>            
