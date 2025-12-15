@@ -38,7 +38,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
 
 export const FeedbacksBlock = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [navReady, setNavReady] = useState(false);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -100,120 +100,122 @@ export const FeedbacksBlock = () => {
 
     swiper.navigation.init();
     swiper.navigation.update();
+
+    return () => {
+      swiper.navigation.destroy();
+    };
   }, [navReady, reviews.length]);
 
   return (
-    <section className={style.section} id="feedbacks">
-      <div className="container">
-        <h2 className={style.title}>Останні відгуки</h2>
+    <section className={`${style.section} container`} id="feedbacks">
+      <h2 className={style.title}>Останні відгуки</h2>
 
-        {isError && (
-          <p className={style.error}>
-            Не вдалося завантажити відгуки. Спробуйте пізніше.
-          </p>
-        )}
+      {isError && (
+        <p className={style.error}>
+          Не вдалося завантажити відгуки. Спробуйте пізніше.
+        </p>
+      )}
 
-        {isLoading ? (
-          <p className={style.loader}>Завантаження...</p>
-        ) : reviews.length === 0 ? (
-          <p className={style.empty}>Поки що немає відгуків.</p>
-        ) : (
-          <div className={style.swiperWrapper}>
-            <Swiper
-              modules={[Navigation, Pagination]}
-              onSwiper={swiper => {
-                swiperRef.current = swiper;
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              onSlideChange={swiper => {
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              slidesPerView={1}
-              spaceBetween={16}
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                  spaceBetween: 12,
-                },
-                375: {
-                  slidesPerView: 1,
-                  spaceBetween: 16,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 24,
-                },
-                1440: {
-                  slidesPerView: 3,
-                  spaceBetween: 32,
-                },
-              }}
-              pagination={{
-                el: '.js-feedback-pagination',
-                clickable: true,
-                dynamicBullets: true,
-                dynamicMainBullets: 5,
-              }}
-              navigation={
-                navReady
-                  ? { prevEl: prevRef.current, nextEl: nextRef.current }
-                  : false
-              }
-              className={style.swiper}
-            >
-              {reviews.map(r => (
-                <SwiperSlide key={r.id}>
-                  <article className={style.card}>
-                    <Rating value={r.rating} />
-                    <p className={style.text}>{r.text}</p>
-                    <p className={style.author}>{r.authorName}</p>
-                  </article>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+      {isLoading ? (
+        <p className={style.loader}>Завантаження...</p>
+      ) : reviews.length === 0 ? (
+        <p className={style.empty}>Поки що немає відгуків.</p>
+      ) : (
+        <div className={style.swiperWrapper}>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            onSwiper={swiper => {
+              swiperRef.current = swiper;
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+            onSlideChange={swiper => {
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+            slidesPerView={1}
+            spaceBetween={16}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 12,
+              },
+              375: {
+                slidesPerView: 1,
+                spaceBetween: 16,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 24,
+              },
+              1440: {
+                slidesPerView: 3,
+                spaceBetween: 32,
+              },
+            }}
+            pagination={{
+              el: '.js-feedback-pagination',
+              clickable: true,
+              dynamicBullets: true,
+              dynamicMainBullets: 5,
+            }}
+            navigation={
+              navReady
+                ? { prevEl: prevRef.current, nextEl: nextRef.current }
+                : false
+            }
+            className={style.swiper}
+          >
+            {reviews.map(r => (
+              <SwiperSlide key={r.id}>
+                <article className={style.card}>
+                  <Rating value={r.rating} />
+                  <p className={style.text}>{r.text}</p>
+                  <p className={style.author}>{r.authorName}</p>
+                </article>
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-            <div className={style.controls}>
-              <div className={`${style.pagination} js-feedback-pagination`} />
+          <div className={style.controls}>
+            <div className={`${style.pagination} js-feedback-pagination`} />
 
-              <div className={style.arrows}>
-                <button
-                  ref={setPrevEl}
-                  type="button"
-                  className={style.arrowBtn}
-                  aria-label="Prev"
+            <div className={style.arrows}>
+              <button
+                ref={setPrevEl}
+                type="button"
+                className={style.arrowBtn}
+                aria-label="Prev"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  className={style.btnIcon}
+                  aria-hidden="true"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    className={style.btnIcon}
-                    aria-hidden="true"
-                  >
-                    <use href="/sprite.svg#arrow_back" />
-                  </svg>
-                </button>
+                  <use href="/sprite.svg#arrow_back" />
+                </svg>
+              </button>
 
-                <button
-                  ref={setNextEl}
-                  type="button"
-                  className={style.arrowBtn}
-                  aria-label="Next"
+              <button
+                ref={setNextEl}
+                type="button"
+                className={style.arrowBtn}
+                aria-label="Next"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  className={style.btnIcon}
+                  aria-hidden="true"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    className={style.btnIcon}
-                    aria-hidden="true"
-                  >
-                    <use href="/sprite.svg#arrow_forward" />
-                  </svg>
-                </button>
-              </div>
+                  <use href="/sprite.svg#arrow_forward" />
+                </svg>
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 };

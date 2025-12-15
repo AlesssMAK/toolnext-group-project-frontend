@@ -1,5 +1,6 @@
 .section {
   padding: 64px 20px;
+  max-width: 100wh;
   overflow-x: hidden;
 }
 
@@ -58,6 +59,7 @@
 }
 
 .controls {
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -109,14 +111,12 @@
   white-space: nowrap;
 
   flex-shrink: 0; /* ✅ */
-  width: max-content !important; /* ✅ */
 }
 
 .pagination:global(.swiper-pagination-bullets),
 .pagination:global(.swiper-pagination-bullets-dynamic) {
   flex-wrap: nowrap;
   flex-shrink: 0; /* ✅ не стискається */
-  width: max-content !important; /* ✅ ширина по контенту */
 }
 
 .pagination :global(.swiper-pagination-bullet-active-prev),
