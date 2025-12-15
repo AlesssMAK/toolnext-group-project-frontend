@@ -1,0 +1,36 @@
+.page {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+
+
+@media (min-width: 768px) {
+.page {
+  max-width: 768px;
+  padding: 32px 32px 64px;
+}
+
+.title {
+  font-size: 30px;
+}
+}
+
+@media (min-width: 1440px)  {
+.page {
+  max-width: 1440px;
+  padding: 48px 64px 112px;
+}
+
+.title {
+  font-size: 42px;
+}
+}

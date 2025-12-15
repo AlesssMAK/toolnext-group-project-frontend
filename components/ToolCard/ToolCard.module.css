@@ -98,7 +98,7 @@
 /*TABLET ≥ 768*/
 @media (min-width: 768px) {
   .tool_card {
-    width: 336px;
+    max-width: 336px;
   }
 
   .tool_card_image {

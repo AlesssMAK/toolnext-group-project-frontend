@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getTools } from "@/lib/api/tools";
 import { Tool } from "../../types/tool";
 import { ToolCard } from "../ToolCard/ToolCard";
+import Link from "next/link";
 import styles from "./FeaturedToolsBlock.module.css";
 
 export const FeaturedToolsBlock: React.FC = () => {
@@ -32,7 +33,7 @@ export const FeaturedToolsBlock: React.FC = () => {
         ))}
       </div>
 
-      <button className={styles.featured_btn}>До всіх інструментів</button>
+      <Link href="/tools" className={styles.featured_btn}>До всіх інструментів</Link>
     </section>
   );
 };
