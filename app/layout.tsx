@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import { Inter, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import 'normalize.css';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
 // import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import { Toaster } from 'react-hot-toast';
@@ -46,12 +44,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${nunitoSans.variable}`}>
-      <Toaster position="top-right" />
+        <Toaster position="top-right" />
         <TanStackProvider>
           {/* <AuthProvider> */}
-          <Header />
           {children}
-          <Footer />
           {/* </AuthProvider> */}
         </TanStackProvider>
       </body>
