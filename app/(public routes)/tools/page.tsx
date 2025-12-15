@@ -1,5 +1,5 @@
-const Tools = () => {
-  return <div>Tools</div>;
-};
+import ToolsPage from "@/components/ToolsPage/ToolsPage";
 
-export default Tools;
+export default function Page() {
+  return <ToolsPage />;
+}

@@ -16,9 +16,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       <div className={styles.tool_card_content}>
         <div className={styles.tool_card_rating}>
           <Rating value={tool.rating} />
-          <span className={styles.tool_card_reviews}>
-            ({tool.feedbacks.length})
-          </span>
+          
         </div>
 
         <h3 className={styles.tool_card_title}>{tool.name}</h3>
