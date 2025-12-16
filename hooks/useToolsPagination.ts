@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Tool } from "@/types/tool";
 
 const API_URL =
-  "https://toolnext-group-project-backend.onrender.com/api/tools";
+  `${process.env.NEXT_PUBLIC_API_URL}/api/tools`;
 
 export function useToolsPagination() {
   const [tools, setTools] = useState<Tool[]>([]);

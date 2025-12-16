@@ -1,27 +1,18 @@
-'use client';
-
-import { useEffect, useState } from "react";
-import { getTools } from "@/lib/api/tools";
-import { Tool } from "../../types/tool";
+"use server";
+import { getTools } from "@/lib/api/serverApi";
 import { ToolCard } from "../ToolCard/ToolCard";
+import { Tool } from "@/types/tool";
 import Link from "next/link";
 import styles from "./FeaturedToolsBlock.module.css";
 
-export const FeaturedToolsBlock: React.FC = () => {
-  const [tools, setTools] = useState<Tool[]>([]);
+export default async function FeaturedToolsBlock() {
+  let tools: Tool[] = [];
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const toolsArray = await getTools();
-        setTools(toolsArray.slice(0, 8));
-      } catch (err) {
-        console.log("Error loading tools", err);
-      }
-    };
-
-    load();
-  }, []);
+  try {
+    tools = await getTools();
+  } catch (error) {
+    console.error("Error loading tools", error);
+  }
 
   return (
     <section className={styles.featured}>
@@ -33,7 +24,9 @@ export const FeaturedToolsBlock: React.FC = () => {
         ))}
       </div>
 
-      <Link href="/tools" className={styles.featured_btn}>До всіх інструментів</Link>
+      <Link href="/tools" className={styles.featured_btn}>
+        До всіх інструментів
+      </Link>
     </section>
   );
-};
+}

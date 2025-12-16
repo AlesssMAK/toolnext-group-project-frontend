@@ -1,22 +1,25 @@
 .filterBar {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 24px;
   align-items: center;
   margin-bottom: 32px;
 }
 
 .select {
   height: 40px;
-  width: 304px;
+  min-width: 280px;
+  max-width: 335px;
+  width: 100%;
   padding: 8 12px;
   border-radius: 6px;
   border: 2px solid #000;
   background: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .resetBtn {
-  margin-left: auto;
+  margin-right: auto;
   background: none;
   border: none;
   color: #000;
