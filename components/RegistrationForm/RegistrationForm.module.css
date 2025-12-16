@@ -1,5 +1,6 @@
 .formSection {
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,6 +8,7 @@
 .mainContent {
   width: 100%;
   background-color: #fff;
+  height: 100vh;
 }
 .form {
   height: 100%;
@@ -17,6 +19,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
   gap: 24px;
 }
 .formTitle {
@@ -118,11 +121,20 @@
   }
 }
 @media screen and (min-width: 1440px) {
+  .formSection {
+    height: auto;
+  }
+
+  .mainContent {
+    height: auto;
+  }
+
   .wrapper {
     max-width: 1440px;
   }
 
   .form {
     width: 736px;
+    height: 756px;
   }
 }
