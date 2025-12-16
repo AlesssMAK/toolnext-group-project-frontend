@@ -1,5 +1,5 @@
 .hero {
-  width: 100vw;
+  width: 99vw;
   padding: 45px 0;
 
   background-image: linear-gradient(#00000080, #00000080), url('/images/main_page/heroBlock/heroBackground.png');
