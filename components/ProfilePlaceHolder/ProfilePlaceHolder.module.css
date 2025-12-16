@@ -13,13 +13,14 @@
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-scheme-1-text);
+  margin-bottom: 32px;
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 32px;
+
 }
 
 .text {
@@ -45,11 +46,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 335px;
+  width: 100%;
+  max-width: 335px;
 padding: 8px 20px;
   border-radius: 6px;
 
   background: var(--color-electric-violet);
+  border: 2px solid var(--color-electric-violet);
 
   font-weight: 500;
   font-size: 16px;
@@ -57,6 +60,7 @@ padding: 8px 20px;
   /* line-height: 24px; */
   line-height: 1.5;
   color: var(--color-white);
+  transition: 0.2s;
 }
 
 .button:hover,
@@ -70,12 +74,6 @@ padding: 8px 20px;
   border: 2px solid var(--color-electric-violet);
   background: var(--color-electric-violet-lighter);
   color: var(--color-scheme-1-text);
-}
-
-.button:disabled {
-  border: 1px solid var(--color-electric-violet);
-  background: var(--color-electric-violet);
-  opacity: 0.4;
 }
 
 /* Styles for Tablet devices */
