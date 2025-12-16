@@ -4,11 +4,28 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
 
+import { Rating } from "../RatingIcon/RatingIcon";
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import style from './FeedbacksBlock.module.css';
+
+type FeedbackApiItem = {
+    _id: string;
+    name: string;
+    description: string;
+    rate: number;
+}
+
+type FeedbackApiResponse = {
+    page: number;
+    perPage: number;
+    totalPages: number;
+    totalFeedbacks: number;
+    feedbacks: FeedbackApiItem[];
+}
 
 interface Review { 
     id: string;
@@ -17,7 +34,7 @@ interface Review {
     rating: number;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
 
 export const FeedbacksBlock = () => {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -30,40 +47,36 @@ export const FeedbacksBlock = () => {
                 setIsLoading(true);
                 setIsError(false);
 
-                const res = await fetch(`${API_BASE_URL}/api/reviews`);
+                const res = await fetch(`${API_BASE_URL}/api/feedbacks`);
                 if (!res.ok) {
-                    throw new Error('Failed to fetch');
+                    throw new Error(`Failed to fetch: ${res.status}`);
                 }
 
-                const data = await res.json();
+                const data = (await res.json()) as FeedbackApiResponse;
 
-                const reviewsFromApi = Array.isArray(data) ? data : data.data;
-
+                const reviewsFromApi: Review[] = (data.feedbacks ?? []).map((f: FeedbackApiItem) => ({
+                    id: f._id,
+                    authorName: f.name,
+                    text: f.description,
+                    rating: f.rate,
+      }));
                 setReviews(reviewsFromApi);
             } catch (error) {
                 console.error(error);
                 setIsError(true);
+                setReviews([]);
             } finally {
                 setIsLoading(false);
             }
         };
+
         fetchReviews();
     }, [])
 
-    const renderStars = (rating: number) => {
-        return Array.from({ length: 5 }, (_, index) => (
-            <span
-                key={index}
-                className={
-                    index < rating ? style.starFilled : style.star
-                }
-            >  ★
-            </span>
-        ));
-    };
+    
     return (
         <section className={style.section} id="feedbacks">
-            <div className={style.container}>
+            <div className="container">
                 <h2 className={style.title}>Останні відгуки</h2>
 
                 {isError && (
@@ -77,6 +90,9 @@ export const FeedbacksBlock = () => {
                             <div className={ style.swiperWrapper}>
                                 <Swiper
                                     modules={[Navigation, Pagination]}
+                                    observer
+                                    observeParents
+                                    updateOnWindowResize
                                     //Mobil
                                     slidesPerView={1}
                                     spaceBetween={32}
@@ -89,21 +105,24 @@ export const FeedbacksBlock = () => {
                                             slidesPerView: 3,
                                         },
                                     }} 
-                                    navigation={{
-                                        enabled: true,
-                                    }}
+                                    
+                                    navigation
                                     pagination={{
                                         clickable: true,
+                                        dynamicBullets: true,
+                                        dynamicMainBullets: 5,
+                                        
                                     }}
                                     className={style.swiper}
                                 >
-                                    |{
-                                        reviews.map((reviews) => (
-                                            <SwiperSlide key={reviews.id}>
+                                    {
+                                        reviews.map((r) => (
+                                            <SwiperSlide key={r.id}>
                                                 <article className={style.card}>
-                                                    <div className={style.rating}>{renderStars(reviews.rating)}</div>
-                                                    <p className={style.text}>{reviews.text}</p>
-                                                    <p className={style.author}>{reviews.authorName}</p>
+                                                <Rating value={r.rating} />
+                                                    {/* <div className={style.rating}>{renderStars(reviews.rating)}</div> */}
+                                                    <p className={style.text}>{r.text}</p>
+                                                    <p className={style.author}>{r.authorName}</p>
                                                 </article>
                                             </SwiperSlide>
                                         ))}

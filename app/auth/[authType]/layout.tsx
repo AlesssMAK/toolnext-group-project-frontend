@@ -1,42 +1,43 @@
-// 'use client';
+'use client';
 
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+import css from './AuthLayout.module.css';
+import { usePathname } from 'next/navigation';
+export const dynamic = 'force-static'; // або не треба, якщо нема props
 
-// type Props = {
-//   children: React.ReactNode;
-// };
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const currentYear = new Date().getFullYear();
 
-// export default function AuthLayout({ children }: Props) {
-//   const router = useRouter();
+  const isLogin = pathname === '/auth/login';
+  const imageSrc = isLogin
+    ? '/images/register_login_form/login_image.png'
+    : '/images/register_login_form/register-image.png';
 
-//   useEffect(() => {
-//     router.refresh();
-//   }, [router]);
-
-//   return <> {children}</>;
-// }
-
-// "use client";
-// import { useRouter } from "next/navigation";
-// import { useEffect, useState } from "react";
-
-// interface Props {
-//   children: React.ReactNode;
-// }
-
-// export default function AuthLayout({ children }: Props) {
-//   const [loading, setLoading] = useState(true);
-//   const router = useRouter();
-//   useEffect(() => {
-//     router.refresh();
-//     setLoading(false);
-//   }, [router]);
-//   return <>{loading ? <div>Loading...</div> : children}</>;
-// }
-
-export const dynamic = "force-static"; // або не треба, якщо нема props
-
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  const imageAlt = isLogin ? 'Вхід' : 'Реєстрація';
+  return (
+    <div className={css.authContainer}>
+      <div>
+        <header className={css.header}>
+          <Link href={'/'}>
+            <Image src="/logo.svg" alt="ToolNext" width={83} height={15} />
+          </Link>
+        </header>
+        <main className={css.mainContent}>{children}</main>
+        <footer className={css.footer}>© {currentYear} ToolNext</footer>
+      </div>
+      <Image
+        src={imageSrc}
+        alt="Інструменти"
+        width={704}
+        height={900}
+        className={css.imageSection}
+      />
+    </div>
+  );
 }

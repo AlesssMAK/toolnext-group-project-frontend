@@ -2,9 +2,10 @@ import { User } from "@/types/user";
 import nextServer from "./api";
 
 export type RegisterRequest = {
+  name: string;
   email: string;
   password: string;
-  username: string;
+  confirmPassword: string;
 };
 
 export const register = async (data: RegisterRequest) => {
