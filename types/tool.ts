@@ -16,3 +16,15 @@ export interface Tool {
   bookedDates: string[];
   feedbacks: Feedback[];
 }
+
+export interface UserToolsResponse {
+  data: {
+    tools: Tool[];
+    pagination: {
+      currentPage: number;
+      perPage: number;
+      totalTools: number;
+      totalPages: number;
+    };
+  };
+};

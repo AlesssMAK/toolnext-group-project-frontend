@@ -1,5 +1,6 @@
 import { User } from '@/types/user';
 import nextServer from './api';
+import { UserToolsResponse } from '@/types/tool';
 
 export type RegisterRequest = {
   name: string;
@@ -49,3 +50,16 @@ export async function getMe() {
 //   const res = await nextServer.patch<User>('/users/me', payload);
 //   return res.data;
 // };
+
+
+
+// Клієнтський запит для підвантаження інструментів користувача, використовую для пагінації (кнопка "Показати більше")
+
+export async function getUserToolsClient(userId: string, page = 1, perPage = 8) {
+  const { data } = await nextServer.get<UserToolsResponse>(
+    `/users/${userId}/tools`,
+    { params: { page, perPage } }
+  );
+
+  return data.data; // { tools, pagination }
+}

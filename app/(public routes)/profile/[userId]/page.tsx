@@ -1,45 +1,42 @@
 import { Metadata } from 'next';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHolder';
+import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 
-import { getUserById } from '@/lib/api/serverApi';
+import { getUserById, getToolsByUserId } from '@/lib/api/serverApi';
 
 export const metadata: Metadata = {
   title: 'User Profile',
   description: '',
-  icons: '',
-  openGraph: {
-    title: 'User Profile',
-    description: '',
-    url: '',
-    images: [
-      {
-        url: '',
-        width: 1200,
-        height: 630,
-        alt: '',
-      },
-    ],
-  },
 };
 
-
-type Props = {
+interface Props {
   params: Promise<{ userId: string }>;
-};
+}
 
 const PublicProfile = async ({ params }: Props) => {
   const { userId } = await params;
 
   const user = await getUserById(userId);
 
+  const { tools, pagination } = await getToolsByUserId(userId, 1, 8);
+
   return (
     <main>
-        <UserProfile name={user.name} avatar={user.avatar} />
+      <UserProfile name={user.name} avatar={user.avatar} />
+      {tools.length > 0 ? (
+        <ToolsGrid
+          tools={tools}
+          userId={userId}
+          initialPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          perPage={pagination.perPage}
+        />
+      ) : (
         <ProfilePlaceHolder isOwner={false} />
+      )}
     </main>
   );
 };
 
 export default PublicProfile;
-
