@@ -6,7 +6,7 @@ import { UserResponse } from '@/types/user';
 
 export async function checkServerSession() {
   const cookieStore = await cookies();
-  const res = await nextServer.get('auth/refrech', {
+  const res = await nextServer.get('/auth/refresh', {
     headers: {
       Cookie: cookieStore.toString(),
     },

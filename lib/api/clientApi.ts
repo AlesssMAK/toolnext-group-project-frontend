@@ -32,7 +32,7 @@ type CheckSessionRequest = {
 };
 
 export async function checkSession() {
-  const res = await nextServer.get<CheckSessionRequest>('/auth/refrech');
+  const res = await nextServer.get<CheckSessionRequest>('/auth/refresh');
   return res.data.success;
 }
 
