@@ -1,0 +1,17 @@
+.burgerContainer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.burgerButton {
+  border: 2px solid var(--color-neutral-darkest);
+  border-radius: 6px;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

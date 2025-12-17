@@ -48,6 +48,7 @@
   --color-scheme-3-foreground: var(--color-neutral-lightest);
   --color-red-dark: #c40202;
   --color-red-light: #ea3131;
+  --header-h: 72px;
 }
 
 /* @media (prefers-color-scheme: dark) {

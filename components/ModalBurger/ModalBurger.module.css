@@ -12,11 +12,15 @@
 }
 
 .modal {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 8px;
-  max-width: 500px;
+  background-color: var(--color-scheme-3-background);
+  height: 100%;
   width: 100%;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 1440px) {
+  .backdrop {
+    display: none;
+  }
 }

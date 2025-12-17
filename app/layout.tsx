@@ -37,8 +37,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  modal,
   children,
 }: Readonly<{
+  modal: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -46,7 +48,10 @@ export default function RootLayout({
       <body className={`${inter.variable} ${nunitoSans.variable}`}>
         <Toaster position="top-right" />
         <TanStackProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {modal}
+            {children}
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>

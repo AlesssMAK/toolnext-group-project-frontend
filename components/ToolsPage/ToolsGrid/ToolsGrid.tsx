@@ -1,6 +1,6 @@
-import styles from "./ToolsGrid.module.css";
-import { ToolCard } from "@/components/ToolCard/ToolCard";
-import { Tool } from "@/types/tool";
+import styles from './ToolsGrid.module.css';
+import { ToolCard } from '@/components/ToolCard/ToolCard';
+import { Tool } from '@/types/tool';
 
 type Props = {
   tools: Tool[];
@@ -23,15 +23,13 @@ export default function ToolsGrid({
         ))}
       </div>
 
-      
-        <button
-          className={styles.loadMoreBtn}
-          onClick={onLoadMore}
-          disabled={!hasMore}
-        >
-           {loading ? "Завантаження..." : "Показати більше"}
-        </button>
-
+      <button
+        className={styles.loadMoreBtn}
+        onClick={onLoadMore}
+        disabled={!hasMore}
+      >
+        {loading ? 'Завантаження...' : 'Показати більше'}
+      </button>
     </div>
   );
 }
