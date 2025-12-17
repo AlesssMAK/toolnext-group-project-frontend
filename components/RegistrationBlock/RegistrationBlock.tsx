@@ -27,7 +27,7 @@ export default function RegistrationBlock() {
             Приєднуйтесь до ToolNext вже сьогодні!
           </p>
           <button
-            className={css.registButton}
+            className={`${css.registButton} button button--primary`}
             onClick={handleClick}
             disabled={isDisabled}
           >

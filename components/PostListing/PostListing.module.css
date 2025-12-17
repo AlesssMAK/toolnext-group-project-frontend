@@ -1,35 +1,5 @@
 .navigationLinkBtn {
-  border: 2px solid var(--color-electric-violet);
-  border-radius: 6px;
   padding: 8px 20px;
-  height: 37px;
-  width: 100%;
-  max-width: 375px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
-  color: var(--color-white);
-  background: var(--color-electric-violet);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s ease;
-  opacity: 1;
-}
-
-.navigationLinkBtn:hover,
-.navigationLinkBtn:focus {
-  background-color: transparent;
-  color: var(--color-scheme-1-text);
-}
-
-.navigationLinkBtn:active {
-  background-color: var(--color-electric-violet-lighter);
-}
-
-.navigationLinkBtn:disabled {
-  background-color: var(--color-electric-violet);
-  opacity: 0.4;
 }
 
 .tablet .navigationLinkBtn {

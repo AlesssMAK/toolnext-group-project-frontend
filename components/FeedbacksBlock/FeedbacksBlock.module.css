@@ -96,7 +96,7 @@
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: var(--color-scheme-1-text);
+  background: var(--color-black);
   opacity: 0.2;
   margin: 0 !important;
   position: static !important;
@@ -155,9 +155,9 @@
 .arrowBtn {
   width: 48px;
   height: 48px;
-  border: 2px solid var(--color-neutral-darkest);
+  border: 2px solid var(--color-black);
   border-radius: 6px;
-  background: var(--color-scheme-1-foreground);
+  background: var(--color-white);
   cursor: pointer;
 
   display: flex;
@@ -180,11 +180,11 @@
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
-  border-color: var(--color-neutral-darkest);
+  border-color: var(--color-black);
 }
 
 .arrowBtn:disabled .btnIcon {
-  fill: var(--color-neutral-darkest);
+  fill: var(--color-black);
 }
 
 /* Swiper */
