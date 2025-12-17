@@ -83,7 +83,7 @@
 
 .pagination {
   position: relative;
-  width: 82px !important;
+  /* width: 82px !important; */
   height: 14px;
   overflow: hidden;
 
