@@ -69,7 +69,7 @@ export default function ToolsGrid({
 
         {hasMore && (
           <button
-            className={styles.loadMoreBtn}
+            className={`${styles.loadMoreBtn} button button--primary`}
             onClick={onLoadMore}
             disabled={loading}
             type="button"

@@ -114,17 +114,19 @@ export const FeedbacksBlock = () => {
       <div className="container">
         <h2 className={style.title}>Останні відгуки</h2>
 
-        {isError && (
+        {!isLoading && isError && (
           <p className={style.error}>
             Не вдалося завантажити відгуки. Спробуйте пізніше.
           </p>
         )}
 
-        {isLoading ? (
-          <p className={style.loader}>Завантаження...</p>
-        ) : reviews.length === 0 ? (
+        {isLoading && <p className={style.loader}>Завантаження...</p>}
+
+        {!isLoading && !isError && reviews.length === 0 && (
           <p className={style.empty}>Поки що немає відгуків.</p>
-        ) : (
+        )}
+
+        {!isLoading && !isError && reviews.length > 0 && (
           <div className={style.swiperWrapper}>
             <Swiper
               modules={[Navigation, Pagination]}

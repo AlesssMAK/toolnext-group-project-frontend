@@ -15,8 +15,8 @@ export default function RegistrationBlock() {
   };
 
   return (
-    <section className={`${css.registBox} container`}>
-      <div className={css.registWrapper}>
+    <section className={css.registBox}>
+      <div className={`${css.registWrapper} container`}>
         <div className={css.registContent}>
           <h2 className={css.registTitle}>
             Зареєструйтесь і отримайте доступ до інструментів поруч із вами
@@ -27,7 +27,7 @@ export default function RegistrationBlock() {
             Приєднуйтесь до ToolNext вже сьогодні!
           </p>
           <button
-            className={css.registButton}
+            className={`${css.registButton} button button--primary`}
             onClick={handleClick}
             disabled={isDisabled}
           >
