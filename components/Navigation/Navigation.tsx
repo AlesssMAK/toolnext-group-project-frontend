@@ -4,7 +4,7 @@ import css from './Navigation.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
-import { getMe, logout } from '@/lib/api/clientApi';
+import { logout } from '@/lib/api/clientApi';
 import PostListing from '../PostListing/PostListing';
 
 type NavVariant = 'header' | 'burger';

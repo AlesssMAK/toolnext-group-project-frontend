@@ -14,4 +14,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.burgerButton:hover,
+.burgerButton:focus {
+  background-color: var(--color-electric-violet-lighter);
+}
+
+.burgerButton:active {
+  background-color: var(--color-electric-violet);
 }

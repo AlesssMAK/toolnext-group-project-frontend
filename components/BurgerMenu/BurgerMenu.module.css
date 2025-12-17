@@ -23,4 +23,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.closeMenuBurger:hover,
+.closeMenuBurger:focus {
+  background-color: var(--color-electric-violet-lighter);
+}
+
+.closeMenuBurger:active {
+  background-color: var(--color-electric-violet);
 }

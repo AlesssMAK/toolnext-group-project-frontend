@@ -15,16 +15,24 @@ const Footer = () => {
           <nav>
             <ul className={css.nav_list}>
               <li className={css.nav_list_item}>
-                <a href="./">Головна</a>
+                <a className={css.nav_list_link} href="./">
+                  Головна
+                </a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./tools">Інструменти</a>
+                <a className={css.nav_list_link} href="./tools">
+                  Інструменти
+                </a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./auth/login">Увійти</a>
+                <a className={css.nav_list_link} href="./auth/login">
+                  Увійти
+                </a>
               </li>
               <li className={css.nav_list_item}>
-                <a href="./auth/register">Зареєствуватися</a>
+                <a className={css.nav_list_link} href="./auth/register">
+                  Зареєствуватися
+                </a>
               </li>
             </ul>
           </nav>

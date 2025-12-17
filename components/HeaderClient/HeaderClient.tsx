@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/authStore';
 import { useState } from 'react';
 import css from './HeaderClient.module.css';
 
@@ -10,12 +12,15 @@ import PostListing from '../PostListing/PostListing';
 export const HeaderClient = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
+  const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
 
   return (
     <div className={css.burgerContainer}>
-      <PostListing variant="tablet" />
+      {isAuthenticated && <PostListing variant="tablet" />}
       <button
         type="button"
         className={css.burgerButton}
