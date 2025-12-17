@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { parse } from 'cookie';
-// import { checkServerSession } from './lib/api/serverApi';
+import { checkServerSession } from './lib/api/serverApi';
 
 const privateRoutes = ['/profile', '/notes'];
-const authRoutes = ['/sign-in', '/sign-up'];
+const authRoutes = ['/auth/login', '/auth/register'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -13,31 +13,11 @@ export async function middleware(request: NextRequest) {
   const refreshToken = cookieStore.get('refreshToken')?.value;
 
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
-
-
-// ВАЖЛИВО:
-// Не можна використовувати `pathname.startsWith('/profile')`.
-// Причина:
-//  - `/profile` — ПРИВАТНА сторінка (профіль поточного користувача)
-//  - `/profile/[userId]` — ПУБЛІЧНА сторінка (профілі інших користувачів)
-
-  // const isPrivateRoute = privateRoutes.some(route =>
-  //   pathname.startsWith(route)
-  // );
-
- const isPrivateRoute = pathname === '/profile';
+  const isPrivateRoute = privateRoutes.includes(pathname);
 
   if (!accessToken) {
     if (refreshToken) {
-      // const data = await checkServerSession();
-      const data = {
-        headers: {
-          'set-cookie': [
-            'accessToken=mock-access-token; Path=/; Max-Age=900',
-            'refreshToken=mock-refresh-token; Path=/; Max-Age=604800',
-          ],
-        },
-      };
+      const data = await checkServerSession();
       const setCookie = data.headers['set-cookie'];
 
       if (setCookie) {
@@ -78,7 +58,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL('/sign-in', request.url));
+      return NextResponse.redirect(new URL('/auth/login', request.url));
     }
   }
 
@@ -91,5 +71,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile/:path*', '/notes/:path*', '/sign-in', '/sign-up'],
+  matcher: ['/profile', '/authType/:path*'],
 };

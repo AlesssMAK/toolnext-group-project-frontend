@@ -17,6 +17,18 @@ export interface Tool {
   feedbacks: Feedback[];
 }
 
+export interface UserToolsResponse {
+  data: {
+    tools: Tool[];
+    pagination: {
+      currentPage: number;
+      perPage: number;
+      totalTools: number;
+      totalPages: number;
+    };
+  };
+};
+
 export type ToolsResponse = {
   page: number;
   limit: number;

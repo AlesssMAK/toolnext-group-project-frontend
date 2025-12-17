@@ -41,11 +41,14 @@
   color: var(--color-red-light);
 }
 
-.input:focus, .input:focus-visible, .input:active {
+.input:focus,
+.input:focus-visible,
+.input:active {
   border-color: var(--color-electric-violet);
 }
 
-.input.inputError:active, .input.inputError:focus,
+.input.inputError:active,
+.input.inputError:focus,
 .input.inputError:focus-visible {
   border-color: var(--color-red-light);
 }
@@ -62,7 +65,7 @@
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
-  
+
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;

@@ -1,0 +1,119 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigationItem {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: var(--color-scheme-1-text);
+  white-space: nowrap;
+  transition: 0.3s ease;
+}
+
+.navigationLink {
+  transition: 0.3s ease;
+}
+
+.navigationLink:hover,
+.navigationLink:focus {
+  border-bottom: 1px solid var(--color-scheme-1-border);
+}
+
+.navigationLink:active {
+  border-bottom: 1px solid var(--color-electric-violet);
+  color: var(--color-electric-violet);
+}
+
+.navigationLinkBtn {
+  border: 2px solid var(--color-electric-violet);
+  border-radius: 6px;
+  padding: 8px 20px;
+  height: 37px;
+  width: 100%;
+  max-width: 375px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: var(--color-white);
+  background-color: var(--color-electric-violet);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+  opacity: 1;
+}
+
+.navigationLinkBtn:hover,
+.navigationLinkBtn:focus {
+  background-color: transparent;
+  color: var(--color-scheme-1-text);
+}
+
+.navigationLinkBtn:active {
+  background-color: var(--color-electric-violet-lighter);
+}
+
+.navigationLinkBtn:disabled {
+  background-color: var(--color-electric-violet);
+  opacity: 0.4;
+}
+
+.userContainer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBox {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 150%;
+  color: var(--color-scheme-1-text);
+  white-space: nowrap;
+}
+
+.divider {
+  width: 1px;
+  height: 39px;
+  background: var(--color-scheme-1-text);
+}
+
+@media (min-width: 1440px) {
+  .nav {
+    flex-direction: row;
+  }
+
+  .navList {
+    flex-direction: row;
+  }
+}

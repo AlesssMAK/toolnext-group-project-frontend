@@ -1,13 +1,13 @@
 import { createPortal } from 'react-dom';
-import css from './Modal.module.css';
+import css from './ModalBurger.module.css';
 import { useEffect } from 'react';
 
-export interface ModalProps {
+export interface ModalBurgerProps {
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const Modal = ({ onClose, children }: ModalProps) => {
+const ModalBurger = ({ onClose, children }: ModalBurgerProps) => {
   const handleBackdropClick = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (ev.target === ev.currentTarget) {
       onClose();
@@ -43,4 +43,4 @@ const Modal = ({ onClose, children }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default ModalBurger;

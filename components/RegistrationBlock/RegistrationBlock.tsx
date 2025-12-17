@@ -15,8 +15,8 @@ export default function RegistrationBlock() {
   };
 
   return (
-    <section className={css.registBox}>
-      <div className={`${css.registWrapper} container `}>
+    <section className={`${css.registBox} container`}>
+      <div className={css.registWrapper}>
         <div className={css.registContent}>
           <h2 className={css.registTitle}>
             Зареєструйтесь і отримайте доступ до інструментів поруч із вами

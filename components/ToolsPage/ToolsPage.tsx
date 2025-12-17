@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
 import FilterBar from "../FilterBar/FilterBar";
 import ToolsGrid from "../ToolsGrid/ToolsGrid";
 import styles from "./ToolsPage.module.css";
-
-import { useToolsPagination } from "@/hooks/useToolsPagination";
+import { useToolsPagination } from '@/hooks/useToolsPagination';
 
 export default function ToolsPage() {
   const { tools, loading, hasMore, loadMore } = useToolsPagination();

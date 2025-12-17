@@ -25,6 +25,7 @@
   margin-bottom: 24px;
   width: 100%;
   max-width: 335px;
+  word-wrap: anywhere;
 }
 
 .registText {
