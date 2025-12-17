@@ -15,12 +15,10 @@
   gap: 32px;
 }
 
-
-
 .loadMoreBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   margin: 32px auto 0;
   width: 100%;
@@ -44,7 +42,7 @@
 }
 
 .loadMoreBtn:active{
-    background: #E7CDF4;
+  background: #E7CDF4;
 }
 
 .loadMoreBtn:disabled {
@@ -66,13 +64,10 @@
 
   }
 
-
-
   .loadMoreBtn {
     width: 182px;
   }
 }
-
 
 /*DESKTOP ≥ 1440*/
 

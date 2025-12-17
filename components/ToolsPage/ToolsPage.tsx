@@ -1,7 +1,7 @@
 "use client";
 
-import FilterBar from "./FilterBar/FilterBar";
-import ToolsGrid from "./ToolsGrid/ToolsGrid";
+import FilterBar from "../FilterBar/FilterBar";
+import ToolsGrid from "../ToolsGrid/ToolsGrid";
 import styles from "./ToolsPage.module.css";
 
 import { useToolsPagination } from "@/hooks/useToolsPagination";

@@ -16,3 +16,19 @@ export interface Tool {
   bookedDates: string[];
   feedbacks: Feedback[];
 }
+
+export type ToolsResponse = {
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+  tools: Tool[];
+};
+
+export type CategoriesResponse = {
+  status: string;
+  data: {
+    _id: string;
+    title: string;
+  }[];
+};

@@ -1,0 +1,26 @@
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.resetFilter{
+    display: flex;
+    margin-left: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/*TABLET ≥ 768*/
+
+@media (min-width: 768px) {
+    .filterBar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .resetFilter{
+        align-items: center;
+    }   
+}

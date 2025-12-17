@@ -3,7 +3,8 @@ import { cookies } from 'next/headers';
 import nextServer from './api';
 import { User } from '@/types/user';
 import { UserResponse } from '@/types/user';
-import { Tool } from '@/types/tool'
+import { Tool, ToolsResponse, CategoriesResponse } from '@/types/tool'
+import { Option } from '@/components/CategorySelect/CategorySelect';
 
 export async function checkServerSession() {
   const cookieStore = await cookies();
@@ -30,18 +31,15 @@ export async function getUserById(userId: string): Promise<User> {
   return data.data;
 }
 
-export const getTools = async (): Promise<Tool[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/tools?limit=8`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch tools");
-  }
-
-  const data = await res.json();
+export async function getTools(limit = 8): Promise<Tool[]> {
+  const { data } = await nextServer.get<ToolsResponse>(`/tools?limit=${limit}`);
   return data.tools;
-};
+}
+
+export async function getCategories(): Promise<Option[]> {
+  const { data } = await nextServer.get<CategoriesResponse>("/categories");
+  return data.data.map(cat => ({
+    value: cat._id,
+    label: cat.title,
+  }));
+}
