@@ -4,23 +4,27 @@ import { useRouter } from 'next/navigation';
 import css from './ToolInfoBlock.module.css';
 import { User } from '@/types/user';
 import Link from 'next/link';
-// import AuthRequiredModal from '@/components/AuthRequiredModal';
+import { useAuthStore } from '@/lib/store/authStore';
+import { Tool } from '@/types/tool';
+import { useState } from 'react';
+import AuthRequiredModal from '../AuthRequiredModal/AuthRequiredModal';
 
 export default function ToolInfoBlock({
   tool,
   owner,
 }: {
-  tool: any;
+  tool: Tool;
   owner: User;
 }) {
   const router = useRouter();
-  const isAuthorized = false; // з auth store / context
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleBookClick = () => {
-    if (isAuthorized) {
-      router.push(`/booking/${tool.id}`);
+    if (isAuthenticated) {
+      router.push(`/tools/${tool._id}/booking`);
     } else {
-      // open modal
+      setIsAuthModalOpen(true);
     }
   };
 
@@ -49,13 +53,17 @@ export default function ToolInfoBlock({
         {Object.entries(tool.specifications).map(([key, value]) => (
           <p key={key}>
             <strong className={css.toolSpecTitle}>{key}: </strong>
-            {String(value)}
+            {value}
           </p>
         ))}
       </div>
       <button className={css.toolBut} onClick={handleBookClick}>
         Забронювати
       </button>
+      <AuthRequiredModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </div>
   );
 }

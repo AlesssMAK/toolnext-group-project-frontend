@@ -14,6 +14,9 @@
   border: none;
   cursor: pointer;
   background-color: #8808cc;
+  transition:
+    color 200ms ease,
+    background 200ms ease;
 }
 
 .toolBut:hover {
@@ -33,9 +36,6 @@
   outline: 1px solid var(--color-electric-violet-lighter);
   color: var(--color-white);
   cursor: default;
-}
-
-.toolInfo {
 }
 
 .toolTitle {
@@ -81,6 +81,11 @@
   margin-bottom: 24px;
 }
 
+.ownerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
 .ownerAvatar {
   width: 80px;
   border-radius: 100%;
@@ -101,13 +106,26 @@
   justify-content: center;
   border: 2px solid #000;
   border-radius: 6px;
-  padding: 8px 19px;
-  max-width: 192px;
+  padding: 8px 8px;
+  width: clamp(140px, 100%, 192px);
 
   font-weight: 500;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
+  transition:
+    color 200ms ease,
+    background 200ms ease;
+}
+
+.ownerLink:hover {
+  background: var(--color-electric-violet-lighter);
+}
+
+.ownerLink:active {
+  color: var(--color-white);
+  border: 1px solid var(--color-electric-violet-dark);
+  background: var(--color-electric-violet-dark);
 }
 
 @media (min-width: 768px) {

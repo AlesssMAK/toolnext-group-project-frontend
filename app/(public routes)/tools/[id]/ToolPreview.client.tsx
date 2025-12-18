@@ -13,7 +13,7 @@ export default function ToolDetails() {
   const params = useParams();
   const toolId = params?.id as string;
 
-  const { data: tool } = useQuery({
+  const { data: tool, isError } = useQuery({
     queryKey: ['tool', toolId],
     queryFn: () => getToolById(toolId),
   });
@@ -24,7 +24,12 @@ export default function ToolDetails() {
     enabled: !!tool?.owner,
   });
 
-  if (!tool || !owner) return <p>Loading...</p>;
+  if (isError || !tool) {
+    return <p className={styles.notFound}>Sorry, tool not found!</p>;
+  }
+  if (!owner) {
+    return <p className={styles.loading}>Loading owner...</p>;
+  }
 
   return (
     <section className={`${styles.page} container`}>

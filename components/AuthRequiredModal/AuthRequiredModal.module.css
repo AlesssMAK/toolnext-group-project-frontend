@@ -1,0 +1,107 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.text {
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.login,
+.register {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.login {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  transition: background 200ms ease;
+}
+
+.login:hover {
+  background: var(--color-electric-violet-lighter);
+}
+
+.login:active {
+  color: var(--color-white);
+  border: 1px solid var(--color-electric-violet-dark);
+  background: var(--color-electric-violet-dark);
+}
+
+.register {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  background: #8808cc;
+  color: #fff;
+  transition:
+    color 200ms ease,
+    background 200ms ease;
+}
+
+.register:hover {
+  background: var(--color-white);
+  outline: 1px solid var(--color-electric-violet-dark);
+  color: var(--color-neutral-darkest);
+}
+
+.register:active {
+  background: var(--color-electric-violet-lighter);
+  outline: 1px solid var(--color-electric-violet-dark);
+  color: var(--color-neutral-darkest);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  border-radius: 100%;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.close:hover {
+  color: var(--color-electric-violet-dark);
+  transform: scale(1.2);
+}
