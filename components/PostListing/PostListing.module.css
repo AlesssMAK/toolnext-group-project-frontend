@@ -1,18 +1,5 @@
 .navigationLinkBtn {
-  border: 1px solid var(--color-electric-violet);
-  border-radius: 6px;
   padding: 8px 20px;
-  height: 37px;
-  width: 100%;
-  max-width: 375px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
-  color: var(--color-white);
-  background: var(--color-electric-violet);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .tablet .navigationLinkBtn {

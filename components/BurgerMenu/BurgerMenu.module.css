@@ -15,7 +15,7 @@
 }
 
 .closeMenuBurger {
-  border: 2px solid var(--color-neutral-darkest);
+  border: 2px solid var(--color-black);
   border-radius: 6px;
   padding: 8px;
   width: 40px;
@@ -23,4 +23,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.closeMenuBurger:hover,
+.closeMenuBurger:focus {
+  background-color: var(--color-electric-violet-lighter);
+}
+
+.closeMenuBurger:active {
+  background-color: var(--color-electric-violet);
 }

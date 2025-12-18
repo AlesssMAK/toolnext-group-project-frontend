@@ -33,7 +33,12 @@ export const FeaturedToolsBlock: React.FC = () => {
         ))}
       </div>
 
-      <Link href="/tools" className={styles.featured_btn}>До всіх інструментів</Link>
+      <Link
+        href="/tools"
+        className={`${styles.featured_btn} button button--primary`}
+      >
+        До всіх інструментів
+      </Link>
     </section>
   );
 };

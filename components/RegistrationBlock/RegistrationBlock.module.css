@@ -39,41 +39,11 @@
 }
 
 .registButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #8808cc;
-  border-radius: 6px;
-  padding: 10px 16px;
-  width: 100%;
-  max-width: 335px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  background-color: #8808cc;
-  margin-bottom: 32px;
-}
+  margin: 32px 0;
 
-.registButton:hover {
-  background: var(--color-white);
-  outline: 1px solid var(--color-electric-violet-dark);
-  color: var(--color-neutral-darkest);
-}
-
-.registButton:active {
-  background: var(--color-electric-violet-lighter);
-  outline: 1px solid var(--color-electric-violet-dark);
-  color: var(--color-neutral-darkest);
-}
-
-.registButton:disabled {
-  background: var(--color-electric-violet-lighter);
-  outline: 1px solid var(--color-electric-violet-lighter);
-  color: var(--color-white);
-  cursor: default;
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 0
+  }
 }
 
 .registImageWrapper {
@@ -99,10 +69,6 @@
 
   .registText {
     max-width: 704px;
-  }
-
-  .registButton {
-    max-width: 166px;
   }
 
   .registImageWrapper {
@@ -137,12 +103,6 @@
   .registText {
     font-size: 18px;
     max-width: 755px;
-  }
-
-  .registButton {
-    max-width: 183px;
-    margin-bottom: 0;
-    font-size: 16px;
   }
 
   .registImageWrapper {

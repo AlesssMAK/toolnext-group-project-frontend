@@ -12,7 +12,7 @@
   /* line-height: 58px; */
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
   margin-bottom: 32px;
 }
 
@@ -30,7 +30,7 @@
   /* line-height: 34px; */
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
 }
 
 .subtext {
@@ -39,7 +39,7 @@
 
   /* line-height: 27px; */
   line-height: 1.5;
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
 }
 
 .button {
@@ -48,7 +48,7 @@
   justify-content: center;
   width: 100%;
   max-width: 335px;
-padding: 8px 20px;
+  padding: 8px 20px;
   border-radius: 6px;
 
   background: var(--color-electric-violet);
@@ -66,14 +66,14 @@ padding: 8px 20px;
 .button:hover,
 .button:focus {
   border: 2px solid var(--color-electric-violet);
-  background: transparent;
-  color: var(--color-scheme-1-text);
+  background: var(--color-white);
+  color: var(--color-black);
 }
 
 .button:active {
   border: 2px solid var(--color-electric-violet);
   background: var(--color-electric-violet-lighter);
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
 }
 
 /* Styles for Tablet devices */
