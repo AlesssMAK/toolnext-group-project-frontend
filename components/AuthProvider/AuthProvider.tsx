@@ -1,6 +1,6 @@
 'use client';
 
-import { checkSession, getMe } from '@/lib/api/clientApi';
+import { getMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useEffect } from 'react';
 
@@ -16,14 +16,23 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const isAuthenticated = await checkSession();
-      if (isAuthenticated) {
+      try {
         const user = await getMe();
-        if (user) setUser(user);
-      } else {
+
+        if (user) {
+          setUser(user);
+          return;
+        }
+
+        // ✅ якщо user нема (401 або 304 без body) — це гість
+        clearIsAuthenticated();
+      } catch (e) {
+        // ✅ будь-які інші помилки — не валимо апку
+        console.error('AuthProvider getMe error:', e);
         clearIsAuthenticated();
       }
     };
+
     fetchUser();
   }, [setUser, clearIsAuthenticated]);
 
