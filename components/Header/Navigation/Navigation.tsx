@@ -163,7 +163,7 @@ export const Navigation = ({
           <Link
             href="/auth/register"
             prefetch={false}
-            className={css.navigationLinkBtn}
+            className={`${css.navigationLinkBtn} button button--primary`}
             onClick={onItemClick}
           >
             Зареєструватися

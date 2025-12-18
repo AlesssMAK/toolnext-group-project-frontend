@@ -24,7 +24,7 @@ export default function ToolsGrid({
       </div>
 
       <button
-        className={styles.loadMoreBtn}
+        className={`${styles.loadMoreBtn} button button--primary`}
         onClick={onLoadMore}
         disabled={!hasMore}
       >

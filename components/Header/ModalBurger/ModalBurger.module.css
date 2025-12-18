@@ -12,7 +12,7 @@
 }
 
 .modal {
-  background-color: var(--color-scheme-3-background);
+  background-color: var(--color-neutral-lightest);
   height: 100%;
   width: 100%;
   position: relative;

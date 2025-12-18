@@ -18,7 +18,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
   white-space: nowrap;
   transition: 0.3s ease;
 }
@@ -29,7 +29,7 @@
 
 .navigationLink:hover,
 .navigationLink:focus {
-  border-bottom: 1px solid var(--color-scheme-1-border);
+  border-bottom: 1px solid var(--color-black);
 }
 
 .navigationLink:active {
@@ -38,37 +38,7 @@
 }
 
 .navigationLinkBtn {
-  border: 2px solid var(--color-electric-violet);
-  border-radius: 6px;
   padding: 8px 20px;
-  height: 37px;
-  width: 100%;
-  max-width: 375px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 150%;
-  color: var(--color-white);
-  background-color: var(--color-electric-violet);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s ease;
-  opacity: 1;
-}
-
-.navigationLinkBtn:hover,
-.navigationLinkBtn:focus {
-  background-color: transparent;
-  color: var(--color-scheme-1-text);
-}
-
-.navigationLinkBtn:active {
-  background-color: var(--color-electric-violet-lighter);
-}
-
-.navigationLinkBtn:disabled {
-  background-color: var(--color-electric-violet);
-  opacity: 0.4;
 }
 
 .userContainer {
@@ -98,14 +68,14 @@
   font-weight: 600;
   font-size: 10px;
   line-height: 150%;
-  color: var(--color-scheme-1-text);
+  color: var(--color-black);
   white-space: nowrap;
 }
 
 .divider {
   width: 1px;
   height: 39px;
-  background: var(--color-scheme-1-text);
+  background: var(--color-black);
 }
 
 .avatarPlaceholder {
