@@ -1,6 +1,6 @@
 import css from './Header.module.css';
-import { Navigation } from '../Navigation/Navigation';
-import { HeaderClient } from '../HeaderClient/HeaderClient';
+import { Navigation } from './Navigation/Navigation';
+import { HeaderClient } from './HeaderClient/HeaderClient';
 
 const Header = () => {
   return (

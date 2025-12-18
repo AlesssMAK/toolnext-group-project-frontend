@@ -1,7 +1,9 @@
 'use client';
 
-import { getMe } from '@/lib/api/clientApi';
+import { checkSession, getMe } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
+import { User } from '@/types/user';
+import axios from 'axios';
 import { useEffect } from 'react';
 
 type Props = {
@@ -9,32 +11,66 @@ type Props = {
 };
 
 const AuthProvider = ({ children }: Props) => {
+  const setLoading = useAuthStore(state => state.setLoading);
   const setUser = useAuthStore(state => state.setUser);
   const clearIsAuthenticated = useAuthStore(
     state => state.clearIsAuthenticated
   );
 
   useEffect(() => {
+    const fetchMe = async (): Promise<User | null> => {
+      const user = await getMe();
+      console.log('[AuthProvider] me:', user);
+      return user;
+    };
+
     const fetchUser = async () => {
+      setLoading(true);
+
       try {
-        const user = await getMe();
+        const user = await fetchMe();
+        console.log(user);
 
         if (user) {
           setUser(user);
           return;
         }
-
-        // ✅ якщо user нема (401 або 304 без body) — це гість
-        clearIsAuthenticated();
       } catch (e) {
-        // ✅ будь-які інші помилки — не валимо апку
+        console.log(e);
+
+        if (axios.isAxiosError(e) && e.response?.status === 401) {
+          try {
+            const sessionChecked = await checkSession();
+
+            if (!sessionChecked) {
+              // clearIsAuthenticated();
+              return;
+            }
+
+            const user = await fetchMe();
+            if (user) {
+              setUser(user);
+              return;
+            }
+
+            // clearIsAuthenticated();
+            return;
+          } catch (err) {
+            console.error('AuthProvider refresh/me error:', err);
+            // clearIsAuthenticated();
+            return;
+          }
+        }
+
         console.error('AuthProvider getMe error:', e);
-        clearIsAuthenticated();
+        // clearIsAuthenticated();
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUser();
-  }, [setUser, clearIsAuthenticated]);
+  }, [setLoading, setUser]);
 
   return children;
 };
