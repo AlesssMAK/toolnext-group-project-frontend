@@ -1,12 +1,7 @@
 /* Styles for Mobile devices */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.containerConfirmation {
   padding: 32px 20px;
-  text-align: center;
-  max-width: 375px;
-  margin: 0 auto;
 }
 
 .title {
@@ -28,28 +23,14 @@
   margin-bottom: 16px;
 }
 
-.button {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #fff;
-  border: 1px solid #8808cc;
-  border-radius: 6px;
-  padding: 8px 127.5px;
-  background: #8808cc;
+.btn {
   width: 335px;
-}
-
-.button:active {
-  background: #e7cdf4;
-  color: #000;
 }
 
 /* Styles for Tablet devices */
 
-@media only screen and (min-width: 768px) {
-  .container {
-    max-width: 768px;
+@media screen and (min-width: 768px) {
+  .containerConfirmation {
     padding-top: 138px;
     padding-bottom: 215.61px;
     padding-left: 32px;
@@ -63,8 +44,36 @@
     width: 704px;
   }
 
-  .button {
-    padding: 8px 20px;
+  .btn {
+    margin: 0 auto;
+    white-space: nowrap;
+    padding: 0;
     width: 120px;
+    height: 37px;
+  }
+}
+
+/* Styles for Desktop devices */
+
+@media screen and (min-width: 1440px) {
+  .containerConfirmation {
+    padding-top: 154px;
+    padding-bottom: 200px;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .title {
+    width: 1312px;
+    font-size: 48px;
+  }
+  .text {
+    width: 1312px;
+    font-size: 18px;
+  }
+
+  .btn {
+    width: 131px;
+    height: 40px;
   }
 }

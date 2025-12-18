@@ -1,13 +1,11 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import styles from './BookingConfirmationPage.module.css';
+import Link from 'next/link';
 
 export default function BookingConfirmationPage() {
-  const router = useRouter();
+ 
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.containerConfirmation} container`}>
       <h1 className={styles.title}>
         Інструмент успішно заброньовано
       </h1>
@@ -16,13 +14,12 @@ export default function BookingConfirmationPage() {
         Власник інструмента скоро з вами звʼяжеться стововно деталей та оплати вашої броні
       </p>
 
-      <button
-        type="button"
-        className={styles.button}
-        onClick={() => router.push('/')}
+      <Link
+        href="/"
+        className={`${styles.btn} button button--primary`}
       >
         На головну
-      </button>
+      </Link>
     </section>
   );
 }
