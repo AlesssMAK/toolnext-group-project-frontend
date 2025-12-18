@@ -1,9 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styles from './HeroForm.module.css';
 import { useRouter } from 'next/navigation';
+import Modal from '@/components/Modal/Modal';
+import FeedbackFormModal from '@/components/FeedbackFormModal/FeedbackFormModal';
 
 const validationSchema = Yup.object({
   search: Yup.string()
@@ -13,6 +16,10 @@ const validationSchema = Yup.object({
 });
 
 const HeroForm = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -25,34 +32,48 @@ const HeroForm = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className={styles.form}>
-      <div className={styles.inputWrapper}>
-        <input
-          type="text"
-          id="search"
-          name="search"
-          placeholder="Дриль алмазного свердління "
-          value={formik.values.search}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className={`${styles.input} ${
-            formik.touched.search && formik.errors.search
-              ? styles.inputError
-              : ''
-          }`}
-        />
-        {formik.touched.search && formik.errors.search && (
-          <div className={styles.error}>{formik.errors.search}</div>
-        )}
-      </div>
+    // <form onSubmit={formik.handleSubmit} className={styles.form}>
+    //   <div className={styles.inputWrapper}>
+    //     <input
+    //       type="text"
+    //       id="search"
+    //       name="search"
+    //       placeholder="Дриль алмазного свердління "
+    //       value={formik.values.search}
+    //       onChange={formik.handleChange}
+    //       onBlur={formik.handleBlur}
+    //       className={`${styles.input} ${
+    //         formik.touched.search && formik.errors.search
+    //           ? styles.inputError
+    //           : ''
+    //       }`}
+    //     />
+    //     {formik.touched.search && formik.errors.search && (
+    //       <div className={styles.error}>{formik.errors.search}</div>
+    //     )}
+    //   </div>
+    //   <button
+    //     type="submit"
+    //     disabled={!!formik.errors.search}
+    //     className={`button button--primary ${styles.button}`}
+    //   >
+    //     Пошук
+    //   </button>
+    // </form>
+    <>
       <button
         type="submit"
         disabled={!!formik.errors.search}
         className={`button button--primary ${styles.button}`}
+        onClick={() => openModal()}
       >
         Пошук
       </button>
-    </form>
+
+      <Modal onClose={closeModal}>
+        <FeedbackFormModal />
+      </Modal>
+    </>
   );
 };
 
