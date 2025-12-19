@@ -1,6 +1,7 @@
 import { User } from '@/types/user';
 import nextServer from './api';
 import { UserToolsResponse } from '@/types/tool';
+import { feedbacksProps, feedbacksRequestProps } from '@/types/feedback';
 
 export type RegisterRequest = {
   name: string;
@@ -81,4 +82,20 @@ export async function getUserToolsClient(
   );
 
   return data.data; // { tools, pagination }
+}
+
+export async function fetchFeedbacks({
+  page,
+  toolId,
+  userId,
+}: feedbacksRequestProps): Promise<feedbacksProps> {
+  const { data } = await nextServer.get<feedbacksProps>('/feedbacks', {
+    params: {
+      page,
+      ...(toolId && { toolId }),
+      ...(userId && { userId }),
+    },
+  });
+
+  return data;
 }

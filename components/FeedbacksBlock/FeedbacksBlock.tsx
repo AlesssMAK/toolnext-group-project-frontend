@@ -1,228 +1,122 @@
 'use client';
-
-import { useEffect, useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import type { Swiper as SwiperClass } from 'swiper';
-
-import { Rating } from '../RatingIcon/RatingIcon';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import FeedbackItem from './FeedbackItem';
+import { useQuery } from '@tanstack/react-query';
+import css from './FeedbacksBlock.module.css';
+import { fetchFeedbacks } from '@/lib/api/clientApi';
+import EmptyFeedbacks from './EmptyFeedback/EmptyFeedbacks';
+import SwiperBtnPrev from './SwiperButton/SwiperBtnPrev';
+import SwiperBtnNext from './SwiperButton/SwiperBtnNext';
+import EmptyUserFeedbacks from './EmptyFeedback/EmptyUserFeedbacks';
+import { useState } from 'react';
+import EmptyUserPersonalFeedbacks from './EmptyFeedback/EmptyUserPersonalFeedbacks';
 
-import style from './FeedbacksBlock.module.css';
-
-type FeedbackApiItem = {
-  _id: string;
-  name: string;
-  description: string;
-  rate: number;
-};
-type FeedbackApiResponse = {
-  feedbacks: FeedbackApiItem[];
-  page: number;
-  perPage: number;
-  totalPages: number;
-  totalFeedbacks: number;
-};
-
-interface Review {
-  id: string;
-  authorName: string;
-  text: string;
-  rating: number;
+interface FeedbacksBlockProps {
+  toolId?: string;
+  userId?: string;
+  isOwner?: boolean;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
-
-export const FeedbacksBlock = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [navReady, setNavReady] = useState(false);
-  const [isBeginning, setIsBeginning] = useState(true);
+const FeedbacksBlock = ({
+  toolId,
+  userId,
+  isOwner = false,
+}: FeedbacksBlockProps) => {
+  const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  const prevRef = useRef<HTMLButtonElement | null>(null);
-  const nextRef = useRef<HTMLButtonElement | null>(null);
-  const swiperRef = useRef<SwiperClass | null>(null);
+  const { data, isSuccess } = useQuery({
+    queryKey: ['feedbackAllKey', toolId, userId],
+    queryFn: () => fetchFeedbacks({ page: 1, toolId, userId }),
+  });
 
-  const setPrevEl = (el: HTMLButtonElement | null) => {
-    prevRef.current = el;
-    setNavReady(!!el && !!nextRef.current);
-  };
+  const allFeedbacks = data?.feedbacks ?? [];
 
-  const setNextEl = (el: HTMLButtonElement | null) => {
-    nextRef.current = el;
-    setNavReady(!!prevRef.current && !!el);
-  };
+  const hasFeedbacks = isSuccess && allFeedbacks.length > 0;
+  const hasNoFeedbacks = isSuccess && allFeedbacks.length === 0;
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setIsLoading(true);
-        setIsError(false);
-
-        const res = await fetch(`${API_BASE_URL}/api/feedbacks`);
-        if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
-
-        const data = (await res.json()) as FeedbackApiResponse;
-
-        setReviews(
-          (data.feedbacks ?? []).map(f => ({
-            id: f._id,
-            authorName: f.name,
-            text: f.description,
-            rating: f.rate,
-          }))
-        );
-      } catch (error) {
-        console.error(error);
-        setIsError(true);
-        setReviews([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchReviews();
-  }, []);
-
-  useEffect(() => {
-    const swiper = swiperRef.current;
-    const canNav = navReady && prevRef.current && nextRef.current;
-
-    if (!swiper || !canNav) return;
-
-    // @ts-expect-error
-    swiper.params.navigation.prevEl = prevRef.current;
-    // @ts-expect-error
-    swiper.params.navigation.nextEl = nextRef.current;
-
-    swiper.navigation.init();
-    swiper.navigation.update();
-
-    return () => {
-      if (swiper.destroyed) return;
-      swiper.navigation?.destroy?.();
-    };
-  }, [navReady, reviews.length]);
+  const isToolPage = Boolean(toolId);
+  const isUserPage = Boolean(userId);
+  const isMainPage = !toolId && !userId;
 
   return (
-    <section className={style.section} id="feedbacks">
-      <div className="container">
-        <h2 className={style.title}>Останні відгуки</h2>
-
-        {!isLoading && isError && (
-          <p className={style.error}>
-            Не вдалося завантажити відгуки. Спробуйте пізніше.
-          </p>
-        )}
-
-        {isLoading && <p className={style.loader}>Завантаження...</p>}
-
-        {!isLoading && !isError && reviews.length === 0 && (
-          <p className={style.empty}>Поки що немає відгуків.</p>
-        )}
-
-        {!isLoading && !isError && reviews.length > 0 && (
-          <div className={style.swiperWrapper}>
-            <Swiper
-              modules={[Navigation, Pagination]}
-              onSwiper={swiper => {
-                swiperRef.current = swiper;
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              onSlideChange={swiper => {
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              slidesPerView={1}
-              spaceBetween={16}
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                  spaceBetween: 12,
-                },
-                375: {
-                  slidesPerView: 1,
-                  spaceBetween: 16,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 24,
-                },
-                1440: {
-                  slidesPerView: 3,
-                  spaceBetween: 32,
-                },
-              }}
-              pagination={{
-                el: '.js-feedback-pagination',
-                clickable: true,
-                dynamicBullets: true,
-                dynamicMainBullets: 5,
-              }}
-              navigation={
-                navReady
-                  ? { prevEl: prevRef.current, nextEl: nextRef.current }
-                  : false
-              }
-              className={style.swiper}
-            >
-              {reviews.map(r => (
-                <SwiperSlide key={r.id}>
-                  <article className={style.card}>
-                    <Rating value={r.rating} />
-                    <p className={style.text}>{r.text}</p>
-                    <p className={style.author}>{r.authorName}</p>
-                  </article>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            <div className={style.controls}>
-              <div className={`${style.pagination} js-feedback-pagination`} />
-
-              <div className={style.arrows}>
-                <button
-                  ref={setPrevEl}
-                  type="button"
-                  className={style.arrowBtn}
-                  aria-label="Prev"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    className={style.btnIcon}
-                    aria-hidden="true"
-                  >
-                    <use href="/sprite.svg#arrow_back" />
-                  </svg>
-                </button>
-
-                <button
-                  ref={setNextEl}
-                  type="button"
-                  className={style.arrowBtn}
-                  aria-label="Next"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    className={style.btnIcon}
-                    aria-hidden="true"
-                  >
-                    <use href="/sprite.svg#arrow_forward" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
+    <section className={css.feedbackSection}>
+      <div className={`${css.feedbackStaticBox} container`}>
+        <h2 className={css.feedbackTitle}>
+          {isMainPage && 'Останні відгуки'}
+          {(isToolPage || isUserPage) && 'Відгуки'}
+        </h2>
+        {isToolPage && (
+          <button className={css.feedbackBtn}>Залишити відгук</button>
         )}
       </div>
+      {hasNoFeedbacks && isToolPage && <EmptyFeedbacks />}
+      {hasNoFeedbacks && isUserPage && isOwner && <EmptyUserFeedbacks />}
+      {hasNoFeedbacks && isUserPage && isOwner && (
+        <EmptyUserPersonalFeedbacks />
+      )}
+      {hasFeedbacks && (
+        <>
+          <Swiper
+            className={css.feedbackSwiper}
+            modules={[Navigation, Pagination]}
+            navigation={{
+              nextEl: '.swaperBtnNext',
+              prevEl: '.swaperBtnPrev',
+            }}
+            pagination={{
+              el: '.feedback-pagination',
+              clickable: true,
+            }}
+            spaceBetween={32}
+            grabCursor={true}
+            breakpoints={{
+              375: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1440: { slidesPerView: 3 },
+            }}
+            onSwiper={swiper => {
+              setIsStart(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+            onSlideChange={swiper => {
+              setIsStart(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+            }}
+          >
+            {allFeedbacks.map(feedback => (
+              <SwiperSlide key={feedback._id}>
+                <FeedbackItem feedback={feedback} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* <div className={css.feedbackSwiperContainer}>
+            <div className="feedback-pagination"></div>
+            <div className={css.feedbackSwiperBtnBox}>
+              <div
+                className={`swaperBtnPrev ${
+                  isStart ? css.feedbackSwiperBtnDisabled : ''
+                }`}
+              >
+                <SwiperBtnPrev />
+              </div>
+              <div
+                className={`swaperBtnNext ${
+                  isEnd ? css.feedbackSwiperBtnDisabled : ''
+                }`}
+              >
+                <SwiperBtnNext />
+              </div>
+            </div>
+          </div> */}
+        </>
+      )}
     </section>
   );
 };
+
+export default FeedbacksBlock;
