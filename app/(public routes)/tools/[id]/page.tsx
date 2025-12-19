@@ -1,5 +1,5 @@
 import BookingToolForm from '@/components/BookingToolForm/BookingToolForm';
-import Link from 'next/link';
+// import Link from 'next/link';
 import styles from './BookingToolPage.module.css';
 
 type Props = {
@@ -10,10 +10,8 @@ type Props = {
 const BookingToolPage = ({ toolId, pricePerDay }: Props) => {
   return (
     <section className={`${styles.containerConfirmation} container`}>
-      <BookingToolForm toolId={toolId} pricePerDay={pricePerDay} />
-      <Link href="/" className={`${styles.btn} button button--primary`}>
-        На головну
-      </Link>
+      <BookingToolForm toolId="692db3ffab59e437964311d4" pricePerDay={300} />
+      {/* <BookingToolForm toolId={toolId} pricePerDay={pricePerDay} /> */}
     </section>
   );
 };
