@@ -1,38 +1,35 @@
 import { Metadata } from 'next';
-import { getServerMe } from '@/lib/api/serverApi';
 import UserProfile from '@/components/UserProfile/UserProfile';
 import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHolder';
+import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
+
+import { getServerMe, getToolsByUserId } from '@/lib/api/serverApi';
 
 export const metadata: Metadata = {
   title: 'My Profile',
   description: '',
-  icons: '',
-  openGraph: {
-    title: 'My Profile',
-    description: '',
-    url: '',
-    images: [
-      {
-        url: '',
-        width: 1200,
-        height: 630,
-        alt: '',
-      },
-    ],
-  },
 };
 
-
 const Profile = async () => {
-
   const user = await getServerMe();
-  console.log("PROFILE USER:", user);
+
+  const { tools, pagination } = await getToolsByUserId(user.id, 1, 8);
 
   return (
-      <main>
-        <UserProfile name={user.name} avatar={user.avatar} />
+    <main>
+      <UserProfile name={user.name} avatar={user.avatar} />
+      {tools.length > 0 ? (
+        <ToolsGrid
+          tools={tools}
+          userId={user.id}
+          initialPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          perPage={pagination.perPage}
+        />
+      ) : (
         <ProfilePlaceHolder isOwner={true} />
-      </main>
+      )}
+    </main>
   );
 };
 

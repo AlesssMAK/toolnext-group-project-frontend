@@ -19,7 +19,7 @@ export default function LoginForm() {
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email('Некоректний email')
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Невірний формат email')
       .required('Email обов’язковий'),
     password: Yup.string()
       .min(6, 'Мінімум 6 символів')
@@ -43,16 +43,15 @@ export default function LoginForm() {
         toast.success('Вітаю, Ви увійшли 👌');
         const redirectTo = searchParams.get('redirectTo') || '/';
         router.push(redirectTo);
+        router.refresh();
       } catch (err) {
         const apiError = err as ApiError;
 
-        const msg =
-          apiError.response?.data?.message ||
-          apiError.message ||
-          'Сталася помилка';
-
-        setError(msg);
-        toast.error(msg);
+        if (apiError.response?.status === 400) {
+          toast.error('Перевірте правильність введених даних');
+        } else {
+          toast.error('Сталася помилка. Спробуйте пізніше');
+        }
       } finally {
         setSubmitting(false);
       }

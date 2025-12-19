@@ -21,7 +21,8 @@ export default function RegistrationForm() {
     name: Yup.string().min(2, 'Мінімум 2 символи').required('Ім’я обов’язкове'),
 
     email: Yup.string()
-      .email('Невірний формат email')
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Невірний формат email')
+      // .email('Невірний формат email')
       .required('Email обов’язковий'),
 
     password: Yup.string()
@@ -54,8 +55,8 @@ export default function RegistrationForm() {
         };
 
         const res = await register(payload);
-
-        setUser(res);
+        console.log('REGISTER RES:', res);
+        setUser(res.user);
         toast.success(`Вітаю! Аккаунт створено 🎉`);
 
         setTimeout(() => {
@@ -64,13 +65,11 @@ export default function RegistrationForm() {
       } catch (err) {
         const apiError = err as ApiError;
 
-        const msg =
-          apiError.response?.data?.message ||
-          apiError.message ||
-          'Oops... some error';
-
-        setError(msg);
-        toast.error(msg);
+        if (apiError.response?.status === 400) {
+          toast.error('Перевірте правильність введених даних');
+        } else {
+          toast.error('Сталася помилка. Спробуйте пізніше');
+        }
       } finally {
         setSubmitting(false);
       }

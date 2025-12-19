@@ -1,0 +1,108 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigationItem {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: var(--color-black);
+  white-space: nowrap;
+  transition: 0.3s ease;
+}
+
+.navigationLink {
+  transition: 0.3s ease;
+}
+
+.navigationLink:hover,
+.navigationLink:focus {
+  border-bottom: 1px solid var(--color-black);
+}
+
+.navigationLink:active {
+  border-bottom: 1px solid var(--color-electric-violet);
+  color: var(--color-electric-violet);
+}
+
+.navigationLinkBtn {
+  padding: 8px 20px;
+}
+
+.userContainer {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBox {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 256px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 150%;
+  color: var(--color-black);
+  white-space: nowrap;
+}
+
+.divider {
+  width: 1px;
+  height: 39px;
+  background: var(--color-black);
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: var(--color-electric-violet);
+  color: var(--color-white);
+  border: 2px solid var(--color-electric-violet);
+}
+
+.logoutBtn:hover,
+.logoutBtn:focus,
+.logoutBtn:active {
+  fill: var(--color-electric-violet);
+}
+
+@media (min-width: 1440px) {
+  .nav {
+    flex-direction: row;
+  }
+
+  .navList {
+    flex-direction: row;
+  }
+}

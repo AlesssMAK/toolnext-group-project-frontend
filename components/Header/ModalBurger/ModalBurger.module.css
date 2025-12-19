@@ -12,22 +12,15 @@
 }
 
 .modal {
-  background-color: #ffffff;
-  border-radius: 8px;
-  max-width: 334px;
+  background-color: var(--color-neutral-lightest);
+  height: 100%;
   width: 100%;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-@media (min-width: 768px) {
-  .modal {
-    max-width: 704px;
-  }
-}
-
 @media (min-width: 1440px) {
-  .modal {
-    max-width: 768px;
+  .backdrop {
+    display: none;
   }
 }

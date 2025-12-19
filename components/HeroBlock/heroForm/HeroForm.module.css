@@ -41,11 +41,14 @@
   color: var(--color-red-light);
 }
 
-.input:focus, .input:focus-visible, .input:active {
+.input:focus,
+.input:focus-visible,
+.input:active {
   border-color: var(--color-electric-violet);
 }
 
-.input.inputError:active, .input.inputError:focus,
+.input.inputError:active,
+.input.inputError:focus,
 .input.inputError:focus-visible {
   border-color: var(--color-red-light);
 }
@@ -55,38 +58,10 @@
 }
 
 .button {
-  padding: 10px 24px;
-  background: var(--color-electric-violet);
-  border: 2px solid var(--color-electric-violet-dark);
-  color: var(--color-white);
-  border-radius: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  user-select: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .button:hover {
-    background: var(--color-white);
-    border: 2px solid var(--color-electric-violet-dark);
-    color: var(--color-neutral-darkest);
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: max-content;
   }
-}
-
-.button:active {
-  background: var(--color-electric-violet-lighter);
-  border: 2px solid var(--color-electric-violet-dark);
-  color: var(--color-neutral-darkest);
-}
-
-.button:disabled {
-  background: var(--color-electric-violet-lighter);
-  border: 2px solid var(--color-electric-violet-lighter);
-  color: var(--color-white);
-  cursor: default;
 }
 
 .error {
