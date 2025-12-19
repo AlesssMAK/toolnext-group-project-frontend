@@ -36,6 +36,7 @@ type CheckSessionRequest = {
   success: boolean;
 };
 
+
 export async function checkSession(): Promise<boolean> {
   try {
     await nextServer.post<CheckSessionRequest>('/auth/refresh');

@@ -7,6 +7,7 @@ import { UserToolsResponse } from '@/types/tool';
 
 export async function checkServerSession() {
   const cookieStore = await cookies();
+ 
   const res = await nextServer.post('/auth/refresh', {
     headers: {
       Cookie: cookieStore.toString(),
