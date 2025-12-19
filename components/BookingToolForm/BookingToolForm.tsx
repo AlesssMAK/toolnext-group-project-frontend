@@ -30,7 +30,7 @@ const initialDraft: Booking = {
 };
 
 
-const BookingToolPage = () => {
+const BookingToolForm = () => {
   const fieldId = useId();
   const router = useRouter();
 
@@ -131,24 +131,21 @@ const BookingToolPage = () => {
             </li>
           </ul>
 
-          <div className={css.item}>
-  <label className={css.label}>Період бронювання</label>
-  <div >
-    <Calendar
-      startDate={draft.startDate}
-      endDate={draft.endDate}
-      bookedDates={[
-        "2025-12-20T00:00:00.000Z",
-        "2025-12-21T00:00:00.000Z",
-        "2025-12-25T00:00:00.000Z"
-      ]}
-      onChange={({ start, end }) =>
-        setDraft({ ...draft, startDate: start, endDate: end })
-      }
-    />
-  </div>
-  {errors.startDate && <div className="error">{errors.startDate}</div>}
-  {errors.endDate && <div className="error">{errors.endDate}</div>}
+          <div className={css.list}>
+            <Calendar
+              startDate={draft.startDate}
+              endDate={draft.endDate}
+              bookedDates={[
+                "2025-12-20T00:00:00.000Z",
+                "2025-12-21T00:00:00.000Z",
+                "2025-12-25T00:00:00.000Z"
+              ]}
+              onChange={({ start, end }) =>
+                setDraft({ ...draft, startDate: start, endDate: end })   
+              }  
+            />
+            {errors.startDate && <div className="error">{errors.startDate}</div>}
+            {errors.endDate && <div className="error">{errors.endDate}</div>} 
           </div>
           
 
@@ -192,7 +189,7 @@ const BookingToolPage = () => {
   );
 };
 
-export default BookingToolPage;
+export default BookingToolForm;
 
 
 {/* <li className={css.item}>
