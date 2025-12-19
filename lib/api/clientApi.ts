@@ -9,12 +9,12 @@ export type RegisterRequest = {
   confirmPassword: string;
 };
 
-interface LoginResponse {
+interface AuthResponse {
   user: User;
 }
 
 export const register = async (data: RegisterRequest) => {
-  const res = await nextServer.post<User>('/auth/register', data);
+  const res = await nextServer.post<AuthResponse>('/auth/register', data);
   return res.data;
 };
 
@@ -24,7 +24,7 @@ export type LoginRequest = {
 };
 
 export async function login(data: LoginRequest) {
-  const res = await nextServer.post<LoginResponse>('/auth/login', data);
+  const res = await nextServer.post<AuthResponse>('/auth/login', data);
   return res.data.user;
 }
 
