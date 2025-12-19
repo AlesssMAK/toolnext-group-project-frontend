@@ -146,6 +146,7 @@ section {
 .button--primary:focus-visible {
   color: var(--color-black);
   background-color: var(--color-white);
+  outline: none;
 }
 
 .button--primary:active {

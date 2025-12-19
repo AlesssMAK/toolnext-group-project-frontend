@@ -55,8 +55,8 @@ export default function RegistrationForm() {
         };
 
         const res = await register(payload);
-
-        setUser(res);
+        console.log('REGISTER RES:', res);
+        setUser(res.user);
         toast.success(`Вітаю! Аккаунт створено 🎉`);
 
         setTimeout(() => {
@@ -64,7 +64,7 @@ export default function RegistrationForm() {
         }, 1200);
       } catch (err) {
         const apiError = err as ApiError;
-      
+
         if (apiError.response?.status === 400) {
           toast.error('Перевірте правильність введених даних');
         } else {
