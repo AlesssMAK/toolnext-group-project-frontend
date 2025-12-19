@@ -39,18 +39,9 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify({
-          toolId,
-          userFirstname: form.userFirstname,
-          userLastname: form.userLastname,
-          userPhone: form.userPhone,
-          startDate: form.startDate,
-          endDate: form.endDate,
-          deliveryCity: form.deliveryCity,
-          deliveryBranch: form.deliveryBranch,
-        }),
+        credentials: 'include', // отправка cookie
+        body: JSON.stringify({ ...form, toolId }),
       });
 
       const data = await res.json();
