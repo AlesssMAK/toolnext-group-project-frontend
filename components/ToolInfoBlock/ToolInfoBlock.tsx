@@ -56,6 +56,12 @@ export default function ToolInfoBlock({
             {value}
           </p>
         ))}
+        {tool.rentalTerms && (
+          <p key="rentalTerms">
+            <strong className={css.toolSpecTitle}>Умови оренди: </strong>
+            {tool.rentalTerms}
+          </p>
+        )}
       </div>
       <button className={css.toolBut} onClick={handleBookClick}>
         Забронювати

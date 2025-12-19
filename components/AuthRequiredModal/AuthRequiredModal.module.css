@@ -11,43 +11,59 @@
 .modal {
   position: relative;
   background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  width: 90%;
-  max-width: 400px;
+  border-radius: 16px;
+
+  width: 100%;
+  padding: 64px 20px;
+
   text-align: center;
 }
 
 .title {
-  font-size: 20px;
   font-weight: 700;
-  margin-bottom: 12px;
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #000;
+  margin-bottom: 16px;
 }
 
 .text {
-  font-size: 14px;
-  margin-bottom: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+  margin-bottom: 48px;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .login,
 .register {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
   border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-}
-
-.login {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.5;
+  color: #000;
+  cursor: pointer;
+  border: none;
+  max-width: 294px;
+  max-height: 41px;
+  width: 100%;
+}
+
+.login {
   background: #fff;
   color: #000;
   border: 2px solid #000;
@@ -60,14 +76,17 @@
 
 .login:active {
   color: var(--color-white);
-  border: 1px solid var(--color-electric-violet-dark);
+  border: 2px solid var(--color-electric-violet-dark);
+  background: var(--color-electric-violet-dark);
+}
+
+.login:disabled {
+  color: var(--color-white);
+  border: 2px solid var(--color-electric-violet-dark);
   background: var(--color-electric-violet-dark);
 }
 
 .register {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
   background: #8808cc;
   color: #fff;
   transition:
@@ -77,31 +96,70 @@
 
 .register:hover {
   background: var(--color-white);
-  outline: 1px solid var(--color-electric-violet-dark);
+  outline: 2px solid var(--color-electric-violet-dark);
   color: var(--color-neutral-darkest);
 }
 
 .register:active {
   background: var(--color-electric-violet-lighter);
-  outline: 1px solid var(--color-electric-violet-dark);
+  outline: 2px solid var(--color-electric-violet-dark);
   color: var(--color-neutral-darkest);
+}
+
+.register:disabled {
+  background: var(--color-electric-violet-lighter);
+  outline: 2px solid var(--color-electric-violet-lighter);
+  color: var(--color-white);
+  cursor: default;
 }
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   font-size: 18px;
   cursor: pointer;
   border: none;
-  border-radius: 100%;
+  border-radius: 50%;
   transition:
     transform 0.2s ease,
     color 0.2s ease;
 }
 
+.closeIcon {
+  fill: currentColor;
+  width: 24px;
+  height: 24px;
+}
+
 .close:hover {
   color: var(--color-electric-violet-dark);
   transform: scale(1.2);
+}
+
+@media (min-width: 768px) {
+  .modal {
+    padding: 64px 32px;
+  }
+
+  .actions {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal {
+    padding: 64px;
+  }
+
+  .login,
+  .register {
+    max-width: 308px;
+    max-height: 44px;
+  }
 }

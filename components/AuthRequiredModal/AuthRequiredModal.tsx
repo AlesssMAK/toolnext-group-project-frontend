@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import css from './AuthRequiredModal.module.css';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
 
 type Props = {
   isOpen: boolean;
@@ -11,53 +12,55 @@ type Props = {
 
 export default function AuthRequiredModal({ isOpen, onClose }: Props) {
   const router = useRouter();
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
+  const handleLogin = () => {
+    setIsSubmitting(true);
+    onClose();
+    router.push('/auth/login');
+  };
+
+  const handleRegister = () => {
+    setIsSubmitting(true);
+    onClose();
+    router.push('/auth/register');
+  };
+
   return (
-    <div className={css.backdrop} onClick={onClose}>
-      <div className={css.modal} onClick={e => e.stopPropagation()}>
-        <h2 className={css.title}>Потрібна авторизація</h2>
+    <Modal onClose={onClose}>
+      <div className={css.modal}>
+        <h2 className={css.title}>Спочатку авторизуйтесь</h2>
         <p className={css.text}>
-          Щоб забронювати інструмент, увійдіть або зареєструйтесь
+          Щоб забрронювати інструмент, треба спочатку зареєструватись, або
+          авторизуватись на платформі
         </p>
 
         <div className={css.actions}>
           <button
             className={css.login}
-            onClick={() => router.push('/auth/login')}
+            onClick={handleLogin}
+            disabled={isSubmitting}
           >
-            Увійти
+            Вхід
           </button>
 
           <button
             className={css.register}
-            onClick={() => router.push('/auth/register')}
+            onClick={handleRegister}
+            disabled={isSubmitting}
           >
             Реєстрація
           </button>
         </div>
 
         <button className={css.close} onClick={onClose}>
-          ✕
+          <svg aria-hidden="true" className={css.closeIcon}>
+            <use href="/sprite.svg#close" />
+          </svg>
         </button>
       </div>
-    </div>
+    </Modal>
   );
 }

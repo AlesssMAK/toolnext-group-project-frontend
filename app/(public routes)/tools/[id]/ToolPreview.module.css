@@ -30,5 +30,7 @@
     grid-template-columns: 1.2fr 1fr;
     align-items: start;
     flex-direction: row;
+    padding-top: 48px;
+    padding-bottom: 112px;
   }
 }
