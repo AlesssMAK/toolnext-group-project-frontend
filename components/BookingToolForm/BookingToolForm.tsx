@@ -1,219 +1,134 @@
 'use client';
-
-import React, { useId, useState } from 'react';
-import * as Yup from 'yup';
-import css from './BookingToolForm.module.css';
-import { useRouter } from 'next/navigation';
-
-import { Booking } from '@/types/booking';
-import  Calendar  from '@/components/Calendar/Calendar';
-
-
-export const bookingSchema = Yup.object({
-  firstName: Yup.string().min(2).max(50).required('Вкажіть ім’я'),
-  lastName: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
-  phone: Yup.string().matches(/^\+38\d{10}$/, 'Формат: +38XXXXXXXXXX').required('Вкажіть номер телефону'),
-  startDate: Yup.date().required('Вкажіть дату початку'),
-  endDate: Yup.date().required('Вкажіть дату завершення').min(Yup.ref('startDate'), 'Кінцева дата не може бути раніше початкової'),
-  deliveryCity: Yup.string().min(2).max(100).required('Вкажіть місто'),
-  deliveryBranch: Yup.string().min(1).max(200).required('Вкажіть відділення'),
-});
-
-const initialDraft: Booking = {
-  firstName: '',
-  lastName: '',
-  phone: '',
-  startDate: '',
-  endDate: '',
-  deliveryCity: '',
-  deliveryBranch: '',
+import { useState } from 'react';
+type Props = {
+  toolId: string;
+  pricePerDay: number;
 };
-
-
-const BookingToolForm = () => {
-  const fieldId = useId();
-  const router = useRouter();
-
-  const [draft, setDraft] = useState<Booking>(initialDraft);
-
-  const [errors, setErrors] = useState<Partial<Record<keyof Booking, string>>>({});
+export default function BookingForm({ toolId, pricePerDay }: Props) {
   const [loading, setLoading] = useState(false);
-
-  const pricePerDay = 500;
-
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<any>(null);
+  const [form, setForm] = useState({
+    userFirstname: '',
+    userLastname: '',
+    userPhone: '',
+    startDate: '',
+    endDate: '',
+    deliveryCity: '',
+    deliveryBranch: '',
+  });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setDraft({ ...draft, [name]: value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Сабміт викликано!', draft);
-
+    setLoading(true);
+    setError(null);
     try {
-      await bookingSchema.validate(draft, { abortEarly: false });
-      setErrors({});
-      setLoading(true);
-
-      // await axios.post('/api/book', draft);
-
-      router.push('/BookingConfirmation');
-      setDraft(initialDraft);
-
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const formattedErrors: Partial<Record<keyof Booking, string>> = {};
-        error.inner.forEach((err) => {
-          if (err.path) {
-            formattedErrors[err.path as keyof Booking] = err.message;
-          }
-        });
-        setErrors(formattedErrors);
+      const res = await fetch('http://localhost:3030/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          toolId,
+          ...form,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Помилка бронювання');
       }
+      setSuccess(data);
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
-  const start = draft.startDate ? new Date(draft.startDate) : null;
-  const end = draft.endDate ? new Date(draft.endDate) : null;
-  let totalPrice = 0;
-  if (start && end && end > start) {
-    const diffTime = end.getTime() - start.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    totalPrice = diffDays * pricePerDay;
-  }
-
   return (
-    <section className={css.section}>
-      <div className={css.container}>
-        <div className={css.title}>
-          <h2>Підтвердження бронювання</h2>
-        </div>
-        <form className={css.form} onSubmit={handleSubmit}>
-          <ul className={css.list}>
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-firstName`}>Ім’я</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-firstName`}
-                name="firstName"
-                value={draft.firstName}
-                onChange={handleChange}
-              />
-              {errors.firstName && <div className="error">{errors.firstName}</div>}
-            </li>
-
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-lastName`}>Прізвище</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-lastName`}
-                name="lastName"
-                value={draft.lastName}
-                onChange={handleChange}
-              />
-              {errors.lastName && <div className="error">{errors.lastName}</div>}
-            </li>
-          </ul>
-
-          <ul className={css.listphone}>
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-phone`}>Номер телефону</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-phone`}
-                name="phone"
-                value={draft.phone}
-                onChange={handleChange}
-              />
-              {errors.phone && <div className="error">{errors.phone}</div>}
-            </li>
-          </ul>
-
-          <div className={css.list}>
-            <Calendar
-              startDate={draft.startDate}
-              endDate={draft.endDate}
-              bookedDates={[
-                "2025-12-20T00:00:00.000Z",
-                "2025-12-21T00:00:00.000Z",
-                "2025-12-25T00:00:00.000Z"
-              ]}
-              onChange={({ start, end }) =>
-                setDraft({ ...draft, startDate: start, endDate: end })   
-              }  
-            />
-            {errors.startDate && <div className="error">{errors.startDate}</div>}
-            {errors.endDate && <div className="error">{errors.endDate}</div>} 
-          </div>
-          
-
-{/* Місто доставки */}
-          <ul className={css.list}>
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-deliveryCity`}>Місто доставки</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-deliveryCity`}
-                name="deliveryCity"
-                value={draft.deliveryCity}
-                onChange={handleChange}
-              />
-              {errors.deliveryCity && <div className="error">{errors.deliveryCity}</div>}
-            </li>
-
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-deliveryBranch`}>Відділення Нової Пошти</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-deliveryBranch`}
-                name="deliveryBranch"
-                value={draft.deliveryBranch}
-                onChange={handleChange}
-              />
-              {errors.deliveryBranch && <div className="error">{errors.deliveryBranch}</div>}
-            </li>
-          </ul>
-
-          <div className={css.priceBlock}>
-            <strong className={css.price}>Ціна: {totalPrice > 0 ? `${totalPrice} грн` : ''}</strong>
-          </div>
-
-          <button type="submit" className={`${css.priceButton} button--primary`} disabled={loading}>
-            {loading ? 'Завантаження...' : 'Забронювати'}
-          </button>
-        </form>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl space-y-4 border p-4 rounded"
+    >
+      <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
+      <div className="grid grid-cols-2 gap-3">
+        <input
+          name="userFirstname"
+          placeholder="Імʼя"
+          value={form.userFirstname}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          name="userLastname"
+          placeholder="Прізвище"
+          value={form.userLastname}
+          onChange={handleChange}
+          required
+          className="input"
+        />
       </div>
-    </section>
+      <input
+        name="userPhone"
+        placeholder="+380 50 123 45 67"
+        value={form.userPhone}
+        onChange={handleChange}
+        required
+        className="input w-full"
+      />
+      <div className="grid grid-cols-2 gap-3">
+        <input
+          type="date"
+          name="startDate"
+          value={form.startDate}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+        <input
+          type="date"
+          name="endDate"
+          value={form.endDate}
+          onChange={handleChange}
+          required
+          className="input"
+        />
+      </div>
+      <input
+        name="deliveryCity"
+        placeholder="Місто доставки"
+        value={form.deliveryCity}
+        onChange={handleChange}
+        required
+        className="input w-full"
+      />
+      <input
+        name="deliveryBranch"
+        placeholder="Відділення / склад"
+        value={form.deliveryBranch}
+        onChange={handleChange}
+        required
+        className="input w-full"
+      />
+      <div className="flex justify-between items-center pt-2">
+        <span className="font-medium">Ціна: {pricePerDay} грн / день</span>
+        <button
+          disabled={loading}
+          className="bg-purple-600 text-white px-4 py-2 rounded"
+        >
+          {loading ? 'Зачекайте...' : 'Забронювати'}
+        </button>
+      </div>
+      {error && <p className="text-red-600">{error}</p>}
+      {success && (
+        <div className="p-3 border rounded bg-green-50">
+          <p className="font-medium">Бронювання № {success.bookingNum}</p>
+          <p>Статус: {success.status}</p>
+        </div>
+      )}
+    </form>
   );
-};
-
-export default BookingToolForm;
-
-
-{/* <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-startDate`}>Початкова дата</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-startDate`}
-                name="startDate"
-                type="date"
-                value={draft.startDate}
-                onChange={handleChange}
-              />
-              {errors.startDate && <div className="error">{errors.startDate}</div>}
-            </li>
-
-            <li className={css.item}>
-              <label className={css.label} htmlFor={`${fieldId}-endDate`}>Кінцева дата</label>
-              <input
-                className={css.field}
-                id={`${fieldId}-endDate`}
-                name="endDate"
-                type="date"
-                value={draft.endDate}
-                onChange={handleChange}
-              />
-              {errors.endDate && <div className="error">{errors.endDate}</div>}
-            </li> */}
+}
