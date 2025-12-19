@@ -1,0 +1,43 @@
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 8px;
+
+    border: 2px solid var(--color-neutral-darkest);
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 335px;
+    height: 40px;
+}
+
+.field:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* фон самого календаря */
+.react-datepicker {
+    background-color: #c02626;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* хедер */
+.react-datepicker__header {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* вибраний день */
+.react-datepicker__day--selected {
+    background-color: #28a745;
+    color: #fff;
+}

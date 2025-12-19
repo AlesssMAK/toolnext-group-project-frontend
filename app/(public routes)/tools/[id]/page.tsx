@@ -1,7 +1,8 @@
-
+import BookingToolPage from '@/components/BookingToolForm/BookingToolForm'
 const ToolDetails = () => {
   return (
-    <div>ToolDetails</div>
+    // <div>ToolDetails</div>
+    <BookingToolPage />
   );
 };
 
