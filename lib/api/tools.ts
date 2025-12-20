@@ -17,8 +17,8 @@ export const getTools = async () => {
   return data.tools || [];
 };
 
-export const getToolById = async (id: string): Promise<Tool> => {
-  const res = await nextServer.get<Tool>(`/tools/${id}`);
+export const getToolById = async (toolId: string): Promise<Tool> => {
+  const res = await nextServer.get<Tool>(`/tools/${toolId}`);
 
   if (!res.data || !res.data._id) {
     throw new Error('Tool not found');

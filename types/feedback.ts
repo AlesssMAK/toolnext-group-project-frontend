@@ -2,7 +2,7 @@ export interface Feedback {
   _id: string;
   name: string;
   description: string;
-  rating: number;
+  rate: number;
   toolId: string;
   userId: string;
   createdAt: string;
@@ -21,4 +21,10 @@ export interface feedbacksProps {
   totalPages: number;
   toolId?: string;
   userId?: string;
+}
+
+export interface FeedbacksBlockProps {
+  toolId?: string;
+  userId?: string;
+  isOwner?: boolean;
 }

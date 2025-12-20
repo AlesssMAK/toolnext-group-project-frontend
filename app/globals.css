@@ -1,5 +1,8 @@
 :root {
-  --color-black: #000;
+  --color-scheme-1-background: var(--color-white);
+  --color-neutral-darkest: #000;
+  --color-scheme-1-border: var(--color-neutral-darkest);
+  --color-scheme-1-text: var(--color-neutral-darkest);
   --color-neutral-lighter: #d8d8d8;
   --color-white: #fff;
   --color-neutral-lightest: #f2f2f2;
@@ -8,6 +11,8 @@
   --color-neutral-dark: #4c4c4c;
   --color-neutral-darker: #191919;
   --opacity-transparent: rgba(255, 255, 255, 0);
+  --color-scheme-1-foreground: var(--color-white);
+  --color-scheme-1-accent: var(--color-electric-violet);
   --opacity-white-5: rgba(255, 255, 255, 0.05);
   --opacity-white-10: rgba(255, 255, 255, 0.1);
   --opacity-white-15: rgba(255, 255, 255, 0.15);
@@ -31,9 +36,18 @@
   --color-electric-violet-dark: #6c06a3;
   --color-electric-violet-darker: #360351;
   --color-electric-violet-darkest: #28023d;
+  --color-scheme-2-text: var(--color-neutral-darkest);
+  --color-scheme-2-background: var(--color-electric-violet-lightest);
+  --color-scheme-2-border: var(--color-neutral-darkest);
+  --color-scheme-2-accent: var(--color-electric-violet);
+  --color-scheme-2-foreground: var(--color-electric-violet-lightest);
+  --color-scheme-3-text: var(--color-neutral-darkest);
+  --color-scheme-3-background: var(--color-neutral-lightest);
+  --color-scheme-3-border: var(--color-neutral-darkest);
+  --color-scheme-3-accent: var(--color-electric-violet);
+  --color-scheme-3-foreground: var(--color-neutral-lightest);
   --color-red-dark: #c40202;
   --color-red-light: #ea3131;
-  --header-h: 72px;
 }
 
 /* @media (prefers-color-scheme: dark) {

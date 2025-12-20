@@ -37,7 +37,6 @@ type CheckSessionRequest = {
   success: boolean;
 };
 
-
 export async function checkSession(): Promise<boolean> {
   try {
     await nextServer.post<CheckSessionRequest>('/auth/refresh');
@@ -93,10 +92,12 @@ export async function fetchFeedbacks({
   const { data } = await nextServer.get<feedbacksProps>('/feedbacks', {
     params: {
       page,
+      perPage: 10,
       ...(toolId && { toolId }),
       ...(userId && { userId }),
     },
   });
+  console.log(data);
 
   return data;
 }
