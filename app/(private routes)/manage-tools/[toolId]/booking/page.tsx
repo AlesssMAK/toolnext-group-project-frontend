@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-const BookingPage = () => {
-  return null;
-};
-
-export default BookingPage;
-=======
 import BookingToolForm from '@/components/BookingToolForm/BookingToolForm';
 // import Link from 'next/link';
 import styles from './BookingToolPage.module.css';
@@ -24,4 +17,3 @@ const BookingToolPage = ({ toolId, pricePerDay }: Props) => {
 };
 
 export default BookingToolPage;
->>>>>>> 4ab3543 (good route)
