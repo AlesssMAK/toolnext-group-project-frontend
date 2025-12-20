@@ -1,45 +1,36 @@
 import { useEffect, useState } from "react";
-import { Tool } from "@/types/tool";
-
-const API_URL =
-  "https://toolnext-group-project-backend.onrender.com/api/tools";
+import { useQuery } from '@tanstack/react-query';
+import { Tool } from '@/types/tool';
+import nextServer from '@/lib/api/api';
 
 export function useToolsPagination() {
-  const [tools, setTools] = useState<Tool[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [allTools, setAllTools] = useState<Tool[]>([]);
 
   useEffect(() => {
     setLimit(window.innerWidth <= 767 ? 8 : 16);
   }, []);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['tools', { page, limit }],
+    queryFn: async () => {
+      const res = await nextServer.get(`/tools?page=${page}&limit=${limit}`);
+      return res.data;
+    },
+    enabled: limit !== null,
+  });
+
   useEffect(() => {
-    if (limit === null) return;
-
-    async function fetchTools() {
-      setLoading(true);
-
-      const res = await fetch(
-        `${API_URL}?page=${page}&limit=${limit}`
-      );
-      const data = await res.json();
-
-      setTools(prev =>
-        page === 1 ? data.tools : [...prev, ...data.tools]
-      );
-      setTotalPages(data.totalPages);
-      setLoading(false);
+    if (data?.tools) {
+      setAllTools(prev => (page === 1 ? data.tools : [...prev, ...data.tools]));
     }
-
-    fetchTools();
-  }, [page, limit]);
+  }, [data, page]);
 
   return {
-    tools,
-    loading,
-    hasMore: page < totalPages,
+    tools: allTools,
+    loading: isLoading,
+    hasMore: page < (data?.totalPages || 1),
     loadMore: () => setPage(p => p + 1),
   };
 }
