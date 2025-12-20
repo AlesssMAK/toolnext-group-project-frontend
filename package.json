@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.12",
+    "air-datepicker": "^3.6.0",
     "axios": "^1.12.2",
     "cookie": "^1.1.1",
     "date-fns": "^4.1.0",
