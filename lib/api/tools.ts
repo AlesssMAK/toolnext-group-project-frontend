@@ -11,8 +11,19 @@ export const getTools = async () => {
   return res.data.tools || [];
 };
 
-export const getToolsWithPagination = async (page: number, limit: number) => {
-  const res = await nextServer.get(`/tools?page=${page}&limit=${limit}`);
+export const getToolsWithPagination = async (
+  page: number,
+  limit: number,
+  search?: string,
+  tag?: string
+) => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    ...(search ? { search } : {}),
+    ...(tag ? { categories: tag } : {}),
+  });
+  const res = await nextServer.get(`/tools?${params.toString()}`);
 
   if (!res.data) {
     throw new Error('Failed to fetch tools');

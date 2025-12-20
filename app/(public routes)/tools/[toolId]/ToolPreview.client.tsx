@@ -27,9 +27,6 @@ export default function ToolDetails() {
   if (isError || !tool) {
     return <p className={styles.notFound}>Sorry, tool not found!</p>;
   }
-  if (!owner) {
-    return <p className={styles.loading}>Loading owner...</p>;
-  }
 
   return (
     <section className={`${styles.page} container`}>

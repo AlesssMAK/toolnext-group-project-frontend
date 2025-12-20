@@ -19,17 +19,26 @@ export const metadata: Metadata = {
   ],
 };
 
-export default async function Page() {
+interface PageProps {
+  searchParams: Promise<{
+    search?: string;
+    tag?: string;
+  }>;
+}
+
+export default async function Page({ searchParams }: PageProps) {
   const queryClient = new QueryClient();
+  const params = await searchParams;
+  const search = params.search || '';
 
   await queryClient.prefetchQuery({
-    queryKey: ['tools', { page: 1, limit: 16 }],
-    queryFn: () => getToolsWithPagination(1, 16),
+    queryKey: ['tools', { page: 1, limit: 16, search }],
+    queryFn: () => getToolsWithPagination(1, 16, search),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ToolsPage />
+      <ToolsPage search={search} />
     </HydrationBoundary>
   );
 }
