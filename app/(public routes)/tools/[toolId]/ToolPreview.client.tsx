@@ -30,9 +30,6 @@ export default function ToolDetails() {
   if (isError || !tool) {
     return <p className={styles.notFound}>Sorry, tool not found!</p>;
   }
-  if (!owner) {
-    return <p className={styles.loading}>Loading owner...</p>;
-  }
 
   const isOwner = Boolean(user?.id && user.id === tool.owner);
 

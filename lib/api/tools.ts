@@ -2,19 +2,34 @@ import { Tool } from '@/types/tool';
 import nextServer from './api';
 
 export const getTools = async () => {
-  const res = await fetch(
-    'https://toolnext-group-project-backend.onrender.com/api/tools',
-    {
-      cache: 'no-store',
-    }
-  );
+  const res = await nextServer.get('/tools');
 
-  if (!res.ok) {
+  if (!res.data) {
     throw new Error('Failed to fetch tools');
   }
 
-  const data = await res.json();
-  return data.tools || [];
+  return res.data.tools || [];
+};
+
+export const getToolsWithPagination = async (
+  page: number,
+  limit: number,
+  search?: string,
+  tag?: string
+) => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    ...(search ? { search } : {}),
+    ...(tag ? { categories: tag } : {}),
+  });
+  const res = await nextServer.get(`/tools?${params.toString()}`);
+
+  if (!res.data) {
+    throw new Error('Failed to fetch tools');
+  }
+
+  return res.data;
 };
 
 export const getToolById = async (toolId: string): Promise<Tool> => {

@@ -1,0 +1,1 @@
+export type SortOption = 'popular' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'nameDesc'

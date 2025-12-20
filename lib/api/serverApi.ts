@@ -33,8 +33,6 @@ export async function getUserById(userId: string): Promise<User> {
   return data.data;
 }
 
-// Першу сторінку інструментів отримуємо на сервері, щоб сторінка одразу рендерилась з даними
-
 export async function getToolsByUserId(userId: string, page = 1, perPage = 8) {
   const { data } = await nextServer.get<UserToolsResponse>(
     `/users/${userId}/tools`,

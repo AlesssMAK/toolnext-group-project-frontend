@@ -65,10 +65,9 @@
 }
 
 .tool_card_bottom{
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
 }
 
 .tool_card_btn {
