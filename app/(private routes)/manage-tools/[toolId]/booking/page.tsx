@@ -1,17 +1,21 @@
 import BookingToolForm from '@/components/BookingToolForm/BookingToolForm';
 // import Link from 'next/link';
 import styles from './BookingToolPage.module.css';
+import { getToolById } from '@/lib/api/tools';
 
-type Props = {
-  toolId: string;
-  pricePerDay: number;
+type PageProps = {
+  params: Promise<{
+    toolId: string;
+  }>;
 };
 
-const BookingToolPage = ({ toolId, pricePerDay }: Props) => {
+const BookingToolPage = async ({ params }: PageProps) => {
+  const { toolId } = await params;
+  const tool = await getToolById(toolId);
+
   return (
     <section className={`${styles.containerConfirmation} container`}>
-      <BookingToolForm toolId="692db3ffab59e437964311d4" pricePerDay={300} />
-      {/* <BookingToolForm toolId={toolId} pricePerDay={pricePerDay} /> */}
+      <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} />
     </section>
   );
 };
