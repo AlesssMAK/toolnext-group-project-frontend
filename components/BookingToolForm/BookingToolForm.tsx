@@ -1,6 +1,5 @@
 'use client';
 
-import css from './BookingToolForm.module.css'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -14,7 +13,7 @@ registerLocale('uk', uk);
 
 type Props = {
   toolId: string;
-  pricePerDay: number; 
+  pricePerDay: number;
 };
 
 interface MyFormValues {
@@ -27,7 +26,7 @@ interface MyFormValues {
   deliveryBranch: string;
 }
 
-export default function BookingForm({toolId, pricePerDay}: Props) {
+export default function BookingForm({ toolId, pricePerDay }: Props) {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
@@ -85,7 +84,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
             credentials: 'include',
             body: JSON.stringify({
               ...values,
-              toolId, 
+              toolId,
               startDate: values.startDate?.toISOString().split('T')[0],
               endDate: values.endDate?.toISOString().split('T')[0],
             }),
@@ -114,72 +113,51 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
     >
       {({ setFieldValue, values, isSubmitting }) => {
         const bookingDays = getBookingDays(values.startDate, values.endDate);
-        const totalPrice = bookingDays * pricePerDay; 
+        const totalPrice = bookingDays * pricePerDay;
 
         return (
-          <section className={css.section}>
-          <div className={css.container}>
-            <h2 className={`${css.titleBooking} text-xl font-semibold`}>Підтвердження бронювання</h2>
-              <Form className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}>
-                
-                  <ul className={css.blok_fameli_city}>
-                    <li>
-                      <label className={css.labels} htmlFor="userFirstname">Ім'я</label>
-            <Field className={css.inputs} name="userFirstname" placeholder="Ваше імʼя" />
+          <Form className="max-w-xl space-y-4 border p-4 rounded">
+            <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
+
+            <Field name="userFirstname" placeholder="Імʼя" />
             <ErrorMessage
               name="userFirstname"
               component="p"
               className="text-red-600 text-sm"
             />
-                    </li>
-                    <li>
-                      <label className={css.labels} htmlFor="userLastname">Прізвище</label>
-            <Field className={css.inputs} name="userLastname" placeholder="Прізвище" />
+
+            <Field name="userLastname" placeholder="Прізвище" />
             <ErrorMessage
               name="userLastname"
               component="p"
               className="text-red-600 text-sm"
-                  />
-                    </li>
-                  </ul>
+            />
 
-                  <ul className={css.blok_phone}>
-                    <li>
-                        <label className={css.labels} htmlFor="userPhone">Номер телефону</label>
-            <Field className={css.inputs_phone} name="userPhone" placeholder="+38 (XXX) XXX XX XX" />
+            <Field name="userPhone" placeholder="+380..." />
             <ErrorMessage
               name="userPhone"
               component="p"
               className="text-red-600 text-sm"
-                  />
-                    </li>
-                  </ul>
-                  
-                <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                    <label className={css.labels} >Виберіть період бронювання</label>
-                  <ul >
-                    <li>
-                      <DatePicker className={css.inputs}
+            />
+
+            <div className="grid grid-cols-2 gap-3">
+              <DatePicker
                 selected={values.startDate}
                 onChange={(date: Date | null) =>
                   setFieldValue('startDate', date)
                 }
                 locale="uk"
                 dateFormat="dd.MM.yyyy"
-                placeholderText="Початкова дата"
+                placeholderText="Дата початку"
               />
-                    </li>
-                    <li>
-                        <DatePicker className={css.inputs}
+              <DatePicker
                 selected={values.endDate}
                 onChange={(date: Date | null) => setFieldValue('endDate', date)}
                 locale="uk"
                 dateFormat="dd.MM.yyyy"
-                placeholderText="Кінцева дата"
-                    />
-                    </li>
-                  </ul>
-                  </div>
+                placeholderText="Дата завершення"
+              />
+            </div>
 
             <ErrorMessage
               name="startDate"
@@ -190,34 +168,25 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
               name="endDate"
               component="p"
               className="text-red-600 text-sm"
-                />
-                
-                  <ul className={css.blok_fameli_city}>
-                    <li>
-                        <label className={css.labels} htmlFor="deliveryCity">Місто доставки</label>
-            <Field className={css.inputs} name="deliveryCity" placeholder="Ваше місто" />
+            />
+
+            <Field name="deliveryCity" placeholder="Місто доставки" />
             <ErrorMessage
               name="deliveryCity"
               component="p"
               className="text-red-600 text-sm"
             />
-                    </li>
-                    <li>
-                       <label className={css.labels} htmlFor="deliveryBranch">Відділення Нової Пошти</label>
-            <Field className={css.inputs} name="deliveryBranch" placeholder="24" />
+
+            <Field name="deliveryBranch" placeholder="Відділення / склад" />
             <ErrorMessage
               name="deliveryBranch"
               component="p"
               className="text-red-600 text-sm"
             />
-                    </li>
-                </ul>
 
-                  <ul className={`${css.blok_button} flex justify-between items-center pt-2`}>
-                    <li>
-                    <span className="font-medium">
-                      Ціна: це видалити
-                Ціна: {totalPrice} грн 
+            <div className="flex justify-between items-center pt-2">
+              <span className="font-medium">
+                Ціна: {totalPrice} грн
                 {/* {bookingDays > 0 && (
                   <span className="text-sm text-gray-500">
                     {' '}
@@ -225,27 +194,18 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
                   </span>
                 )} */}
               </span>
-                    </li>
-                    <li>
-                      <button className={css.button_boking} type="submit" disabled={isSubmitting}>
+
+              <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
               </button>
-                    </li>
-                  </ul>
+            </div>
 
             {serverWarning && (
               <p className="text-orange-600 font-medium">{serverWarning}</p>
             )}
-            </Form>
-            </div>
-            </section>
+          </Form>
         );
       }}
     </Formik>
   );
 }
-
-
-
-
-               
