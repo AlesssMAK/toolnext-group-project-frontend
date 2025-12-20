@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 type Props = {
   toolId: string;
   pricePerDay: number;
 };
 
 export default function BookingForm({ toolId, pricePerDay }: Props) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<any>(null);
@@ -51,6 +52,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
       }
 
       setSuccess(data);
+      router.push('http://localhost:3000/confirm/booking');
     } catch (err: any) {
       setError(err.message);
     } finally {
