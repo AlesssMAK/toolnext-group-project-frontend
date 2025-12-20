@@ -30,6 +30,18 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
+  const getBookingDays = (start: Date | null, end: Date | null): number => {
+    if (!start || !end) return 0;
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    const diffTime = endDate.getTime() - startDate.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays > 0 ? diffDays : 0;
+  };
+
   const validationSchema = Yup.object({
     userFirstname: Yup.string().min(2).max(50).required('Вкажіть імʼя'),
     userLastname: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
@@ -99,85 +111,101 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         }
       }}
     >
-      {({ setFieldValue, values, isSubmitting }) => (
-        <Form className="max-w-xl space-y-4 border p-4 rounded">
-          <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
+      {({ setFieldValue, values, isSubmitting }) => {
+        const bookingDays = getBookingDays(values.startDate, values.endDate);
+        const totalPrice = bookingDays * pricePerDay;
 
-          {/* Імʼя */}
-          <Field name="userFirstname" placeholder="Імʼя" />
-          <ErrorMessage
-            name="userFirstname"
-            component="p"
-            className="text-red-600 text-sm"
-          />
+        return (
+          <Form className="max-w-xl space-y-4 border p-4 rounded">
+            <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
 
-          <Field name="userLastname" placeholder="Прізвище" />
-          <ErrorMessage
-            name="userLastname"
-            component="p"
-            className="text-red-600 text-sm"
-          />
-
-          <Field name="userPhone" placeholder="+380..." />
-          <ErrorMessage
-            name="userPhone"
-            component="p"
-            className="text-red-600 text-sm"
-          />
-
-          <div className="grid grid-cols-2 gap-3">
-            <DatePicker
-              selected={values.startDate}
-              onChange={(date: Date | null) => setFieldValue('startDate', date)}
-              locale="uk"
-              dateFormat="dd.MM.yyyy"
-              placeholderText="Дата початку"
+            <Field name="userFirstname" placeholder="Імʼя" />
+            <ErrorMessage
+              name="userFirstname"
+              component="p"
+              className="text-red-600 text-sm"
             />
-            <DatePicker
-              selected={values.endDate}
-              onChange={(date: Date | null) => setFieldValue('endDate', date)}
-              locale="uk"
-              dateFormat="dd.MM.yyyy"
-              placeholderText="Дата завершення"
+
+            <Field name="userLastname" placeholder="Прізвище" />
+            <ErrorMessage
+              name="userLastname"
+              component="p"
+              className="text-red-600 text-sm"
             />
-          </div>
-          <ErrorMessage
-            name="startDate"
-            component="p"
-            className="text-red-600 text-sm"
-          />
-          <ErrorMessage
-            name="endDate"
-            component="p"
-            className="text-red-600 text-sm"
-          />
 
-          <Field name="deliveryCity" placeholder="Місто доставки" />
-          <ErrorMessage
-            name="deliveryCity"
-            component="p"
-            className="text-red-600 text-sm"
-          />
+            <Field name="userPhone" placeholder="+380..." />
+            <ErrorMessage
+              name="userPhone"
+              component="p"
+              className="text-red-600 text-sm"
+            />
 
-          <Field name="deliveryBranch" placeholder="Відділення / склад" />
-          <ErrorMessage
-            name="deliveryBranch"
-            component="p"
-            className="text-red-600 text-sm"
-          />
+            <div className="grid grid-cols-2 gap-3">
+              <DatePicker
+                selected={values.startDate}
+                onChange={(date: Date | null) =>
+                  setFieldValue('startDate', date)
+                }
+                locale="uk"
+                dateFormat="dd.MM.yyyy"
+                placeholderText="Дата початку"
+              />
+              <DatePicker
+                selected={values.endDate}
+                onChange={(date: Date | null) => setFieldValue('endDate', date)}
+                locale="uk"
+                dateFormat="dd.MM.yyyy"
+                placeholderText="Дата завершення"
+              />
+            </div>
 
-          <div className="flex justify-between items-center pt-2">
-            <span className="font-medium">Ціна: {pricePerDay} грн / день</span>
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
-            </button>
-          </div>
+            <ErrorMessage
+              name="startDate"
+              component="p"
+              className="text-red-600 text-sm"
+            />
+            <ErrorMessage
+              name="endDate"
+              component="p"
+              className="text-red-600 text-sm"
+            />
 
-          {serverWarning && (
-            <p className="text-orange-600 font-medium">{serverWarning}</p>
-          )}
-        </Form>
-      )}
+            <Field name="deliveryCity" placeholder="Місто доставки" />
+            <ErrorMessage
+              name="deliveryCity"
+              component="p"
+              className="text-red-600 text-sm"
+            />
+
+            <Field name="deliveryBranch" placeholder="Відділення / склад" />
+            <ErrorMessage
+              name="deliveryBranch"
+              component="p"
+              className="text-red-600 text-sm"
+            />
+
+            <div className="flex justify-between items-center pt-2">
+              <span className="font-medium">
+                Ціна: {totalPrice} грн
+                {/* {bookingDays > 0 && (
+                  <span className="text-sm text-gray-500">
+                    {' '}
+                    ({bookingDays} дн. × {pricePerDay} грн)
+                  </span>
+                )} */}
+              </span>
+
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
+              </button>
+            </div>
+
+            {serverWarning && (
+              <p className="text-orange-600 font-medium">{serverWarning}</p>
+            )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
