@@ -110,22 +110,6 @@
   text-decoration: underline;
 }
 
-.dropdown {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  margin-top: 4px;
-  width: 100%;
-  max-height: 240px;
-  overflow-y: auto;
-  border-radius: 6px;
-  border: 1px solid #7A2EE6;
-  background: #F6E8FF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 4px 4px 4px 0; /* трохи місця справа під трек */
-  z-index: 10;
-}
-
 .dropdown::before {
   content: "";
   position: absolute;

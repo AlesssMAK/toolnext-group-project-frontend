@@ -6,23 +6,30 @@ import FilterBar from './FilterBar/FilterBar';
 import ToolsGrid from './ToolsGrid/ToolsGrid';
 import styles from './ToolsPage.module.css';
 
-import { useToolsPagination } from '@/hooks/useToolsPagination';
+import { useToolsPagination, ToolsFilter } from '@/hooks/useToolsPagination';
+import { SortOption } from './FilterBar/types';
 
 interface ToolsPageProps {
   search?: string;
 }
 
 export default function ToolsPage({ search = '' }: ToolsPageProps) {
-  const [tag, setTag] = useState('');
-  const [searchQuery, setSearchQuery] = useState(search);
+  const [filters, setFilters] = useState<ToolsFilter>({
+    search,
+    tag: '',
+    minPrice: null,
+    maxPrice: null,
+  });
+  const [sort, setSort] = useState<SortOption>('popular');
   const router = useRouter();
-  const { tools, loading, hasMore, loadMore } = useToolsPagination(
-    searchQuery,
-    tag
-  );
+  const { tools, loading, hasMore, loadMore } = useToolsPagination(filters);
+
+  const handleTagChange = (tag: string) => {
+    setFilters(prev => ({ ...prev, tag }));
+  };
 
   const handleResetSearch = () => {
-    setSearchQuery('');
+    setFilters({});
     router.push('/tools');
   };
 
@@ -31,9 +38,19 @@ export default function ToolsPage({ search = '' }: ToolsPageProps) {
       <h1 className={styles.title}>Всі інструменти</h1>
 
       <FilterBar
-        selectedTag={tag}
-        onTagChange={setTag}
+        selectedTag={filters.tag || ''}
+        onTagChange={handleTagChange}
         onResetSearch={handleResetSearch}
+        minPrice={filters.minPrice || null}
+        maxPrice={filters.maxPrice || null}
+        onMinPriceChange={value =>
+          setFilters(prev => ({ ...prev, minPrice: value }))
+        }
+        onMaxPriceChange={value =>
+          setFilters(prev => ({ ...prev, maxPrice: value }))
+        }
+        sort={sort}
+        onSortChange={setSort}
       />
 
       <ToolsGrid

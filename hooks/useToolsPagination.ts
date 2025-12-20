@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Tool } from '@/types/tool';
 import nextServer from '@/lib/api/api';
 
-export function useToolsPagination(search: string = '', tag: string = '') {
+export interface ToolsFilter {
+  search?: string;
+  tag?: string;
+  minPrice?: number | null;
+  maxPrice?: number | null;
+}
+
+export function useToolsPagination(filters: ToolsFilter = {}) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState<number | null>(null);
   const [allTools, setAllTools] = useState<Tool[]>([]);
@@ -15,16 +22,20 @@ export function useToolsPagination(search: string = '', tag: string = '') {
   useEffect(() => {
     setPage(1);
     setAllTools([]);
-  }, [search, tag]);
+  }, [filters.search, filters.tag, filters.minPrice, filters.maxPrice]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['tools', { page, limit, search, tag }],
+    queryKey: ['tools', { page, limit, ...filters }],
     queryFn: async () => {
       const params = new URLSearchParams();
       params.append('page', page.toString());
       params.append('limit', limit!.toString());
-      if (search) params.append('search', search);
-      if (tag) params.append('categories', tag);
+      if (filters.search) params.append('search', filters.search);
+      if (filters.tag) params.append('categories', filters.tag);
+      if (filters.minPrice)
+        params.append('minPrice', filters.minPrice.toString());
+      if (filters.maxPrice)
+        params.append('maxPrice', filters.maxPrice.toString());
 
       const res = await nextServer.get(`/tools?${params.toString()}`);
       return res.data;
@@ -43,5 +54,6 @@ export function useToolsPagination(search: string = '', tag: string = '') {
     loading: isLoading,
     hasMore: page < (data?.totalPages || 1),
     loadMore: () => setPage(p => p + 1),
+    setPage,
   };
 }
