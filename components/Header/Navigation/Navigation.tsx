@@ -4,7 +4,6 @@ import css from './Navigation.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
-import { logout } from '@/lib/api/clientApi';
 import PostListing from '../PostListing/PostListing';
 import Image from 'next/image';
 
@@ -26,8 +25,7 @@ export const Navigation = ({
   onItemClick,
 }: NavigationProps) => {
   const router = useRouter();
-  const { user, isAuthenticated, loading, clearIsAuthenticated } =
-    useAuthStore();
+   const { user, isAuthenticated, loading } = useAuthStore();
 
   console.log('NAV STATE:', {
     loading,
@@ -37,11 +35,9 @@ export const Navigation = ({
 
   if (loading) return null;
 
-  const handleLogout = async () => {
-    await logout();
-    clearIsAuthenticated();
-    onItemClick?.();
-    router.push('/');
+   const handleLogout = () => {
+    onItemClick?.();        
+    router.push('/confirm/logout');
   };
 
   const currentUser = user as PublicUser | null;
