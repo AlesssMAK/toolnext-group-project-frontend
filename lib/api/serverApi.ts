@@ -7,7 +7,7 @@ import { UserToolsResponse } from '@/types/tool';
 
 export async function checkServerSession() {
   const cookieStore = await cookies();
- 
+
   const res = await nextServer.post('/auth/refresh', {
     headers: {
       Cookie: cookieStore.toString(),
@@ -28,15 +28,20 @@ export async function getServerMe(): Promise<User> {
 
 export async function getUserById(userId: string): Promise<User> {
   const { data } = await nextServer.get<UserResponse>(`/users/${userId}`);
+  console.log(data.data);
+
   return data.data;
 }
 
 // Першу сторінку інструментів отримуємо на сервері, щоб сторінка одразу рендерилась з даними
 
 export async function getToolsByUserId(userId: string, page = 1, perPage = 8) {
-  const { data } = await nextServer.get<UserToolsResponse>(`/users/${userId}/tools`, {
-    params: {page, perPage},
-  });
+  const { data } = await nextServer.get<UserToolsResponse>(
+    `/users/${userId}/tools`,
+    {
+      params: { page, perPage },
+    }
+  );
 
   return data.data;
 }
