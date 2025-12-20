@@ -1,10 +1,10 @@
 "use client"
 
 type Props = {
-  className?: string;
+  className: string;
   onClick?: () => void;
   children: React.ReactNode;
-}
+};
 
 const ButtonComponent = ({ className, onClick, children }: Props) => {
   return (
