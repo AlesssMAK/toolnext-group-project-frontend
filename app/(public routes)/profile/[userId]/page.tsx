@@ -5,9 +5,9 @@ import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 
 import { getUserById, getToolsByUserId } from '@/lib/api/serverApi';
 
-export const metadata: Metadata = {
-  title: 'User Profile',
-  description: '',
+export const metadata = {
+  title: 'Профіль користувача',
+  description: 'Публічний профіль користувача',
 };
 
 interface Props {
