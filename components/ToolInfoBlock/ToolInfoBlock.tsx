@@ -26,7 +26,7 @@ export default function ToolInfoBlock({
 
   const handleBookClick = () => {
     if (isAuthenticated) {
-      router.push(`/tools/${tool._id}/booking`);
+      router.push(`/manage-tools/${tool._id}/booking`);
     } else {
       setIsAuthModalOpen(true);
     }
