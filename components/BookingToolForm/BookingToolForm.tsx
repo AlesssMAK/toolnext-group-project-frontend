@@ -2,143 +2,182 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { uk } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+registerLocale('uk', uk);
+
 type Props = {
   toolId: string;
   pricePerDay: number;
 };
 
+interface MyFormValues {
+  userFirstname: string;
+  userLastname: string;
+  userPhone: string;
+  startDate: Date | null;
+  endDate: Date | null;
+  deliveryCity: string;
+  deliveryBranch: string;
+}
+
 export default function BookingForm({ toolId, pricePerDay }: Props) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<any>(null);
+  const [serverWarning, setServerWarning] = useState<string | null>(null);
 
-  const [form, setForm] = useState({
-    userFirstname: '',
-    userLastname: '',
-    userPhone: '',
-    startDate: '',
-    endDate: '',
-    deliveryCity: '',
-    deliveryBranch: '',
+  const validationSchema = Yup.object({
+    userFirstname: Yup.string().min(2).max(50).required('Вкажіть імʼя'),
+    userLastname: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
+    userPhone: Yup.string()
+      .matches(/^\+?[0-9\s\-()]{7,20}$/, 'Невірний формат телефону')
+      .required('Вкажіть номер телефону'),
+    startDate: Yup.date()
+      .required('Оберіть дату початку')
+      .min(new Date(), 'Дата не може бути в минулому'),
+    endDate: Yup.date()
+      .required('Оберіть дату завершення')
+      .when('startDate', (startDate, schema) =>
+        startDate
+          ? schema.min(startDate, 'Дата завершення має бути пізніше')
+          : schema
+      ),
+    deliveryCity: Yup.string().min(2).required('Вкажіть місто'),
+    deliveryBranch: Yup.string().min(1).required('Вкажіть відділення'),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const res = await fetch('http://localhost:3030/api/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // отправка cookie
-        body: JSON.stringify({ ...form, toolId }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || 'Помилка бронювання');
-      }
-
-      setSuccess(data);
-      router.push('http://localhost:3000/confirm/booking');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-xl space-y-4 border p-4 rounded"
+    <Formik<MyFormValues>
+      initialValues={{
+        userFirstname: '',
+        userLastname: '',
+        userPhone: '',
+        startDate: null,
+        endDate: null,
+        deliveryCity: '',
+        deliveryBranch: '',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={async (values, { setSubmitting }) => {
+        setServerWarning(null);
+
+        try {
+          const res = await fetch('http://localhost:3030/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              ...values,
+              toolId,
+              startDate: values.startDate?.toISOString().split('T')[0],
+              endDate: values.endDate?.toISOString().split('T')[0],
+            }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            if (data.code === 'TOOL_UNAVAILABLE' && data.nextAvailable) {
+              setServerWarning(
+                `Інструмент зайнятий. Найближчий вільний період: ${data.nextAvailable.start} — ${data.nextAvailable.end}`
+              );
+              return;
+            }
+
+            throw new Error('Сталася помилка бронювання');
+          }
+
+          router.push('/confirm/booking');
+        } catch (err: any) {
+          setServerWarning(err.message);
+        } finally {
+          setSubmitting(false);
+        }
+      }}
     >
-      <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
+      {({ setFieldValue, values, isSubmitting }) => (
+        <Form className="max-w-xl space-y-4 border p-4 rounded">
+          <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
 
-      <div className="grid grid-cols-2 gap-3">
-        <input
-          name="userFirstname"
-          placeholder="Імʼя"
-          value={form.userFirstname}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="userLastname"
-          placeholder="Прізвище"
-          value={form.userLastname}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          {/* Імʼя */}
+          <Field name="userFirstname" placeholder="Імʼя" />
+          <ErrorMessage
+            name="userFirstname"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      <input
-        name="userPhone"
-        placeholder="+380 50 123 45 67"
-        value={form.userPhone}
-        onChange={handleChange}
-        required
-      />
+          <Field name="userLastname" placeholder="Прізвище" />
+          <ErrorMessage
+            name="userLastname"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      <div className="grid grid-cols-2 gap-3">
-        <input
-          type="date"
-          name="startDate"
-          value={form.startDate}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="date"
-          name="endDate"
-          value={form.endDate}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <Field name="userPhone" placeholder="+380..." />
+          <ErrorMessage
+            name="userPhone"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      <input
-        name="deliveryCity"
-        placeholder="Місто доставки"
-        value={form.deliveryCity}
-        onChange={handleChange}
-        required
-      />
+          <div className="grid grid-cols-2 gap-3">
+            <DatePicker
+              selected={values.startDate}
+              onChange={(date: Date | null) => setFieldValue('startDate', date)}
+              locale="uk"
+              dateFormat="dd.MM.yyyy"
+              placeholderText="Дата початку"
+            />
+            <DatePicker
+              selected={values.endDate}
+              onChange={(date: Date | null) => setFieldValue('endDate', date)}
+              locale="uk"
+              dateFormat="dd.MM.yyyy"
+              placeholderText="Дата завершення"
+            />
+          </div>
+          <ErrorMessage
+            name="startDate"
+            component="p"
+            className="text-red-600 text-sm"
+          />
+          <ErrorMessage
+            name="endDate"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      <input
-        name="deliveryBranch"
-        placeholder="Відділення / склад"
-        value={form.deliveryBranch}
-        onChange={handleChange}
-        required
-      />
+          <Field name="deliveryCity" placeholder="Місто доставки" />
+          <ErrorMessage
+            name="deliveryCity"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      <div className="flex justify-between items-center pt-2">
-        <span className="font-medium">Ціна: {pricePerDay} грн / день</span>
-        <button disabled={loading}>
-          {loading ? 'Зачекайте...' : 'Забронювати'}
-        </button>
-      </div>
+          <Field name="deliveryBranch" placeholder="Відділення / склад" />
+          <ErrorMessage
+            name="deliveryBranch"
+            component="p"
+            className="text-red-600 text-sm"
+          />
 
-      {error && <p className="text-red-600">{error}</p>}
+          <div className="flex justify-between items-center pt-2">
+            <span className="font-medium">Ціна: {pricePerDay} грн / день</span>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
+            </button>
+          </div>
 
-      {success && (
-        <div className="p-3 border rounded bg-green-50">
-          <p className="font-medium">Бронювання створено ✅</p>
-        </div>
+          {serverWarning && (
+            <p className="text-orange-600 font-medium">{serverWarning}</p>
+          )}
+        </Form>
       )}
-    </form>
+    </Formik>
   );
 }
