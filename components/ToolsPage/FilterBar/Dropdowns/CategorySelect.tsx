@@ -41,7 +41,7 @@ export default function CategorySelect({ selectedTag, onSelect }: Props) {
     >
       <button
         type="button"
-        className={styles.select}
+        className={`${styles.select} ${styles.categorySelect}`}
         onClick={() => setIsOpen(v => !v)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}

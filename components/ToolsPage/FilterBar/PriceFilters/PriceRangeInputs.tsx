@@ -42,6 +42,7 @@ export default function PriceRangeInputs({
     <div className={styles.priceInputs}>
       <input
         type="text"
+        name="minPrice"
         inputMode="numeric"
         pattern="[0-9]*"
         placeholder="Мін. ціна"
@@ -55,6 +56,7 @@ export default function PriceRangeInputs({
 
       <input
         type="text"
+        name="maxPrice"
         inputMode="numeric"
         pattern="[0-9]*"
         placeholder="Макс. ціна"

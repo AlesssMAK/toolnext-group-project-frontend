@@ -36,7 +36,7 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
     <div className={styles.selectWrapper + (isOpen ? ' ' + styles.selectWrapperOpen : '')} ref={wrapperRef}>
       <button
         type="button"
-        className={styles.select}
+        className={`${styles.select} ${styles.sortSelect}`}
         onClick={handleToggleOpen}
         aria-haspopup="listbox"
         aria-expanded={isOpen}

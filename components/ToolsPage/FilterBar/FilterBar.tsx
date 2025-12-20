@@ -3,7 +3,7 @@
 import styles from './FilterBar.module.css';
 import CategorySelect from './Dropdowns/CategorySelect';
 import PriceRangeInputs from './PriceFilters/PriceRangeInputs';
-import SortDropdown from './Dropdowns/SortDropdown';
+import SortDropdown from './Dropdowns/SortSelect';
 import { SortOption } from './types';
 
 interface FilterBarProps {
@@ -38,21 +38,25 @@ export default function FilterBar({
 
   return (
     <div className={styles.filterBar}>
-      <CategorySelect selectedTag={selectedTag} onSelect={onTagChange} />
-      <PriceRangeInputs
-        minPrice={minPrice ?? null}
-        maxPrice={maxPrice ?? null}
-        onMinChange={onMinPriceChange}
-        onMaxChange={onMaxPriceChange}
-      />
-      <button
-        className={styles.resetBtn}
-        type="button"
-        onClick={handleResetAll}
-      >
-        Скинути фільтри
-      </button>
-      <SortDropdown value={sort} onChange={onSortChange} />
+      <div className={styles.filtersGroup}>
+        <CategorySelect selectedTag={selectedTag} onSelect={onTagChange} />
+        <PriceRangeInputs
+          minPrice={minPrice ?? null}
+          maxPrice={maxPrice ?? null}
+          onMinChange={onMinPriceChange}
+          onMaxChange={onMaxPriceChange}
+        />
+      </div>
+      <div className={styles.sortGroup}>
+        <button
+          className={styles.resetBtn}
+          type="button"
+          onClick={handleResetAll}
+        >
+          Скинути фільтри
+        </button>
+        <SortDropdown value={sort} onChange={onSortChange} />
+      </div>
     </div>
   );
 }
