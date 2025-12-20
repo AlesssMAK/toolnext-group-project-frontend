@@ -1,7 +1,15 @@
 /* Styles for Mobile devices */
 
 .containerConfirmation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 48px;
+  margin: 0 auto;
   padding: 32px 20px;
+  width: 375px;
+  height: 930px;
 }
 
 .title {
@@ -40,6 +48,7 @@
   .title {
     width: 704px;
   }
+
   .text {
     width: 704px;
   }
@@ -67,6 +76,7 @@
     width: 1312px;
     font-size: 48px;
   }
+
   .text {
     width: 1312px;
     font-size: 18px;
