@@ -7,9 +7,13 @@ type Props = {
 };
 
 const ButtonComponent = ({ className, onClick, children }: Props) => {
+  const clickAction = onClick ? onClick : () => {};
+
   return (
-    <button className={className} onClick={onClick}>{children}</button>
-  )
+    <button className={className} onClick={clickAction}>
+      {children}
+    </button>
+  );
 }
 
 export default ButtonComponent
