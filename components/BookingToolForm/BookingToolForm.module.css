@@ -1,0 +1,149 @@
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 335px;
+    height: 86px;
+    max-width: 768px;
+}
+
+.title h2 {
+    font-weight: 700;
+    font-size: 36px;
+
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 335px;
+    height: 732px;
+    max-width: 768px;
+}
+
+.list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 335px;
+    height: 168px;
+}
+
+.item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+
+    width: 335px;
+    height: 72px;
+}
+
+.label {
+    font-weight: 400;
+    font-size: 16px;
+
+    /* line-height: 24px; */
+    line-height: 1.5;
+    color: var(--color-scheme-3-text);
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 8px;
+
+    border: 2px solid var(--color-neutral-darkest);
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 335px;
+    height: 40px;
+}
+
+.listphone {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 24px;
+
+    width: 335px;
+    height: 72px;
+}
+
+.priceBlock {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 335px;
+    height: 92px;
+}
+
+.price {
+    font-weight: 700;
+    font-size: 16px;
+
+    /* line-height: 24px; */
+    line-height: 1.5;
+    color: var(--color-scheme-3-text);
+}
+
+.priceButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+
+    border: 1px solid var(--color-electric-violet);
+    border-radius: 6px;
+    padding: 10px 24px;
+    width: 335px;
+    height: 44px;
+}
+
+.priceButton:focus {
+    background-color: solid var(--color-electric-violet);
+}
+
+
+@media screen and (min-width: 768px) {
+    .nav_list {
+        flex-direction: row;
+    }
+}
