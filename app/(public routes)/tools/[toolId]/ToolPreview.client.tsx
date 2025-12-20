@@ -11,7 +11,7 @@ import { getUserById } from '@/lib/api/serverApi';
 
 export default function ToolDetails() {
   const params = useParams();
-  const toolId = params?.id as string;
+  const toolId = params?.toolId as string;
 
   const { data: tool, isError } = useQuery({
     queryKey: ['tool', toolId],

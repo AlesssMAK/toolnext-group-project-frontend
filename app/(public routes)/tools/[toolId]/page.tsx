@@ -10,16 +10,16 @@ import ToolDetails from './ToolPreview.client';
 import { getUserById } from '@/lib/api/serverApi';
 
 interface ToolPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ toolId: string }>;
 }
 
 const ToolPage = async ({ params }: ToolPageProps) => {
-  const { id } = await params;
+  const { toolId } = await params;
   const queryClient = new QueryClient();
 
   const tool = await queryClient.fetchQuery({
-    queryKey: ['tool', id],
-    queryFn: () => getToolById(id),
+    queryKey: ['tool', toolId],
+    queryFn: () => getToolById(toolId),
   });
 
   await queryClient.prefetchQuery({

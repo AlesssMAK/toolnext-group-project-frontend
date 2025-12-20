@@ -1,25 +1,9 @@
 .toolBut {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #8808cc;
-  border-radius: 6px;
-  padding: 10px 16px;
   width: 100%;
   max-width: 335px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  background-color: #8808cc;
-  transition:
-    color 200ms ease,
-    background 200ms ease;
 }
 
-.toolBut:hover {
+/* .toolBut:hover {
   background: var(--color-white);
   outline: 1px solid var(--color-electric-violet-dark);
   color: var(--color-neutral-darkest);
@@ -36,7 +20,7 @@
   outline: 1px solid var(--color-electric-violet-lighter);
   color: var(--color-white);
   cursor: default;
-}
+} */
 
 .toolTitle {
   font-weight: 700;
@@ -98,34 +82,6 @@
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-}
-
-.ownerLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #000;
-  border-radius: 6px;
-  padding: 8px 8px;
-  width: clamp(140px, 100%, 192px);
-
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #000;
-  transition:
-    color 200ms ease,
-    background 200ms ease;
-}
-
-.ownerLink:hover {
-  background: var(--color-electric-violet-lighter);
-}
-
-.ownerLink:active {
-  color: var(--color-white);
-  border: 1px solid var(--color-electric-violet-dark);
-  background: var(--color-electric-violet-dark);
 }
 
 @media (min-width: 768px) {
