@@ -25,13 +25,7 @@ export const Navigation = ({
   onItemClick,
 }: NavigationProps) => {
   const router = useRouter();
-   const { user, isAuthenticated, loading } = useAuthStore();
-
-  console.log('NAV STATE:', {
-    loading,
-    isAuthenticated,
-    user,
-  });
+  const { user, isAuthenticated, loading } = useAuthStore();
 
   if (loading) return null;
 

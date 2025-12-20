@@ -45,8 +45,6 @@ const FeedbacksBlock = ({
 
   const allFeedbacks = data?.feedbacks ?? [];
 
-  console.log(allFeedbacks);
-
   const hasFeedbacks = isSuccess && allFeedbacks.length > 0;
   const hasNoFeedbacks = isSuccess && allFeedbacks.length === 0;
 
