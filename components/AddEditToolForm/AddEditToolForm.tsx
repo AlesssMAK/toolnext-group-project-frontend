@@ -105,11 +105,11 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
         };
 
         return (
-            
-                <form onSubmit={formik.handleSubmit} className={css.form}>
-                    <div className={css.deskGroup}>
-                        <div className={css.flexContainer}>
-                        <div className={css.wrapper}>
+            <div className={css.formSection}>
+                <div className='container'>
+                    <form onSubmit={formik.handleSubmit} className={css.form}>
+
+                        <div className={css.formGroup}>
                             <div className={css.photoWrapper}>
                             {/* Відображаємо прев'ю якщо зображення існує */}
                                 {previewUrl ? (
@@ -120,7 +120,7 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
                                 ) : (
                             <label className={css.photoLabel}>
                                 <span className={css.placeholderText}>Фото інструменту</span>
-                                <picture className={css.toolsWrapper}>
+                                <picture>
                                     <source
                                         media="(min-width: 1440px)"
                                         srcSet="/images/add_tool_form/placeholder-2x-desk.jpg"
@@ -143,7 +143,7 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
                                     {formik.errors.photo && formik.touched.photo && <p className={css.errorText}>{formik.errors.photo as string}</p>}
                                 </div>
                         
-                        <div className={css.uploadButton}>
+                        <div>
                             <label htmlFor='file-upload' className={`button button--secondary ${css.button}`} >
                             {previewUrl ? "Змінити фото" : "Завантажити фото"}
                             </label>
@@ -178,10 +178,10 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
 
                         {/* Категорія  */}
                         <div className={css.formGroup}>
-                        <label className={css.selectLabel} >
+                        <label >
                             Категорія
-                                <select className={`${css.select} ${formik.touched.category && formik.errors.category ? css.error : ''}`}{...formik.getFieldProps("category")}>
-                                    <option className={css.option} value="">Категорія</option>
+                                <select className={`${css.input} ${formik.touched.category && formik.errors.category ? css.error : ''}`}{...formik.getFieldProps("category")}>
+                                    <option value="">Категорія</option>
                                     {CATEGORIES.map((cat) => (
                                         <option key={cat} value={cat}>{cat}</option>
                                     ))}
@@ -212,7 +212,7 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
                             </label>
                             {formik.touched.characteristics && formik.errors.characteristics && <p className={css.errorText}>{formik.errors.characteristics as string}</p>}
                         </div>
-                        </div>
+
                         {/* Кнопки */}
                         <div className={css.buttonGroup}>
                             <button
@@ -230,10 +230,10 @@ export default function AddEditToolForm({ initialData, isEditMode = false }: Pro
                                 Відмінити
                             </button>
                         </div>
-                        </div>
+
                     </form>
-                
-            
+                </div>
+            </div>
         );
     }
 

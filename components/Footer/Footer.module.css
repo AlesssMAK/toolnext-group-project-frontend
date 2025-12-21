@@ -36,7 +36,7 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 150%;
-  color: var(--color-black);
+  color: var(--color-scheme-1-border);
   transition: 0.3s ease;
 }
 .nav_list_link {
@@ -45,7 +45,7 @@
 
 .nav_list_link:hover,
 .nav_list_link:focus {
-  border-bottom: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-scheme-1-border);
 }
 
 .nav_list_link:active {
@@ -83,7 +83,7 @@
 
 .social_link_item:hover,
 .social_link_item:focus {
-  border: 1px solid var(--color-black);
+  border: 1px solid var(--color-scheme-1-border);
   border-radius: 6px;
   background: var(--color-electric-violet-lightest);
 }

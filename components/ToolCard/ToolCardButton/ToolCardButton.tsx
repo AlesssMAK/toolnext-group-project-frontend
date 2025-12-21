@@ -31,13 +31,10 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
           >
             Редагувати
           </ButtonComponent>
-          <ButtonComponent
-            onClick={handleClick}
-            className={`button button--secondary ${css.deleteBtn}`}
-          >
+          <ButtonComponent onClick={handleClick} className={css.deleteBtn}>
             <svg
-              width="24"
-              height="24"
+              // width="24"
+              // height="24"
               className={css.deleteIcon}
               aria-hidden="true"
             >
