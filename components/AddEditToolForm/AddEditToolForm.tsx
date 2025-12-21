@@ -96,8 +96,8 @@ export default function AddEditToolForm({
         Object.entries(values).forEach(([key, value]) => {
           if (key === 'photo' && value instanceof File) {
             formData.append('image', value);
-            //} else if (key === 'category') {
-            //formData.append(key, '6704d9c7f1a3b8c2d5e4f6a0');
+          } else if (key === 'photo') {
+            formData.append('imageUrl', value);
           } else if (value !== null) {
             formData.append(key, String(value));
           }
@@ -105,7 +105,7 @@ export default function AddEditToolForm({
 
         const url = isEditMode ? `/api/tools/${initialData.id}` : '/api/tools';
 
-        const method = isEditMode ? 'PUT' : 'POST';
+        const method = isEditMode ? 'PATCH' : 'POST';
 
         const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
           method,
@@ -290,6 +290,8 @@ export default function AddEditToolForm({
               Характеристики
               <textarea
                 className={css.textarea}
+                placeholder={`Вага: 7кг
+Потужність: 4кBт`}
                 {...formik.getFieldProps('specifications')}
               />
             </label>
