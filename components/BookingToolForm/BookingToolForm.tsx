@@ -3,15 +3,14 @@
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import DatePicker, { registerLocale } from 'react-datepicker';
-// import { uk } from 'date-fns/locale';
-// import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { uk } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
-// registerLocale('uk', uk);
+registerLocale('uk', uk);
 
 type Props = {
   toolId: string;
@@ -101,7 +100,6 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               );
               return;
             }
-
             throw new Error('Сталася помилка бронювання');
           }
 
@@ -118,77 +116,46 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         const totalPrice = bookingDays * pricePerDay;
 
         return (
-          <section className={css.section}>
-            <div className={css.container}>
-              <h2 className={`${css.titleBooking} text-xl font-semibold`}>
-                Підтвердження бронювання
-              </h2>
-              <Form
-                className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}
-              >
-                <ul className={css.blok_fameli_city}>
-                  <li>
-                    <label className={css.labels} htmlFor="userFirstname">
-                      Ім'я
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="userFirstname"
-                      placeholder="Ваше імʼя"
-                    />
-                    <ErrorMessage
-                      name="userFirstname"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                  <li>
-                    <label className={css.labels} htmlFor="userLastname">
-                      Прізвище
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="userLastname"
-                      placeholder="Прізвище"
-                    />
-                    <ErrorMessage
-                      name="userLastname"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                </ul>
-
-                <ul className={css.blok_phone}>
-                  <li>
-                    <label className={css.labels} htmlFor="userPhone">
-                      Номер телефону
-                    </label>
-                    <Field
-                      className={css.inputs_phone}
-                      name="userPhone"
-                      placeholder="+38 (XXX) XXX XX XX"
-                    />
-                    <ErrorMessage
-                      name="userPhone"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                </ul>
-
-                <div className={css.blok_calendar}>
-                  <label className={css.labels}>
-                    Виберіть період бронювання
-                  </label>
-
-                  <DateRangePicker
-                    onSelect={(from, to) => {
-                      setFieldValue('startDate', from);
-                      setFieldValue('endDate', to);
-                    }}
+          <div className={css.container}>
+            <h2 className={`${css.titleBooking} text-xl font-semibold`}>Підтвердження бронювання</h2>
+              <Form className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}>
+                
+                  <ul className={css.blok_fameli_city}>
+                    <li>
+                      <label className={css.labels} htmlFor="userFirstname">Ім'я</label>
+            <Field className={css.inputs} name="userFirstname" placeholder="Ваше імʼя" />
+            <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="userFirstname"
+              component="p"
+            />
+                    </li>
+                    <li>
+                      <label className={css.labels} htmlFor="userLastname">Прізвище</label>
+            <Field className={css.inputs} name="userLastname" placeholder="Прізвище" />
+            <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="userLastname"
+              component="p"
                   />
-                  {/* <ul >
+                    </li>
+                  </ul>
+
+                  <ul className={css.blok_phone}>
+                    <li>
+                        <label className={css.labels} htmlFor="userPhone">Номер телефону</label>
+            <Field className={css.inputs_phone} name="userPhone" placeholder="+38 (XXX) XXX XX XX" />
+            <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="userPhone"
+              component="p"
+                  />
+                    </li>
+                  </ul>
+                  
+                <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+                    <label className={css.labels} >Виберіть період бронювання</label>
+                  <ul >
                     <li>
                       <DatePicker className={css.inputs}
                 selected={values.startDate}
@@ -198,7 +165,12 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 locale="uk"
                 dateFormat="dd.MM.yyyy"
                 placeholderText="Початкова дата"
-              />
+                    />
+                    <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="startDate"
+              component="p"
+                  />
                     </li>
                     <li>
                         <DatePicker className={css.inputs}
@@ -208,52 +180,34 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 dateFormat="dd.MM.yyyy"
                 placeholderText="Кінцева дата"
                     />
+                    <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="endDate"
+              component="p"
+                    />  
+                  </li>
+                </ul> 
+              </div>
+      
+                  <ul className={css.blok_fameli_city}>
+                    <li>
+                        <label className={css.labels} htmlFor="deliveryCity">Місто доставки</label>
+            <Field className={css.inputs} name="deliveryCity" placeholder="Ваше місто" />
+            <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="deliveryCity"
+              component="p"
+            />
                     </li>
-                  </ul> */}
-
-                <ErrorMessage
-                  name="startDate"
-                  component="p"
-                  className="text-red-600 text-sm"
-                />
-                <ErrorMessage
-                  name="endDate"
-                  component="p"
-                  className="text-red-600 text-sm"
-                />
-                </div>
-
-                <ul className={css.blok_fameli_city}>
-                  <li>
-                    <label className={css.labels} htmlFor="deliveryCity">
-                      Місто доставки
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="deliveryCity"
-                      placeholder="Ваше місто"
-                    />
-                    <ErrorMessage
-                      name="deliveryCity"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                  <li>
-                    <label className={css.labels} htmlFor="deliveryBranch">
-                      Відділення Нової Пошти
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="deliveryBranch"
-                      placeholder="24"
-                    />
-                    <ErrorMessage
-                      name="deliveryBranch"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
+                    <li>
+                       <label className={css.labels} htmlFor="deliveryBranch">Відділення Нової Пошти</label>
+            <Field className={css.inputs} name="deliveryBranch" placeholder="24" />
+            <ErrorMessage
+              className={`${css.error_message} text-red-600 text-sm`}
+              name="deliveryBranch"
+              component="p"
+            />
+                    </li>
                 </ul>
 
                 <ul
@@ -261,8 +215,8 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 >
                   <li>
                     <span className="font-medium">
-                      Ціна: це видалити Ціна: {totalPrice} грн
-                      {/* {bookingDays > 0 && (
+                Ціна: {totalPrice} грн 
+                {/* {bookingDays > 0 && (
                   <span className="text-sm text-gray-500">
                     {' '}
                     ({bookingDays} дн. × {pricePerDay} грн)
@@ -286,7 +240,6 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 )}
               </Form>
             </div>
-          </section>
         );
       }}
     </Formik>
