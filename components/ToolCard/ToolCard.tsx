@@ -5,9 +5,10 @@ import { ToolCardButton } from './ToolCardButton/ToolCardButton';
 
 interface ToolCardProps {
   tool: Tool;
+  isOwner?: boolean;
 }
 
-export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+export const ToolCard: React.FC<ToolCardProps> = ({ tool, isOwner }) => {
   return (
     <div className={styles.tool_card}>
       <div className={styles.tool_card_image}>
@@ -23,7 +24,11 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
 
         <p className={styles.tool_card_price}>{tool.pricePerDay} грн/день</p>
       </div>
-      <ToolCardButton toolId={tool._id} className={styles.tool_card_bottom} />
+      <ToolCardButton
+        toolId={tool._id}
+        isOwner={isOwner}
+        className={styles.tool_card_bottom}
+      />
     </div>
   );
 };

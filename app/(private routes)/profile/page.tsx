@@ -26,6 +26,7 @@ const Profile = async () => {
           initialPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           perPage={pagination.perPage}
+          isOwner={true}
         />
       ) : (
         <ProfilePlaceHolder isOwner={true} />
