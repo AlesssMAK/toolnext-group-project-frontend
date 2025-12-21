@@ -1,5 +1,7 @@
+
+
 const CreateToolPage = () => {
-  return null;
+  return null
 };
 
 export default CreateToolPage;
