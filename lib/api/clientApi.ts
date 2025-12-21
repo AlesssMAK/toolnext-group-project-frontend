@@ -100,3 +100,14 @@ export async function fetchFeedbacks({
 
   return data;
 }
+
+interface deleteToolRequest {
+  toolId: string;
+}
+
+export async function deleteTool({ toolId }: deleteToolRequest) {
+  const { data } = await nextServer.delete<deleteToolRequest>(
+    `tools/${toolId}`
+  );
+  return data;
+}

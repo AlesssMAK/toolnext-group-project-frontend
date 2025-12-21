@@ -3,6 +3,7 @@
 import css from './ToolCardButton.module.css';
 import { useRouter } from 'next/navigation';
 import ButtonComponent from '@/components/shared/ButtonComponent';
+import { deleteTool } from '@/lib/api/clientApi';
 
 interface ToolCardButtonProps {
   toolId: string;
@@ -25,8 +26,13 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
     router.push(`/manage-tools/${toolId}/edit`);
   };
 
-  const handleDelete = () => {
-    console.log('DELETE TOOL:', toolId);
+  const handleDelete = async () => {
+    try {
+      await deleteTool({ toolId });
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -44,8 +50,8 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
             className={`button button--secondary ${css.deleteBtn}`}
           >
             <svg
-              // width="24"
-              // height="24"
+              width="24"
+              height="24"
               className={css.deleteIcon}
               aria-hidden="true"
             >
