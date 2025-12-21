@@ -29,26 +29,40 @@ export async function GET() {
   }
 }
 
-export async function PATCH(request: Request) {
-  try {
-    const cookieStore = await cookies();
-    const body = await request.json();
+// export async function PATCH(request: Request) {
+//   try {
+//     const cookieStore = await cookies();
+//     const body = await request.json();
 
-    const res = await api.patch('/users/me', body, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-    });
-    return NextResponse.json(res.data, { status: res.status });
-  } catch (error) {
-    if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-      return NextResponse.json(
-        { error: error.message, response: error.response?.data },
-        { status: error.status }
-      );
-    }
-    logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-  }
+//     const res = await api.patch('/users/me', body, {
+//       headers: {
+//         Cookie: cookieStore.toString(),
+//       },
+//     });
+//     return NextResponse.json(res.data, { status: res.status });
+//   } catch (error) {
+//     if (isAxiosError(error)) {
+//       logErrorResponse(error.response?.data);
+//       return NextResponse.json(
+//         { error: error.message, response: error.response?.data },
+//         { status: error.status }
+//       );
+//     }
+//     logErrorResponse({ message: (error as Error).message });
+//     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+//   }
+// }
+
+export async function PATCH(request: Request) {
+  const cookieStore = await cookies();
+  const formData = await request.formData();
+
+  const res = await api.patch('/users/me/avatar', formData, {
+    headers: {
+      Cookie: cookieStore.toString(),
+
+    },
+  });
+
+  return NextResponse.json(res.data, { status: res.status });
 }
