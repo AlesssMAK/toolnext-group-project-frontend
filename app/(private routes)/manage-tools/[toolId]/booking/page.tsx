@@ -15,7 +15,7 @@ const BookingToolPage = async ({ params }: PageProps) => {
 
   return (
     <section className={`${styles.containerConfirmation} container`}>
-      {/* <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} /> */}
+      <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} />
     </section>
   );
 };
