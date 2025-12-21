@@ -1,20 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
-
-const CATEGORIES = [
-  'Перфоратори та відбійні молотки',
-  'Дрилі, шуруповерти та гайковерти',
-  'Шліфувальні та полірувальні машини',
-  'Пилки та різаки',
-  'Плиткорізи та інструменти для плитки',
-];
 
 type Props = {
   initialData?: any;
@@ -28,6 +20,30 @@ export default function AddEditToolForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(initialData?.photo || '');
+  const [categories, setCategories] = useState<
+    { _id: string; title: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(
+          process.env.NEXT_PUBLIC_API_URL + '/api/categories'
+        );
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          setCategories(data.data);
+        } else {
+          toast.error('Не вдалося завантажити категорії');
+        }
+      } catch (error) {
+        toast.error('Помилка під час завантаження категорій');
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -80,8 +96,8 @@ export default function AddEditToolForm({
         Object.entries(values).forEach(([key, value]) => {
           if (key === 'photo' && value instanceof File) {
             formData.append('image', value);
-          } else if (key === 'category') {
-            formData.append(key, '6704d9c7f1a3b8c2d5e4f6a0');
+            //} else if (key === 'category') {
+            //formData.append(key, '6704d9c7f1a3b8c2d5e4f6a0');
           } else if (value !== null) {
             formData.append(key, String(value));
           }
@@ -97,7 +113,6 @@ export default function AddEditToolForm({
           credentials: 'include',
         });
 
-        // 🔐 optional: обробка неавторизованого доступу
         if (response.status === 401) {
           toast.error('Увійдіть у систему');
           router.push('/login');
@@ -230,17 +245,13 @@ export default function AddEditToolForm({
             <label>
               Категорія
               <select
-                className={`${css.input} ${
-                  formik.touched.category && formik.errors.category
-                    ? css.error
-                    : ''
-                }`}
+                className={`${css.input} ${formik.touched.category && formik.errors.category ? css.error : ''}`}
                 {...formik.getFieldProps('category')}
               >
                 <option value="">Категорія</option>
-                {CATEGORIES.map(cat => (
-                  <option key={cat} value={cat}>
-                    {cat}
+                {categories.map(cat => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.title}
                   </option>
                 ))}
               </select>
