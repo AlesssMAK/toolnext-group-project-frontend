@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { requestResetEmail } from "@/lib/api/auth";
+import style from "./forgot-password.module.css";
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
@@ -24,24 +25,33 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <section>
-            <h1>Forgot password</h1>
+        <section className={style.mainContent}>
+            <div className={style.formSection}>
+                <form onSubmit={handleSubmit} className={style.form}>
+                <h1 className={style.formTitle}>Forgot password</h1>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    required
-                />
+                    <div className={style.formGroup}>
+                        <input
+                            className={style.input}
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            required
+                        />
+                    </div>
 
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Sending...' : 'Send reset link'} 
+                <button
+                    type="submit"
+                    className={style.submitButton}
+                    disabled={isLoading}
+                >
+                {isLoading ? 'Sending...' : 'Send reset link'}
                 </button>
-            </form>
 
-            {message && <p>{message}</p>}
+                {message && <p className={style.infoText}>{message}</p>}
+                </form>
+            </div>
         </section>
     )
 }
