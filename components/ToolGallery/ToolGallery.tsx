@@ -14,7 +14,7 @@ export default function ToolGallery({ images }: Props) {
   return (
     <div className={css.gallery}>
       <Image
-        src={mainImage}
+        src={`${mainImage}?v=${Date.now()}`}
         width={800}
         height={600}
         alt="Інструмент"
