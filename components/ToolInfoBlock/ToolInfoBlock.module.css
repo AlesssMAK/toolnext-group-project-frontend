@@ -1,0 +1,108 @@
+.toolBut {
+  width: 100%;
+  max-width: 335px;
+}
+
+.ownerLink {
+  padding: 8px 20px;
+  font-size: 12px;
+  max-height: 37px;
+
+  @media screen and (min-width: 330px) {
+    font-size: 14px;
+  }
+}
+
+.toolTitle {
+  font-weight: 700;
+  overflow-wrap: break-word;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #000;
+  margin-bottom: 8px;
+
+  @media screen and (min-width: 1440px) {
+    font-size: 40px;
+  }
+}
+
+.toolPrice {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.toolDescr {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.toolSpec {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.toolSpecTitle {
+  font-weight: 700;
+}
+
+.toolOwner {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.ownerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ownerAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  margin-right: 16px;
+  object-fit: cover;
+}
+
+.ownerName {
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.toolBut {
+  max-height: 41px;
+}
+
+@media (min-width: 768px) {
+  .toolBut {
+    max-width: 704px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .toolInfo {
+    padding-left: 0;
+
+    margin-left: 0;
+  }
+
+  .toolPrice,
+  .toolSpec,
+  .toolDescr,
+  .toolTitle {
+    max-width: 640px;
+  }
+}

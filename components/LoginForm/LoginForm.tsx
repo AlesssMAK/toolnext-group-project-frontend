@@ -43,6 +43,7 @@ export default function LoginForm() {
         toast.success('Вітаю, Ви увійшли 👌');
         const redirectTo = searchParams.get('redirectTo') || '/';
         router.push(redirectTo);
+        router.refresh();
       } catch (err) {
         const apiError = err as ApiError;
 

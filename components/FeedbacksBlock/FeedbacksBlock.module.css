@@ -1,4 +1,4 @@
-.section {
+.feedback {
   padding-top: 64px;
   padding-bottom: 64px;
   max-width: 100vw;
@@ -10,17 +10,25 @@
   }
 }
 
-.swiper,
-.card,
-.controls {
-  min-width: 0;
+.feedback--tool {
+  padding: 32px 0;
 }
 
-.text,
-.author,
-.title {
-  overflow-wrap: anywhere;
-  word-break: break-word;
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.titleContainer--tool {
+  margin-bottom: 40px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 80px;
+  }
 }
 
 .title {
@@ -28,16 +36,35 @@
   font-size: 36px;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  margin-bottom: 80px;
 
+  /* @media (min-width: 1440px) {
+    font-size: 36px;
+  } */
+}
+
+.feedbackBtn {
+  width: 100%;
+  max-height: 41px;
   @media (min-width: 768px) {
-    font-size: 28px;
-    margin-bottom: 32px;
+    width: max-content;
+    font-size: 14px;
   }
-
   @media (min-width: 1440px) {
-    font-size: 32px;
+    width: max-content;
+    font-size: 16px;
+    max-height: 44px;
   }
+}
+
+.feedbackBtn:hover,
+.feedbackBtn:focus {
+  background-color: var(--color-electric-violet-lighter);
+}
+
+.feedbackBtn:active {
+  background-color: var(--color-electric-violet);
+  border-color: var(--color-electric-violet);
+  color: var(--color-white);
 }
 
 .text {
@@ -58,93 +85,109 @@
   gap: 32px;
 }
 
-/* Swiper */
+.feedbackItemBox {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
 .swiper {
-  position: relative;
-  padding-bottom: 48px;
-
-  overflow: hidden;
+  margin-bottom: 48px;
 }
 
-:global(.swiper),
-:global(.swiper-wrapper),
-:global(.swiper-slide) {
-  min-width: 0;
-}
-
-.controls {
-  padding: 0 16px;
+.feedbackSwiperContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: auto;
 }
 
-.pagination {
-  position: relative;
-  /* width: 82px !important; */
-  height: 14px;
-  overflow: hidden;
-
+.arrows {
   display: flex;
-  align-items: center;
-  justify-content: start;
+  gap: 16px;
 }
 
-.pagination :global(.swiper-pagination-bullet) {
+.feedbackSwiperBtnDisabled {
+  background: var(--color-scheme-1-foreground);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* .feedbackSwiperContainer :global(.swiper-pagination-bullet) {
+  transform: scale(0.8);
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+  margin: 3px !important;
   width: 10px;
   height: 10px;
-  border-radius: 999px;
-  background: var(--color-black);
-  opacity: 0.2;
-  margin: 0 !important;
-  position: static !important;
-  flex: 0 0 auto;
 }
 
-.pagination :global(.swiper-pagination-bullet-active) {
-  width: 14px;
-  height: 14px;
+.feedbackSwiperContainer :global(.swiper-pagination-bullet-active) {
+  background-color: var(--color-scheme-1-text);
+  transform: scale(1.4);
   opacity: 1;
 }
 
-.pagination:global(.swiper-pagination-bullets),
-.pagination:global(.swiper-pagination-horizontal),
-.pagination:global(.swiper-pagination-bullets-dynamic) {
-  position: static !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  bottom: auto !important;
-  transform: none !important;
+.feedbackSwiperContainer
+  :global(.swiper-pagination-bullet-active + .swiper-pagination-bullet),
+.feedbackSwiperContainer
+  :global(.swiper-pagination-bullet:has(+ .swiper-pagination-bullet-active)) {
+  transform: scale(1);
+} */
 
-  display: flex !important;
+
+.pagination {
+  display: flex;
   align-items: center;
-  justify-content: flex-start; /* ✅ */
-  gap: 8px !important;
-  white-space: nowrap;
-
-  flex-shrink: 0; /* ✅ */
+  gap: 8px;
+  height: 14px;
 }
 
-.pagination:global(.swiper-pagination-bullets),
-.pagination:global(.swiper-pagination-bullets-dynamic) {
-  flex-wrap: nowrap;
-  flex-shrink: 0; /* ✅ не стискається */
+/* Базова крапка */
+.dot {
+  border: 0;
+  padding: 0;
+  
+  background-color: var(--color-scheme-1-text, #000);
+  
+  border-radius: 999px;
+  opacity: 0.2;
+  cursor: pointer;
+  flex: 0 0 auto;
 }
 
-.pagination :global(.swiper-pagination-bullet-active-prev),
-.pagination :global(.swiper-pagination-bullet-active-next) {
-  width: 10px;
-  height: 10px;
-}
-
-.pagination :global(.swiper-pagination-bullet-active-prev-prev),
-.pagination :global(.swiper-pagination-bullet-active-next-next) {
+/* Маленькі крайні */
+.dotSmall {
   width: 8px;
   height: 8px;
 }
+
+/* Сусідні */
+.dotMid {
+  width: 10px;
+  height: 10px;
+  opacity: 0.55;
+}
+
+/* Центральна активна */
+.dotMain {
+  width: 14px;
+  height: 14px;
+}
+
+/* Активна */
+.dotActive {
+  opacity: 1;
+}
+
+/* Заблокована (якщо знадобиться) */
+.dotDisabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+
+/* -------Btn--------- */
 
 .arrows {
   pointer-events: auto;
@@ -155,7 +198,7 @@
 .arrowBtn {
   width: 48px;
   height: 48px;
-  border: 2px solid var(--color-black);
+  border: 2px solid var(--color-scheme-1-border);
   border-radius: 6px;
   background: var(--color-white);
   cursor: pointer;
@@ -186,5 +229,3 @@
 .arrowBtn:disabled .btnIcon {
   fill: var(--color-black);
 }
-
-/* Swiper */

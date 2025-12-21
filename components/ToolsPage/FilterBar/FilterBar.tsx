@@ -1,21 +1,62 @@
-"use client";
+'use client';
 
-import styles from "./FilterBar.module.css";
+import styles from './FilterBar.module.css';
+import CategorySelect from './Dropdowns/CategorySelect';
+import PriceRangeInputs from './PriceFilters/PriceRangeInputs';
+import SortDropdown from './Dropdowns/SortSelect';
+import { SortOption } from './types';
 
-export default function FilterBar() {
+interface FilterBarProps {
+  selectedTag: string;
+  onTagChange: (tag: string) => void;
+  onResetSearch: () => void;
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  onMinPriceChange?: (value: number | null) => void;
+  onMaxPriceChange?: (value: number | null) => void;
+  sort: SortOption;
+  onSortChange: (value: SortOption) => void;
+}
+
+export default function FilterBar({
+  selectedTag,
+  onTagChange,
+  onResetSearch,
+  minPrice,
+  maxPrice,
+  onMinPriceChange,
+  onMaxPriceChange,
+  sort,
+  onSortChange,
+}: FilterBarProps) {
+  const handleResetAll = () => {
+    onTagChange('');
+    onResetSearch();
+    onMinPriceChange?.(null);
+    onMaxPriceChange?.(null);
+  };
+
   return (
     <div className={styles.filterBar}>
-      <select className={styles.select}>
-        <option>Всі категорії</option>
-        <option>Перфоратори та відбійні молотки</option>
-        <option>Дрилі, шуруповерти та гайковерти</option>
-        <option>Шліфувальні та полірувальні машини</option>
-        <option>Пилки та різаки</option>
-        <option>Плиткорізи та інструменти для плитки</option>
-        <option>Option 7</option>
-      </select>
-
-      <button className={styles.resetBtn}>Скинути фільтри</button>
+      <div className={styles.filtersGroup}>
+        <CategorySelect selectedTag={selectedTag} onSelect={onTagChange} />
+        <PriceRangeInputs
+          minPrice={minPrice ?? null}
+          maxPrice={maxPrice ?? null}
+          onMinChange={onMinPriceChange}
+          onMaxChange={onMaxPriceChange}
+        />
+      </div>
+      <div className={styles.sortGroup}>
+        <button
+          className={styles.resetBtn}
+          type="button"
+          onClick={handleResetAll}
+        >
+          Скинути фільтри
+        </button>
+        <SortDropdown value={sort} onChange={onSortChange} />
+      </div>
     </div>
   );
 }

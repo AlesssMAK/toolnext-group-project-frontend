@@ -2,6 +2,8 @@ import 'normalize.css';
 import type { Metadata } from 'next';
 import { Inter, Nunito_Sans } from 'next/font/google';
 import './globals.css';
+import 'air-datepicker/air-datepicker.css';
+import './datepicker.css'
 import 'normalize.css';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';

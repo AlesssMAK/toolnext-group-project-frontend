@@ -1,11 +1,9 @@
-export interface Feedback {
-  _id: string ;
-}
+import { Feedback } from './feedback';
 
 export interface Tool {
-  _id: string ;
-  owner: string ;
-  category: string ;
+  _id: string;
+  owner: string;
+  category: string;
   name: string;
   description: string;
   pricePerDay: number;
@@ -27,4 +25,4 @@ export interface UserToolsResponse {
       totalPages: number;
     };
   };
-};
+}
