@@ -1,0 +1,15 @@
+.btnContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.deleteBtn {
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+}
+
+.editBtn {
+  height: 40px;
+  width: 100%;
+}

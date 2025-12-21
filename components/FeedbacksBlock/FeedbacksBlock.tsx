@@ -15,10 +15,13 @@ import { Rating } from '../RatingIcon/RatingIcon';
 import type { Swiper as SwiperClass } from 'swiper';
 import { FeedbacksBlockProps } from '@/types/feedback';
 
+export type FeedbacksVariant = 'home' | 'tool' | 'profile';
+
 const FeedbacksBlock = ({
   toolId,
   userId,
   isOwner = false,
+  variant = 'home',
 }: FeedbacksBlockProps) => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -44,8 +47,6 @@ const FeedbacksBlock = ({
   });
 
   const allFeedbacks = data?.feedbacks ?? [];
-
-  console.log(allFeedbacks);
 
   const hasFeedbacks = isSuccess && allFeedbacks.length > 0;
   const hasNoFeedbacks = isSuccess && allFeedbacks.length === 0;
@@ -75,19 +76,26 @@ const FeedbacksBlock = ({
   }, [navReady]);
 
   return (
-    <section className={style.feedback} id="feedbacks">
+    <section
+      className={`${style.feedback} ${style[`feedback--${variant}`]}`}
+      id="feedbacks"
+    >
       <div className="container">
-        <div className={style.titleContainer}>
-          <h2 className={style.title}>
+        <div
+          className={`${style.titleContainer} ${style[`titleContainer--${variant}`]}`}
+        >
+          <h2 className={`${style.title} ${style[`title--${variant}`]}`}>
             {isMainPage && 'Останні відгуки'}
             {(isToolPage || isUserPage) && 'Відгуки'}{' '}
           </h2>
           {isToolPage && (
-            <button className={style.feedbackBtn}>Залишити відгук</button>
+            <button className={`${style.feedbackBtn} button button--secondary`}>
+              Залишити відгук
+            </button>
           )}
         </div>
         {hasNoFeedbacks && isToolPage && <EmptyFeedbacks />}
-        {hasNoFeedbacks && isUserPage && isOwner && <EmptyUserFeedbacks />}
+        {hasNoFeedbacks && isUserPage && !isOwner && <EmptyUserFeedbacks />}
         {hasNoFeedbacks && isUserPage && isOwner && (
           <EmptyUserPersonalFeedbacks />
         )}

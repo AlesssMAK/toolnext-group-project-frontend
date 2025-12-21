@@ -97,7 +97,6 @@ export async function fetchFeedbacks({
       ...(userId && { userId }),
     },
   });
-  console.log(data);
 
   return data;
 }

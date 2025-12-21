@@ -22,6 +22,7 @@ export default function ToolsGrid({
   initialPage,
   totalPages: initialTotalPages,
   perPage,
+  isOwner,
 }: Props) {
   const [tools, setTools] = useState<Tool[]>(initialTools);
   const [page, setPage] = useState(initialPage);
@@ -63,7 +64,7 @@ export default function ToolsGrid({
       <div className={`container ${styles.grid_cover}`}>
         <div className={styles.grid}>
           {tools.map(tool => (
-            <ToolCard key={tool._id} tool={tool} />
+            <ToolCard key={tool._id} tool={tool} isOwner={isOwner} />
           ))}
         </div>
 

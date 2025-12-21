@@ -12,9 +12,9 @@ const PostListing = ({ variant = 'header', onItemClick }: PostListingProps) => {
   return (
     <div className={css[variant]}>
       <Link
-        href="/"
+        href="/manage-tools/new"
         prefetch={false}
-        className={`${css.btn} button button--primary`}
+        className={`${css.navigationLinkBtn} button button--primary`}
         onClick={onItemClick}
       >
         Опублікувати оголошення
