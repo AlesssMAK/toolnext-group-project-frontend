@@ -13,18 +13,23 @@ const EditToolsPage = async ({ params }: PageEditToolProps) => {
     return <p>Інструмент не знайдено</p>;
   }
   const initialData = {
+    id: toolId,
     name: tool.name || '',
     pricePerDay: tool.pricePerDay || '',
     category: tool.category || '',
     rentalTerms: tool.rentalTerms || '',
     description: tool.description || '',
-    specifications: tool.specifications || '',
+    specifications: tool.specifications
+      ? Object.entries(tool.specifications)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join('\n')
+      : '',
     photo: tool.images || '',
   };
 
   return (
     <section>
-      <AddEditToolForm initialData={initialData} />
+      <AddEditToolForm initialData={initialData} isEditMode={true} />
     </section>
   );
 };
