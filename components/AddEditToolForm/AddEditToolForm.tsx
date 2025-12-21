@@ -35,7 +35,7 @@ export default function AddEditToolForm({
       .max(96, 'Максимум 96 символів')
       .required('Обовʼязкове поле'),
 
-    price: Yup.number()
+    pricePerDay: Yup.number()
       .min(0, 'Ціна не може бути відʼємною')
       .required('Обовʼязкове поле'),
 
@@ -56,7 +56,7 @@ export default function AddEditToolForm({
   const formik = useFormik({
     initialValues: {
       name: initialData?.name || '',
-      price: initialData?.price || '',
+      pricePerDay: initialData?.pricePerDay || '',
       category: initialData?.category || '',
       description: initialData?.description || '',
       specifications: initialData?.specifications || '',
@@ -64,7 +64,9 @@ export default function AddEditToolForm({
     },
     enableReinitialize: true,
     validationSchema,
+
     onSubmit: async values => {
+      console.log('123');
       setIsLoading(true);
 
       try {
@@ -72,7 +74,9 @@ export default function AddEditToolForm({
 
         Object.entries(values).forEach(([key, value]) => {
           if (key === 'photo' && value instanceof File) {
-            formData.append(key, value);
+            formData.append('image', value);
+          } else if (key === 'category') {
+            formData.append(key, '6704d9c7f1a3b8c2d5e4f6a0');
           } else if (value !== null) {
             formData.append(key, String(value));
           }
@@ -82,9 +86,22 @@ export default function AddEditToolForm({
 
         const method = isEditMode ? 'PUT' : 'POST';
 
-        const response = await fetch(url, { method, body: formData });
+        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
+          method,
+          body: formData,
+          credentials: 'include',
+        });
 
-        if (!response.ok) throw new Error('Помилка на сервері');
+        // 🔐 optional: обробка неавторизованого доступу
+        if (response.status === 401) {
+          toast.error('Увійдіть у систему');
+          router.push('/login');
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error('Помилка на сервері');
+        }
 
         const data = await response.json();
 
@@ -104,7 +121,6 @@ export default function AddEditToolForm({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
@@ -130,6 +146,7 @@ export default function AddEditToolForm({
     <div className={css.formSection}>
       <div className="container">
         <form onSubmit={formik.handleSubmit} className={css.form}>
+          {/* Фото */}
           <div className={css.formGroup}>
             <div className={css.photoWrapper}>
               {previewUrl ? (
@@ -175,6 +192,7 @@ export default function AddEditToolForm({
             </div>
           </div>
 
+          {/* Назва */}
           <div className={css.formGroup}>
             <label>
               Назва
@@ -185,9 +203,6 @@ export default function AddEditToolForm({
                 {...formik.getFieldProps('name')}
               />
             </label>
-            {formik.touched.name && formik.errors.name && (
-              <p className={css.errorText}>{formik.errors.name as string}</p>
-            )}
           </div>
 
           {/* Ціна */}
@@ -197,14 +212,13 @@ export default function AddEditToolForm({
               <input
                 type="number"
                 className={`${css.input} ${
-                  formik.touched.price && formik.errors.price ? css.error : ''
+                  formik.touched.pricePerDay && formik.errors.pricePerDay
+                    ? css.error
+                    : ''
                 }`}
-                {...formik.getFieldProps('price')}
+                {...formik.getFieldProps('pricePerDay')}
               />
             </label>
-            {formik.touched.price && formik.errors.price && (
-              <p className={css.errorText}>{formik.errors.price as string}</p>
-            )}
           </div>
 
           {/* Категорія */}
@@ -227,11 +241,6 @@ export default function AddEditToolForm({
                 ))}
               </select>
             </label>
-            {formik.touched.category && formik.errors.category && (
-              <p className={css.errorText}>
-                {formik.errors.category as string}
-              </p>
-            )}
           </div>
 
           {/* Опис */}
@@ -239,19 +248,10 @@ export default function AddEditToolForm({
             <label>
               Опис
               <textarea
-                className={`${css.textarea} ${
-                  formik.touched.description && formik.errors.description
-                    ? css.error
-                    : ''
-                }`}
+                className={css.textarea}
                 {...formik.getFieldProps('description')}
               />
             </label>
-            {formik.touched.description && formik.errors.description && (
-              <p className={css.errorText}>
-                {formik.errors.description as string}
-              </p>
-            )}
           </div>
 
           {/* Характеристики */}
