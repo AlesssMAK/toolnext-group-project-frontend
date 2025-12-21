@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
 
 type Props = {
   initialData?: any;
@@ -20,6 +19,7 @@ export default function AddEditToolForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(initialData?.photo || '');
+  const [isPhotoUploaded, setIsPhotoUploaded] = useState(false);
   const [categories, setCategories] = useState<
     { _id: string; title: string }[]
   >([]);
@@ -139,6 +139,7 @@ export default function AddEditToolForm({
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setIsPhotoUploaded(false);
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -157,54 +158,62 @@ export default function AddEditToolForm({
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreviewUrl(reader.result as string);
+      setIsPhotoUploaded(true);
     };
     reader.readAsDataURL(file);
   };
 
   return (
     <div className={css.formSection}>
-      <div className="container">
-        <form onSubmit={formik.handleSubmit} className={css.form}>
-          {/* Фото */}
+      <form onSubmit={formik.handleSubmit} className={css.form}>
+        {/* Фото */}
+        <div className={css.formFields}>
           <div className={css.formGroup}>
             <div className={css.photoWrapper}>
-              {previewUrl ? (
-                <div className={css.previewContainer}>
-                  <Image
-                    src={previewUrl}
-                    alt="Preview"
-                    width={300}
-                    height={300}
-                    className={css.previewImg}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPreviewUrl('');
-                      formik.setFieldValue('photo', null);
-                    }}
-                    className={css.removePhoto}
-                  >
-                    ✕
-                  </button>
-                </div>
-              ) : (
-                <label className={css.photoLabel}>
-                  <span className={css.placeholderText}>Фото інструменту</span>
-                  <Image
-                    src="/images/add_tool_form/placeholder-2x-mob.jpg"
-                    alt="Фото інструменту"
-                    width={335}
-                    height={223}
-                  />
-                  <input
-                    className={css.hidden}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                </label>
-              )}
+              <div className={css.previewContainer}>
+                <span className={css.placeholderText}>Фото інструменту</span>
+                {isPhotoUploaded ? (
+                  <>
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className={css.previewImg}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPreviewUrl('');
+                        formik.setFieldValue('photo', null);
+                        setIsPhotoUploaded(false);
+                      }}
+                      className="button button--secondary"
+                    >
+                      Видалити фото
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      alt="Preview"
+                      className={css.previewImg}
+                      srcSet="/images/add_tool_form/AddEditFormMobile.png 375w, /images/add_tool_form/AddEditFormTablet.png 768w, /images/add_tool_form/AddEditFormDesktop.png 1440w"
+                      sizes="(max-width: 480px) 375px, (max-width: 1024px) 768px, 1440px"
+                    />
+                    <label
+                      className={`${css.photoLabel} button button--secondary`}
+                    >
+                      Завантажити фото
+                      <input
+                        className={css.hidden}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                  </>
+                )}
+              </div>
+
               {formik.touched.photo && formik.errors.photo && (
                 <p className={css.errorText}>{formik.errors.photo as string}</p>
               )}
@@ -296,31 +305,31 @@ export default function AddEditToolForm({
               />
             </label>
           </div>
+        </div>
 
-          {/* Кнопки */}
-          <div className={css.buttonGroup}>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`button button--primary ${css.button}`}
-            >
-              {isLoading
-                ? 'Завантаження...'
-                : isEditMode
-                  ? 'Зберегти зміни'
-                  : 'Опублікувати'}
-            </button>
+        {/* Кнопки */}
+        <div className={css.buttonGroup}>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`button button--primary ${css.button}`}
+          >
+            {isLoading
+              ? 'Завантаження...'
+              : isEditMode
+                ? 'Зберегти зміни'
+                : 'Опублікувати'}
+          </button>
 
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className={`button button--secondary ${css.button}`}
-            >
-              Відмінити
-            </button>
-          </div>
-        </form>
-      </div>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className={`button button--secondary ${css.button}`}
+          >
+            Відмінити
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
