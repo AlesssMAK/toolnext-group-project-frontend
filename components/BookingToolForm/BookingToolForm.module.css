@@ -6,8 +6,6 @@
     gap: 48px;
     margin: 0 auto;
     padding: 32px 20px;
-    width: 375px;
-    height: 930px;
 }
 
 .container {
@@ -17,10 +15,6 @@
     flex-direction: column;
     gap: 48px;
 
-
-
-    width: 335px;
-    height: 866px;
     max-width: 1280px;
 }
 
@@ -31,7 +25,7 @@
     letter-spacing: -0.01em;
     text-align: center;
 
-    width: 335px;
+    width: 295px;
     height: 86px;
     max-width: 768px;
     gap: 16px;
@@ -44,7 +38,7 @@
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
+    width: 295px;
     height: 732px;
     max-width: 768px;
 }
@@ -56,7 +50,7 @@
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
+    width: 100%;
     height: 168px;
 }
 
@@ -67,7 +61,7 @@
     flex-direction: column;
     gap: 8px;
 
-    width: 335px;
+    width: 100%;
     height: 72px;
 }
 
@@ -78,7 +72,7 @@
     flex-direction: row;
     gap: 24px;
 
-    width: 335px;
+    width: 100%;
     height: 72px;
 }
 
@@ -89,7 +83,7 @@
     flex-direction: column;
     gap: 8px;
 
-    width: 335px;
+    width: 100%;
     height: 72px;
 }
 
@@ -100,7 +94,7 @@
     flex-direction: column;
     gap: 8px;
 
-    width: 335px;
+    width: 100%;
     height: 136px;
 }
 
@@ -111,7 +105,7 @@
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
+    width: 100%;
     height: 104px;
 }
 
@@ -132,7 +126,7 @@
     border: 2px solid var(--color-neutral-darkest);
     border-radius: 6px;
     padding: 8px 12px;
-    width: 335px;
+    width: 296px;
     height: 40px;
 
     background: var(--opacity-transparent);
@@ -148,7 +142,7 @@
     border: 2px solid var(--color-neutral-darkest);
     border-radius: 6px;
     padding: 8px 12px;
-    width: 335px;
+    width: 100%;
     height: 40px;
 
     background: var(--opacity-transparent);
@@ -161,7 +155,7 @@
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
+    width: 100%;
     height: 92px;
 }
 
@@ -175,7 +169,7 @@
     border: 1px solid var(--color-electric-violet);
     border-radius: 6px;
     padding: 10px 24px;
-    width: 335px;
+    width: 295px;
     height: 44px;
 
     background: var(--color-electric-violet);
@@ -188,7 +182,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .deletePush {
+    .section {
         padding: 32px;
         width: 768px;
         height: 576px;
@@ -247,6 +241,112 @@
 
         width: 704px;
         height: 72px;
+    }
+
+    .inputs {
+        gap: 16px;
+
+        width: 340px;
+        height: 40px;
+    }
+
+    .inputs_phone {
+        gap: 8px;
+
+        width: 704px;
+        height: 40px;
+    }
+
+    .blok_button {
+        justify-content: space-between;
+        flex-direction: row;
+
+        width: 704px;
+        height: 44px;
+    }
+
+    .button_boking {
+        gap: 8px;
+
+        width: 155px;
+
+        background: var(--color-electric-violet);
+
+        font-weight: 500;
+        font-size: 16px;
+
+        line-height: 1.5;
+        color: var(--color-white);
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .section {
+        padding: 48px 64px;
+        width: 1440px;
+        height: 622px;
+    }
+
+    .container {
+        width: 704px;
+        height: 512px;
+        max-width: 1280px;
+    }
+
+    .titleBooking {
+        font-size: 30px;
+
+        width: 704px;
+        height: 36px;
+        gap: 16px;
+    }
+
+    .formBoking {
+        width: 704px;
+        height: 428px;
+        max-width: 768px;
+    }
+
+    .blok_fameli_city {
+        flex-direction: row;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .blok_fameli_city li {
+        width: 340px;
+    }
+
+    .blok_phone {
+        width: 704px;
+    }
+
+    .blok_phone li {
+        width: 704px;
+    }
+
+    .blok_calendar {
+        flex-direction: column;
+        gap: 8px;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .blok_calendar ul {
+        flex-direction: row;
+        gap: 24px;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .inputs {
+        gap: 16px;
+
+        width: 340px;
+        height: 40px;
     }
 
     .inputs_phone {

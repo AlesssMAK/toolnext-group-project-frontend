@@ -27,7 +27,7 @@ interface MyFormValues {
   deliveryBranch: string;
 }
 
-export default function BookingForm({toolId, pricePerDay}: Props) {
+export default function BookingForm() {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
@@ -85,7 +85,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
             credentials: 'include',
             body: JSON.stringify({
               ...values,
-              toolId, 
+              // toolId, fffffffffffff
               startDate: values.startDate?.toISOString().split('T')[0],
               endDate: values.endDate?.toISOString().split('T')[0],
             }),
@@ -114,7 +114,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
     >
       {({ setFieldValue, values, isSubmitting }) => {
         const bookingDays = getBookingDays(values.startDate, values.endDate);
-        const totalPrice = bookingDays * pricePerDay; 
+        // const totalPrice = bookingDays * pricePerDay; ffffffffffffffffffff
 
         return (
           <section className={css.section}>
@@ -217,7 +217,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
                     <li>
                     <span className="font-medium">
                       Ціна: це видалити
-                Ціна: {totalPrice} грн 
+                {/* Ціна: {totalPrice} грн  */}
                 {/* {bookingDays > 0 && (
                   <span className="text-sm text-gray-500">
                     {' '}
