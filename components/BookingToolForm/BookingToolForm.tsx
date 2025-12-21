@@ -43,22 +43,31 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
     return diffDays > 0 ? diffDays : 0;
   };
 
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
   const validationSchema = Yup.object({
     userFirstname: Yup.string().min(2).max(50).required('Вкажіть імʼя'),
     userLastname: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
     userPhone: Yup.string()
       .matches(/^\+?[0-9\s\-()]{7,20}$/, 'Невірний формат телефону')
       .required('Вкажіть номер телефону'),
+    
     startDate: Yup.date()
-      .required('Оберіть дату початку')
-      .min(new Date(), 'Дата не може бути в минулому'),
-    endDate: Yup.date()
-      .required('Оберіть дату завершення')
-      .when('startDate', (startDate, schema) =>
-        startDate
-          ? schema.min(startDate, 'Дата завершення має бути пізніше')
-          : schema
-      ),
+    .nullable() 
+    .typeError('Вкажіть коректну дату початку') 
+    .required('Оберіть дату початку')
+    .min(startOfToday, 'Дата не може бути в минулому'),
+
+  endDate: Yup.date()
+    .nullable()
+    .typeError('Вкажіть коректну дату завершення')
+    .required('Оберіть дату завершення')
+    .test('is-after-start', 'Дата завершення має бути пізніше за початок', function (value) {
+      const { startDate } = this.parent;
+      if (!startDate || !value) return true;
+      return value >= startDate;
+    }),
     deliveryCity: Yup.string().min(2).required('Вкажіть місто'),
     deliveryBranch: Yup.string().min(1).required('Вкажіть відділення'),
   });
@@ -79,31 +88,27 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          const res = await fetch(
-            process.env.NEXT_PUBLIC_API_URL + '/api/bookings',
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              credentials: 'include',
-              body: JSON.stringify({
-                ...values,
-                toolId,
-                startDate: values.startDate?.toISOString().split('T')[0],
-                endDate: values.endDate?.toISOString().split('T')[0],
-              }),
-            }
-          );
+          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              ...values,
+              toolId,
+              startDate: values.startDate?.toISOString().split('T')[0],
+              endDate: values.endDate?.toISOString().split('T')[0],
+            }),
+          });
 
           const data = await res.json();
 
           if (!res.ok) {
-            if (data.code === 'TOOL_UNAVAILABLE' && data.nextAvailable) {
-              setServerWarning(
-                `Інструмент зайнятий. Найближчий вільний період: ${data.nextAvailable.start} — ${data.nextAvailable.end}`
-              );
-              return;
+            if (data.message?.includes('booked')) {
+              setServerWarning('Інструмент вже зайнятий на вибрані дати');
+              return;  
             }
-            throw new Error('Сталася помилка бронювання');
+            setServerWarning(data.message || 'Сталася помилка бронювання');
+            return;  
           }
 
           router.push('/confirm/booking');
