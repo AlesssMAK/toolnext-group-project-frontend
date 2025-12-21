@@ -1,20 +1,17 @@
 /* Styles for Mobile devices */
 
 .section {
-  padding-top: 64px;
+  padding-top: 32px;
   padding-bottom: 64px;
 }
 
-.title {
+/* .title {
   font-weight: 700;
-  font-size: 48px;
-
-  /* line-height: 58px; */
+  font-size: 44px;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-black);
-  margin-bottom: 32px;
-}
+} */
 
 .wrapper {
   display: flex;
@@ -42,48 +39,18 @@
   color: var(--color-black);
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.btn {
   width: 100%;
-  max-width: 335px;
-  padding: 8px 20px;
-  border-radius: 6px;
-
-  background: var(--color-electric-violet);
-  border: 2px solid var(--color-electric-violet);
-
-  font-weight: 500;
-  font-size: 16px;
-
-  /* line-height: 24px; */
-  line-height: 1.5;
-  color: var(--color-white);
-  transition: 0.2s;
 }
 
-.button:hover,
-.button:focus {
-  border: 2px solid var(--color-electric-violet);
-  background: var(--color-white);
-  color: var(--color-black);
-}
-
-.button:active {
-  border: 2px solid var(--color-electric-violet);
-  background: var(--color-electric-violet-lighter);
-  color: var(--color-black);
-}
 
 /* Styles for Tablet devices */
 
 @media only screen and (min-width: 768px) {
 
-    .button {
+    .btn {
         width: auto;
         max-width: max-content;
-        padding: 8px 20px;
     }
 }
 

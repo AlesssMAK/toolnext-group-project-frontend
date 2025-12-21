@@ -55,7 +55,6 @@ export default function RegistrationForm() {
         };
 
         const res = await register(payload);
-        console.log('REGISTER RES:', res);
         setUser(res.user);
         toast.success(`Вітаю! Аккаунт створено 🎉`);
 

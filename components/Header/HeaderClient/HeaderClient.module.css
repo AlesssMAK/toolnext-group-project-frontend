@@ -6,7 +6,7 @@
 }
 
 .burgerButton {
-  border: 2px solid var(--color-black);
+  border: 2px solid var(--color-neutral-darkest);
   border-radius: 6px;
   padding: 8px;
   width: 40px;

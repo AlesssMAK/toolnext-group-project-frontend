@@ -1,129 +1,151 @@
-.section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 32px 20px;
-}
-
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    width: 100%;
-    max-width: 400px;
-}
-
-.title {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 16px;
+    gap: 48px;
 
-    width: 335px;
-    height: 86px;
-    max-width: 768px;
+    max-width: 375px;
+    margin: 0 auto;
+
 }
 
-.title h2 {
+.titleBooking {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: center;
+
+    word-break: break-word;
+
     font-weight: 700;
     font-size: 36px;
-
     line-height: 1.2;
     letter-spacing: -0.01em;
-    text-align: center;
+
+    height: 100%;
+    gap: 16px;
 }
 
-.form {
+.formBoking {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
     height: 732px;
-    max-width: 768px;
 }
 
-.list {
+.blok_fameli_city {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
     height: 168px;
 }
 
-.item {
+.blok_fameli_city li {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
     gap: 8px;
 
-    width: 335px;
+    width: 100%;
     height: 72px;
 }
 
-.label {
+.blok_phone {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 24px;
+
+    height: 72px;
+}
+
+.blok_phone li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+
+    width: 100%;
+    height: 72px;
+}
+
+.blok_calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blok_calendar ul {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 24px;
+
+    height: 104px;
+}
+
+.labels {
     font-weight: 400;
     font-size: 16px;
-
-    /* line-height: 24px; */
     line-height: 1.5;
     color: var(--color-scheme-3-text);
 }
 
-.field {
+.inputs {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    gap: 8px;
+    gap: 24px;
 
     border: 2px solid var(--color-neutral-darkest);
     border-radius: 6px;
     padding: 8px 12px;
-    width: 335px;
+    width: 100%;
     height: 40px;
+
+    background: var(--opacity-transparent);
 }
 
-.listphone {
+.inputs_phone {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: row;
     gap: 24px;
 
-    width: 335px;
-    height: 72px;
+    border: 2px solid var(--color-neutral-darkest);
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 100%;
+    height: 40px;
+
+    background: var(--opacity-transparent);
 }
 
-.priceBlock {
+.blok_button {
     display: flex;
-    align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
 
-    width: 335px;
+    width: 100%;
     height: 92px;
 }
 
-.price {
-    font-weight: 700;
-    font-size: 16px;
-
-    /* line-height: 24px; */
-    line-height: 1.5;
-    color: var(--color-scheme-3-text);
-}
-
-.priceButton {
+.button_boking {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,17 +155,172 @@
     border: 1px solid var(--color-electric-violet);
     border-radius: 6px;
     padding: 10px 24px;
-    width: 335px;
+    width: 100%;
     height: 44px;
+
+    background: var(--color-electric-violet);
+
+    font-weight: 500;
+    font-size: 16px;
+
+    line-height: 1.5;
+    color: var(--color-white);
 }
 
-.priceButton:focus {
-    background-color: solid var(--color-electric-violet);
+.button_boking:hover,
+.button_boking:focus {
+    font-weight: 500;
+    font-size: 16px;
+
+    line-height: 1.5;
+    border: 2px solid var(--color-electric-violet);
+    background-color: var(--color-white);
+    color: var(--color-scheme-1-text);
 }
 
+.button_boking:active {
+    background: var(--color-electric-violet-lighter);
+}
 
-@media screen and (min-width: 768px) {
-    .nav_list {
-        flex-direction: row;
+@media screen and (min-width: 740px) {
+    .titleBooking {
+        font-size: 30px;
+
+        width: 704px;
+        height: 36px;
+        gap: 16px;
     }
+
+    .formBoking {
+        width: 704px;
+        height: 428px;
+    }
+
+    .blok_fameli_city {
+        flex-direction: row;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .blok_fameli_city li {
+        width: 340px;
+    }
+
+    .blok_phone {
+        width: 704px;
+    }
+
+    .blok_phone li {
+        width: 704px;
+    }
+
+    .blok_calendar {
+        flex-direction: column;
+        gap: 8px;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .blok_calendar ul {
+        flex-direction: row;
+        gap: 24px;
+
+        width: 704px;
+        height: 72px;
+    }
+
+    .inputs {
+        gap: 16px;
+
+        width: 340px;
+        height: 40px;
+    }
+
+    .inputs_phone {
+        gap: 8px;
+
+        width: 704px;
+        height: 40px;
+    }
+
+    .blok_button {
+        justify-content: space-between;
+        flex-direction: row;
+
+        width: 704px;
+        height: 44px;
+    }
+
+    .button_boking {
+        width: 155px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .titleBooking {
+        font-weight: 700;
+        font-size: 42px;
+
+        width: 768px;
+        height: 50px;
+    }
+
+    .formBoking {
+        width: 100%;
+        height: 428px;
+    }
+
+    .blok_fameli_city {
+        flex-direction: row;
+
+        width: 864px;
+        height: 72px;
+    }
+
+    .blok_fameli_city li {
+        width: 420px;
+    }
+
+    .blok_phone {
+        width: 864px;
+    }
+
+    .blok_phone li {
+        width: 864px;
+    }
+
+    .blok_calendar {
+        width: 864px;
+    }
+
+    .blok_calendar ul {
+        width: 704px;
+    }
+
+    .inputs {
+        gap: 8px;
+
+        width: 420px;
+    }
+
+    .inputs_phone {
+        gap: 8px;
+
+        width: 100%;
+    }
+
+    .blok_button {
+        width: 864px;
+    }
+}
+
+.error_message {
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 12px;
+
+    line-height: 1.5;
+    color: var(--color-red-dark);
 }

@@ -18,7 +18,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: var(--color-black);
+  color: var(--color-scheme-1-border);
   white-space: nowrap;
   transition: 0.3s ease;
 }
@@ -29,7 +29,7 @@
 
 .navigationLink:hover,
 .navigationLink:focus {
-  border-bottom: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-scheme-1-border);
 }
 
 .navigationLink:active {
@@ -39,6 +39,7 @@
 
 .navigationLinkBtn {
   padding: 8px 20px;
+  height: 40px;
 }
 
 .userContainer {

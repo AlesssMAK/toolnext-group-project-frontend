@@ -65,7 +65,7 @@ export async function getMe(): Promise<User | null> {
 // };
 
 // export const updateMe = async (payload: UpdateUserRequest) => {
-//   const res = await nextServer.patch<User>('/users/me', payload);
+//   const res = await nextServer.patch<User>('/users/me/avatar', payload);
 //   return res.data;
 // };
 
@@ -97,7 +97,27 @@ export async function fetchFeedbacks({
       ...(userId && { userId }),
     },
   });
-  console.log(data);
 
+  return data;
+}
+
+export const updateMyAvatar = async (file: File) => {
+  const formData = new FormData();
+  formData.append('avatar', file);
+
+  const res = await nextServer.patch('/users/me/avatar', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+  return res.data;
+};
+interface deleteToolRequest {
+  toolId: string;
+}
+
+export async function deleteTool({ toolId }: deleteToolRequest) {
+  const { data } = await nextServer.delete<deleteToolRequest>(
+    `tools/${toolId}`
+  );
   return data;
 }

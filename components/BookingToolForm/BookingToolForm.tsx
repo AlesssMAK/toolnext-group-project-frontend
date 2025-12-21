@@ -1,5 +1,6 @@
 'use client';
 
+import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -42,22 +43,31 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
     return diffDays > 0 ? diffDays : 0;
   };
 
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
   const validationSchema = Yup.object({
     userFirstname: Yup.string().min(2).max(50).required('Вкажіть імʼя'),
     userLastname: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
     userPhone: Yup.string()
       .matches(/^\+?[0-9\s\-()]{7,20}$/, 'Невірний формат телефону')
       .required('Вкажіть номер телефону'),
+    
     startDate: Yup.date()
-      .required('Оберіть дату початку')
-      .min(new Date(), 'Дата не може бути в минулому'),
-    endDate: Yup.date()
-      .required('Оберіть дату завершення')
-      .when('startDate', (startDate, schema) =>
-        startDate
-          ? schema.min(startDate, 'Дата завершення має бути пізніше')
-          : schema
-      ),
+    .nullable() 
+    .typeError('Вкажіть коректну дату початку') 
+    .required('Оберіть дату початку')
+    .min(startOfToday, 'Дата не може бути в минулому'),
+
+  endDate: Yup.date()
+    .nullable()
+    .typeError('Вкажіть коректну дату завершення')
+    .required('Оберіть дату завершення')
+    .test('is-after-start', 'Дата завершення має бути пізніше за початок', function (value) {
+      const { startDate } = this.parent;
+      if (!startDate || !value) return true;
+      return value >= startDate;
+    }),
     deliveryCity: Yup.string().min(2).required('Вкажіть місто'),
     deliveryBranch: Yup.string().min(1).required('Вкажіть відділення'),
   });
@@ -78,7 +88,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          const res = await fetch('http://localhost:3030/api/bookings', {
+          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/bookings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -93,14 +103,12 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
           const data = await res.json();
 
           if (!res.ok) {
-            if (data.code === 'TOOL_UNAVAILABLE' && data.nextAvailable) {
-              setServerWarning(
-                `Інструмент зайнятий. Найближчий вільний період: ${data.nextAvailable.start} — ${data.nextAvailable.end}`
-              );
-              return;
+            if (data.message?.includes('booked')) {
+              setServerWarning('Інструмент вже зайнятий на вибрані дати');
+              return;  
             }
-
-            throw new Error('Сталася помилка бронювання');
+            setServerWarning(data.message || 'Сталася помилка бронювання');
+            return;  
           }
 
           router.push('/confirm/booking');
@@ -116,94 +124,167 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         const totalPrice = bookingDays * pricePerDay;
 
         return (
-          <Form className="max-w-xl space-y-4 border p-4 rounded">
-            <h2 className="text-xl font-semibold">Підтвердження бронювання</h2>
+          <div className={css.container}>
+            <h2 className={`${css.titleBooking} text-xl font-semibold`}>
+              Підтвердження бронювання
+            </h2>
+            <Form
+              className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}
+            >
+              <ul className={css.blok_fameli_city}>
+                <li>
+                  <label className={css.labels} htmlFor="userFirstname">
+                    Ім'я
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="userFirstname"
+                    placeholder="Ваше імʼя"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userFirstname"
+                    component="p"
+                  />
+                </li>
+                <li>
+                  <label className={css.labels} htmlFor="userLastname">
+                    Прізвище
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="userLastname"
+                    placeholder="Прізвище"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userLastname"
+                    component="p"
+                  />
+                </li>
+              </ul>
 
-            <Field name="userFirstname" placeholder="Імʼя" />
-            <ErrorMessage
-              name="userFirstname"
-              component="p"
-              className="text-red-600 text-sm"
-            />
+              <ul className={css.blok_phone}>
+                <li>
+                  <label className={css.labels} htmlFor="userPhone">
+                    Номер телефону
+                  </label>
+                  <Field
+                    className={css.inputs_phone}
+                    name="userPhone"
+                    placeholder="+38 (XXX) XXX XX XX"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userPhone"
+                    component="p"
+                  />
+                </li>
+              </ul>
 
-            <Field name="userLastname" placeholder="Прізвище" />
-            <ErrorMessage
-              name="userLastname"
-              component="p"
-              className="text-red-600 text-sm"
-            />
+              <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+                <label className={css.labels}>Виберіть період бронювання</label>
+                <ul>
+                  <li>
+                    <DatePicker
+                      className={css.inputs}
+                      selected={values.startDate}
+                      onChange={(date: Date | null) =>
+                        setFieldValue('startDate', date)
+                      }
+                      locale="uk"
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Початкова дата"
+                    />
+                    <ErrorMessage
+                      className={`${css.error_message} text-red-600 text-sm`}
+                      name="startDate"
+                      component="p"
+                    />
+                  </li>
+                  <li>
+                    <DatePicker
+                      className={css.inputs}
+                      selected={values.endDate}
+                      onChange={(date: Date | null) =>
+                        setFieldValue('endDate', date)
+                      }
+                      locale="uk"
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Кінцева дата"
+                    />
+                    <ErrorMessage
+                      className={`${css.error_message} text-red-600 text-sm`}
+                      name="endDate"
+                      component="p"
+                    />
+                  </li>
+                </ul>
+              </div>
 
-            <Field name="userPhone" placeholder="+380..." />
-            <ErrorMessage
-              name="userPhone"
-              component="p"
-              className="text-red-600 text-sm"
-            />
+              <ul className={css.blok_fameli_city}>
+                <li>
+                  <label className={css.labels} htmlFor="deliveryCity">
+                    Місто доставки
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="deliveryCity"
+                    placeholder="Ваше місто"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="deliveryCity"
+                    component="p"
+                  />
+                </li>
+                <li>
+                  <label className={css.labels} htmlFor="deliveryBranch">
+                    Відділення Нової Пошти
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="deliveryBranch"
+                    placeholder="24"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="deliveryBranch"
+                    component="p"
+                  />
+                </li>
+              </ul>
 
-            <div className="grid grid-cols-2 gap-3">
-              <DatePicker
-                selected={values.startDate}
-                onChange={(date: Date | null) =>
-                  setFieldValue('startDate', date)
-                }
-                locale="uk"
-                dateFormat="dd.MM.yyyy"
-                placeholderText="Дата початку"
-              />
-              <DatePicker
-                selected={values.endDate}
-                onChange={(date: Date | null) => setFieldValue('endDate', date)}
-                locale="uk"
-                dateFormat="dd.MM.yyyy"
-                placeholderText="Дата завершення"
-              />
-            </div>
-
-            <ErrorMessage
-              name="startDate"
-              component="p"
-              className="text-red-600 text-sm"
-            />
-            <ErrorMessage
-              name="endDate"
-              component="p"
-              className="text-red-600 text-sm"
-            />
-
-            <Field name="deliveryCity" placeholder="Місто доставки" />
-            <ErrorMessage
-              name="deliveryCity"
-              component="p"
-              className="text-red-600 text-sm"
-            />
-
-            <Field name="deliveryBranch" placeholder="Відділення / склад" />
-            <ErrorMessage
-              name="deliveryBranch"
-              component="p"
-              className="text-red-600 text-sm"
-            />
-
-            <div className="flex justify-between items-center pt-2">
-              <span className="font-medium">
-                Ціна: {totalPrice} грн
-                {/* {bookingDays > 0 && (
+              <ul
+                className={`${css.blok_button} flex justify-between items-center pt-2`}
+              >
+                <li>
+                  <span className="font-medium">
+                    Ціна: {totalPrice} грн
+                    {/* {bookingDays > 0 && (
                   <span className="text-sm text-gray-500">
                     {' '}
                     ({bookingDays} дн. × {pricePerDay} грн)
                   </span>
                 )} */}
-              </span>
+                  </span>
+                </li>
+                <li>
+                  <button
+                    className={css.button_boking}
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
+                  </button>
+                </li>
+              </ul>
 
-              <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
-              </button>
-            </div>
-
-            {serverWarning && (
-              <p className="text-orange-600 font-medium">{serverWarning}</p>
-            )}
-          </Form>
+              {serverWarning && (
+                <p className="text-orange-600 font-medium">{serverWarning}</p>
+              )}
+            </Form>
+          </div>
         );
       }}
     </Formik>

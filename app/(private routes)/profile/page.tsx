@@ -4,6 +4,7 @@ import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHold
 import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 
 import { getServerMe, getToolsByUserId } from '@/lib/api/serverApi';
+import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
 
 export const metadata = {
   title: 'Профіль користувача',
@@ -17,7 +18,7 @@ const Profile = async () => {
 
   return (
     <main>
-      <UserProfile name={user.name} avatar={user.avatar} />
+      <UserProfile name={user.name} avatar={user.avatar} isOwner={true} />
       {tools.length > 0 ? (
         <ToolsGrid
           tools={tools}
@@ -25,10 +26,12 @@ const Profile = async () => {
           initialPage={pagination.currentPage}
           totalPages={pagination.totalPages}
           perPage={pagination.perPage}
+          isOwner={true}
         />
       ) : (
         <ProfilePlaceHolder isOwner={true} />
       )}
+      <FeedbacksBlock variant="tool" userId={user.id} isOwner={true} />
     </main>
   );
 };

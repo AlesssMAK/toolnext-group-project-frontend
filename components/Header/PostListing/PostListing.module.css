@@ -1,5 +1,7 @@
 .navigationLinkBtn {
   padding: 8px 20px;
+  height: 40px;
+  width: 254px;
 }
 
 .tablet .navigationLinkBtn {
@@ -8,11 +10,6 @@
 
 .menu .navigationLinkBtn {
   display: none;
-}
-
-.btn {
-  padding: 8px 20px;
-  font-size: 16px;
 }
 
 @media (min-width: 768px) and (max-width: 1439px) {

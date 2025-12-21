@@ -23,8 +23,11 @@ export interface feedbacksProps {
   userId?: string;
 }
 
+export type FeedbacksVariant = 'home' | 'tool';
+
 export interface FeedbacksBlockProps {
   toolId?: string;
   userId?: string;
   isOwner?: boolean;
+  variant?: FeedbacksVariant;
 }

@@ -4,6 +4,7 @@ import ProfilePlaceHolder from '@/components/ProfilePlaceHolder/ProfilePlaceHold
 import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 
 import { getUserById, getToolsByUserId } from '@/lib/api/serverApi';
+import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
 
 export const metadata = {
   title: 'Профіль користувача',
@@ -35,6 +36,7 @@ const PublicProfile = async ({ params }: Props) => {
       ) : (
         <ProfilePlaceHolder isOwner={false} />
       )}
+      <FeedbacksBlock variant="tool" userId={user.id} isOwner={false} />
     </main>
   );
 };

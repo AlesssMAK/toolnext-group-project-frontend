@@ -1,0 +1,72 @@
+'use client';
+
+import css from './ToolCardButton.module.css';
+import { useRouter } from 'next/navigation';
+import ButtonComponent from '@/components/shared/ButtonComponent';
+import { deleteTool } from '@/lib/api/clientApi';
+
+interface ToolCardButtonProps {
+  toolId: string;
+  className?: string;
+  isOwner?: boolean;
+}
+
+export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
+  toolId,
+  className,
+  isOwner,
+}) => {
+  const router = useRouter();
+
+  const handleView = () => {
+    router.push(`/tools/${toolId}`);
+  };
+
+  const handleEdit = () => {
+    router.push(`/manage-tools/${toolId}/edit`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteTool({ toolId });
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div>
+      {isOwner ? (
+        <div className={css.btnContainer}>
+          <ButtonComponent
+            onClick={handleEdit}
+            className={`button button--secondary ${css.editBtn}`}
+          >
+            Редагувати
+          </ButtonComponent>
+          <ButtonComponent
+            onClick={handleDelete}
+            className={`button button--secondary ${css.deleteBtn}`}
+          >
+            <svg
+              width="24"
+              height="24"
+              className={css.deleteIcon}
+              aria-hidden="true"
+            >
+              <use href="/sprite.svg#delete"></use>
+            </svg>
+          </ButtonComponent>
+        </div>
+      ) : (
+        <ButtonComponent
+          onClick={handleView}
+          className={`button button--secondary ${className}`}
+        >
+          Детальніше
+        </ButtonComponent>
+      )}
+    </div>
+  );
+};

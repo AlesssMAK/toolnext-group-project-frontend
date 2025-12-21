@@ -1,0 +1,19 @@
+.btnContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.deleteIcon {
+  outline: 1px solid red;
+}
+
+.deleteBtn {
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.editBtn {
+  height: 40px;
+  width: 100%;
+}

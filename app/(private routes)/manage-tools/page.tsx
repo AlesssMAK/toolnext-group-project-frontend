@@ -1,5 +1,8 @@
+
+
+
 const PrivateToolsPage = () => {
-  return null;
+  return null
 };
 
 export default PrivateToolsPage;
