@@ -1,75 +1,108 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { parse } from 'cookie';
 import { checkServerSession } from './lib/api/serverApi';
 
-const privateRoutes = ['/profile', '/notes'];
+const privateRoutes = ['/profile', '/manage-tools', '/confirm/booking'];
 const authRoutes = ['/auth/login', '/auth/register'];
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  const refreshToken = cookieStore.get('refreshToken')?.value;
+  const { pathname, search } = request.nextUrl;
+
+  const accessToken = request.cookies.get('accessToken')?.value;
+  const refreshToken = request.cookies.get('refreshToken')?.value;
 
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
-  const isPrivateRoute = privateRoutes.includes(pathname);
+  const isPrivateRoute = privateRoutes.some(
+    route => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  const redirectToLogin = () => {
+    const loginUrl = new URL('/auth/login', request.url);
+    loginUrl.searchParams.set('next', pathname + search);
+    return NextResponse.redirect(loginUrl);
+  };
 
   if (!accessToken) {
     if (refreshToken) {
-      const data = await checkServerSession();
-      const setCookie = data.headers['set-cookie'];
+      try {
+        const data = await checkServerSession();
+        const setCookie = data.headers?.['set-cookie'];
 
-      if (setCookie) {
-        const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
-        for (const cookieStr of cookieArray) {
-          const parsed = parse(cookieStr);
-          const options = {
-            expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-            path: parsed.Path,
-            maxAge: Number(parsed['Max-Age']),
-          };
-          if (parsed.accessToken)
-            cookieStore.set('accessToken', parsed.accessToken, options);
-          if (parsed.refreshToken)
-            cookieStore.set('refreshToken', parsed.refreshToken, options);
-        }
+        if (setCookie) {
+          const response = NextResponse.next();
+          const cookieArray = Array.isArray(setCookie)
+            ? setCookie
+            : [setCookie];
 
-        if (isAuthRoute) {
-          return NextResponse.redirect(new URL('/', request.url), {
-            headers: {
-              Cookie: cookieStore.toString(),
-            },
-          });
-        }
+          for (const cookieStr of cookieArray) {
+            const parsedCookie = parse(cookieStr);
 
-        if (isPrivateRoute) {
-          return NextResponse.next({
-            headers: {
-              Cookie: cookieStore.toString(),
-            },
-          });
+            const options = {
+              expires: parsedCookie.Expires
+                ? new Date(parsedCookie.Expires)
+                : undefined,
+              path: parsedCookie.Path ?? '/',
+              maxAge: parsedCookie['Max-Age']
+                ? Number(parsedCookie['Max-Age'])
+                : undefined,
+            };
+
+            if (parsedCookie.accessToken) {
+              response.cookies.set(
+                'accessToken',
+                parsedCookie.accessToken,
+                options
+              );
+            }
+            if (parsedCookie.refreshToken) {
+              response.cookies.set(
+                'refreshToken',
+                parsedCookie.refreshToken,
+                options
+              );
+            }
+          }
+
+          if (isAuthRoute) {
+            const next = request.nextUrl.searchParams.get('next');
+            return NextResponse.redirect(
+              new URL(next || '/', request.url),
+              response
+            );
+          }
+
+          if (isPrivateRoute) {
+            return response;
+          }
+
+          return response;
         }
+      } catch {
+        if (isPrivateRoute) return redirectToLogin();
+        return NextResponse.next();
       }
     }
 
-    if (isAuthRoute) {
-      return NextResponse.next();
-    }
+    if (isAuthRoute) return NextResponse.next();
 
-    if (isPrivateRoute) {
-      return NextResponse.redirect(new URL('/auth/login', request.url));
-    }
+    if (isPrivateRoute) return redirectToLogin();
+
+    return NextResponse.next();
   }
 
   if (isAuthRoute) {
-    return NextResponse.redirect(new URL('/', request.url));
+    const next = request.nextUrl.searchParams.get('next');
+    return NextResponse.redirect(new URL(next || '/', request.url));
   }
-  if (isPrivateRoute) {
-    return NextResponse.next();
-  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/profile', '/authType/:path*'],
+  matcher: [
+    '/profile',
+    '/manage-tools/:path*',
+    '/confirm/booking/:path*',
+    '/auth/:path*',
+  ],
 };

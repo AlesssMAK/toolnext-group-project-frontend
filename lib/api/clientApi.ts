@@ -111,3 +111,13 @@ export const updateMyAvatar = async (file: File) => {
 
   return res.data;
 };
+interface deleteToolRequest {
+  toolId: string;
+}
+
+export async function deleteTool({ toolId }: deleteToolRequest) {
+  const { data } = await nextServer.delete<deleteToolRequest>(
+    `tools/${toolId}`
+  );
+  return data;
+}

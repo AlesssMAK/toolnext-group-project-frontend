@@ -4,15 +4,11 @@
 }
 
 .deleteIcon {
-  width: 24px;
-  height: 24px;
-  display: block; /* щоб не було дивних відступів */
-  flex: 0 0 24px; /* щоб flex не розтягував */
+  outline: 1px solid red;
 }
 
 .deleteBtn {
-  border-radius: 6px;
-  padding: 6px;
+  padding: 8px;
   width: 40px;
   height: 40px;
 }

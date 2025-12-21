@@ -79,17 +79,20 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/categories', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({
-              ...values,
-              toolId,
-              startDate: values.startDate?.toISOString().split('T')[0],
-              endDate: values.endDate?.toISOString().split('T')[0],
-            }),
-          });
+          const res = await fetch(
+            process.env.NEXT_PUBLIC_API_URL + '/api/bookings',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({
+                ...values,
+                toolId,
+                startDate: values.startDate?.toISOString().split('T')[0],
+                endDate: values.endDate?.toISOString().split('T')[0],
+              }),
+            }
+          );
 
           const data = await res.json();
 
