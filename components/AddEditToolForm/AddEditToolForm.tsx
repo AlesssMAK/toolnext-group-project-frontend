@@ -290,6 +290,8 @@ export default function AddEditToolForm({
               Характеристики
               <textarea
                 className={css.textarea}
+                placeholder={`Вага: 7кг
+Потужність: 4кBт`}
                 {...formik.getFieldProps('specifications')}
               />
             </label>
