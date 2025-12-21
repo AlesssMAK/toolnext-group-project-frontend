@@ -1,9 +1,8 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { useQuery } from '@tanstack/react-query';
 import style from './FeedbacksBlock.module.css';
 import { fetchFeedbacks } from '@/lib/api/clientApi';
@@ -16,6 +15,25 @@ import type { Swiper as SwiperClass } from 'swiper';
 import { FeedbacksBlockProps } from '@/types/feedback';
 
 export type FeedbacksVariant = 'home' | 'tool' | 'profile';
+
+function getWindow5(active: number, total: number) {
+  if (total <= 5) return Array.from({ length: total }, (_, i) => i);
+
+  let start = active - 2;
+  let end = active + 2;
+
+  if (start < 0) {
+    end += -start;
+    start = 0;
+  }
+  if (end > total - 1) {
+    const shift = end - (total - 1);
+    start = Math.max(0, start - shift);
+    end = total - 1;
+  }
+
+  return Array.from({ length: 5 }, (_, i) => start + i);
+}
 
 const FeedbacksBlock = ({
   toolId,
@@ -30,6 +48,10 @@ const FeedbacksBlock = ({
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
+
+  const [activePage, setActivePage] = useState(0);   
+  const [pagesCount, setPagesCount] = useState(1);     
+  const [groupNow, setGroupNow] = useState(1);  
 
   const setPrevEl = (el: HTMLButtonElement | null) => {
     prevRef.current = el;
@@ -54,6 +76,21 @@ const FeedbacksBlock = ({
   const isToolPage = Boolean(toolId);
   const isUserPage = Boolean(userId);
   const isMainPage = !toolId && !userId;
+
+  const syncPageState = (swiper: SwiperClass) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+
+    setActivePage(swiper.snapIndex ?? 0);
+
+    const total = swiper.snapGrid?.length ?? 1;
+    setPagesCount(total);
+    const spg =
+      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
+        ? swiper.params.slidesPerGroup
+        : 1;
+    setGroupNow(spg);
+  };
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -102,39 +139,41 @@ const FeedbacksBlock = ({
         {hasFeedbacks && (
           <div className={style.swiperWrapper}>
             <Swiper
-              modules={[Navigation, Pagination]}
+              modules={[Navigation]}
               onSwiper={swiper => {
                 swiperRef.current = swiper;
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
+                syncPageState(swiper);
               }}
               onSlideChange={swiper => {
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
+                syncPageState(swiper);
+              }}
+              onBreakpoint={(swiper) => {
+                requestAnimationFrame(() => syncPageState(swiper));
               }}
               slidesPerView={1}
+              slidesPerGroup={1}
               spaceBetween={16}
               breakpoints={{
                 320: {
                   slidesPerView: 1,
+                  slidesPerGroup: 1,
                   spaceBetween: 12,
                 },
                 375: {
                   slidesPerView: 1,
+                  slidesPerGroup: 1,
                   spaceBetween: 16,
                 },
                 768: {
                   slidesPerView: 2,
+                  slidesPerGroup: 2,
                   spaceBetween: 24,
                 },
                 1440: {
                   slidesPerView: 3,
+                  slidesPerGroup: 3,
                   spaceBetween: 32,
                 },
-              }}
-              pagination={{
-                el: '.feedback-pagination',
-                clickable: true,
               }}
               navigation={
                 navReady
@@ -155,7 +194,25 @@ const FeedbacksBlock = ({
             </Swiper>
 
             <div className={style.feedbackSwiperContainer}>
-              <div className={`${style.pagination} feedback-pagination`} />
+              <div className={style.pagination} aria-label="Pagination">
+                {getWindow5(activePage, pagesCount).map((i) => {
+                  const dist = Math.abs(i - activePage);
+                  const sizeClass =
+                    dist === 0 ? style.dotMain : dist === 1 ? style.dotMid : style.dotSmall;
+
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      className={`${style.dot} ${sizeClass} ${
+                        i === activePage ? style.dotActive : ''
+                      }`}
+                      aria-label={`Go to page ${i + 1}`}
+                      onClick={() => swiperRef.current?.slideTo(i * groupNow)}
+                    />
+                  );
+                })}
+              </div>
 
               <div className={style.arrows}>
                 <button
