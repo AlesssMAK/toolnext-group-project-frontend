@@ -22,7 +22,7 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
   };
 
   const handleEdit = () => {
-    router.push(`/tools/${toolId}/edit`);
+    router.push(`/manage-tools/${toolId}/edit`);
   };
 
   const handleDelete = () => {
