@@ -46,6 +46,11 @@ export default function AddEditToolForm({
       .max(2000, 'Максимум 2000 символів')
       .required('Додайте опис'),
 
+    rentalTerms: Yup.string()
+      .min(20, 'Мінімум 20 символів')
+      .max(2000, 'Максимум 1000 символів')
+      .required('Додайте умови оренди'),
+
     specifications: Yup.string()
       .max(1000, 'Характеристики не можуть перевищувати 1000 символів')
       .nullable(),
@@ -58,6 +63,7 @@ export default function AddEditToolForm({
       name: initialData?.name || '',
       pricePerDay: initialData?.pricePerDay || '',
       category: initialData?.category || '',
+      rentalTerms: initialData?.rentalTerms || '',
       description: initialData?.description || '',
       specifications: initialData?.specifications || '',
       photo: initialData?.photo || null,
@@ -66,7 +72,6 @@ export default function AddEditToolForm({
     validationSchema,
 
     onSubmit: async values => {
-      console.log('123');
       setIsLoading(true);
 
       try {
@@ -103,13 +108,12 @@ export default function AddEditToolForm({
           throw new Error('Помилка на сервері');
         }
 
-        const data = await response.json();
+        const result = await response.json();
 
         toast.success(
           isEditMode ? 'Оновлено успішно!' : 'Інструмент опубліковано!'
         );
-
-        router.push(`/tools/${data.id || initialData.id}`);
+        router.push(`/tools/${result.data._id || initialData.id}`);
         router.refresh();
       } catch (error) {
         toast.error('Сталася помилка. Спробуйте ще раз.');
@@ -240,6 +244,21 @@ export default function AddEditToolForm({
                   </option>
                 ))}
               </select>
+            </label>
+          </div>
+
+          {/* Умови оренди*/}
+          <div className={css.formGroup}>
+            <label>
+              Умови оренди
+              <input
+                className={`${css.input} ${
+                  formik.touched.rentalTerms && formik.errors.rentalTerms
+                    ? css.error
+                    : ''
+                }`}
+                {...formik.getFieldProps('rentalTerms')}
+              />
             </label>
           </div>
 
