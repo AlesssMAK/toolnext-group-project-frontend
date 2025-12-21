@@ -1,21 +1,9 @@
-.section {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 48px;
-    margin: 0 auto;
-    padding: 32px 20px;
-}
-
 .container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 48px;
-
-    max-width: 1280px;
 }
 
 .titleBooking {
@@ -40,7 +28,6 @@
 
     width: 295px;
     height: 732px;
-    max-width: 768px;
 }
 
 .blok_fameli_city {
@@ -181,19 +168,22 @@
     color: var(--color-white);
 }
 
-@media screen and (min-width: 768px) {
-    .section {
-        padding: 32px;
-        width: 768px;
-        height: 576px;
-    }
+.button_boking:hover,
+.button_boking:focus {
+    font-weight: 500;
+    font-size: 16px;
 
-    .container {
-        width: 704px;
-        height: 512px;
-        max-width: 1280px;
-    }
+    line-height: 1.5;
+    border: 2px solid var(--color-electric-violet);
+    background-color: var(--color-white);
+    color: var(--color-scheme-1-text);
+}
 
+.button_boking:active {
+    background: var(--color-electric-violet-lighter);
+}
+
+@media screen and (min-width: 740px) {
     .titleBooking {
         font-size: 30px;
 
@@ -205,7 +195,6 @@
     .formBoking {
         width: 704px;
         height: 428px;
-        max-width: 768px;
     }
 
     .blok_fameli_city {
@@ -266,115 +255,73 @@
     }
 
     .button_boking {
-        gap: 8px;
-
         width: 155px;
-
-        background: var(--color-electric-violet);
-
-        font-weight: 500;
-        font-size: 16px;
-
-        line-height: 1.5;
-        color: var(--color-white);
     }
 }
 
 @media screen and (min-width: 1440px) {
-    .section {
-        padding: 48px 64px;
-        width: 1440px;
-        height: 622px;
-    }
-
-    .container {
-        width: 704px;
-        height: 512px;
-        max-width: 1280px;
-    }
-
     .titleBooking {
-        font-size: 30px;
+        font-weight: 700;
+        font-size: 42px;
 
-        width: 704px;
-        height: 36px;
-        gap: 16px;
+        width: 768px;
+        height: 50px;
     }
 
     .formBoking {
-        width: 704px;
+        width: 100%;
         height: 428px;
-        max-width: 768px;
     }
 
     .blok_fameli_city {
         flex-direction: row;
 
-        width: 704px;
+        width: 864px;
         height: 72px;
     }
 
     .blok_fameli_city li {
-        width: 340px;
+        width: 420px;
     }
 
     .blok_phone {
-        width: 704px;
+        width: 864px;
     }
 
     .blok_phone li {
-        width: 704px;
+        width: 864px;
     }
 
     .blok_calendar {
-        flex-direction: column;
-        gap: 8px;
-
-        width: 704px;
-        height: 72px;
+        width: 864px;
     }
 
     .blok_calendar ul {
-        flex-direction: row;
-        gap: 24px;
-
         width: 704px;
-        height: 72px;
     }
 
     .inputs {
-        gap: 16px;
+        gap: 8px;
 
-        width: 340px;
-        height: 40px;
+        width: 420px;
     }
 
     .inputs_phone {
         gap: 8px;
 
-        width: 704px;
-        height: 40px;
+        width: 100%;
     }
 
     .blok_button {
-        justify-content: space-between;
-        flex-direction: row;
-
-        width: 704px;
-        height: 44px;
+        width: 864px;
     }
+}
 
-    .button_boking {
-        gap: 8px;
+.error_message {
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 12px;
 
-        width: 155px;
-
-        background: var(--color-electric-violet);
-
-        font-weight: 500;
-        font-size: 16px;
-
-        line-height: 1.5;
-        color: var(--color-white);
-    }
+    line-height: 1.5;
+    color: var(--color-red-dark);
 }

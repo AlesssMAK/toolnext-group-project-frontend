@@ -1,4 +1,3 @@
-// import BookingForm from "@/components/BookingToolForm/BookingToolForm";
 import BookingConfirmationPage from "./BookingConfirmationPage";
 import { Metadata } from 'next';
 
@@ -9,5 +8,4 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return <BookingConfirmationPage />;
-  // return <BookingForm />
 }
