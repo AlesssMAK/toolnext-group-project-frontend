@@ -17,8 +17,16 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleView = () => {
     router.push(`/tools/${toolId}`);
+  };
+
+  const handleEdit = () => {
+    router.push(`/manage-tools/${toolId}/edit`);
+  };
+
+  const handleDelete = () => {
+    console.log('DELETE TOOL:', toolId);
   };
 
   return (
@@ -26,18 +34,18 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
       {isOwner ? (
         <div className={css.btnContainer}>
           <ButtonComponent
-            onClick={handleClick}
+            onClick={handleEdit}
             className={`button button--secondary ${css.editBtn}`}
           >
             Редагувати
           </ButtonComponent>
           <ButtonComponent
-            onClick={handleClick}
+            onClick={handleDelete}
             className={`button button--secondary ${css.deleteBtn}`}
           >
             <svg
-              width="24"
-              height="24"
+              // width="24"
+              // height="24"
               className={css.deleteIcon}
               aria-hidden="true"
             >
@@ -47,7 +55,7 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
         </div>
       ) : (
         <ButtonComponent
-          onClick={handleClick}
+          onClick={handleView}
           className={`button button--secondary ${className}`}
         >
           Детальніше
