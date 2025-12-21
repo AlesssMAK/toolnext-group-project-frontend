@@ -1,5 +1,11 @@
+import AddEditToolForm from '@/components/AddEditToolForm/AddEditToolForm';
+
 const EditToolsPage = () => {
-  return null;
+  return (
+    <section>
+      <AddEditToolForm />
+    </section>
+  );
 };
 
 export default EditToolsPage;
