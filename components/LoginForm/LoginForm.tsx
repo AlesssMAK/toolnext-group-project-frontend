@@ -42,9 +42,10 @@ export default function LoginForm() {
         const user = await login(payload);
         setUser(user);
         toast.success('Вітаю, Ви увійшли 👌');
-        const redirectTo = searchParams.get('redirectTo') || '/';
-        router.push(redirectTo);
-        router.refresh();
+        const next = searchParams.get('next') || '/';
+        console.log('LOGIN URL PARAMS:', searchParams.toString());
+        console.log('NEXT:', searchParams.get('next'));
+        router.replace(next);
       } catch (err) {
         const apiError = err as ApiError;
 
