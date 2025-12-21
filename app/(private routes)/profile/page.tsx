@@ -18,7 +18,7 @@ const Profile = async () => {
 
   return (
     <main>
-      <UserProfile name={user.name} avatar={user.avatar} />
+      <UserProfile name={user.name} avatar={user.avatar} isOwner={true} />
       {tools.length > 0 ? (
         <ToolsGrid
           tools={tools}

@@ -12,7 +12,6 @@ const ProfilePlaceHolder = ({ isOwner }: ProfilePlaceHolderProps) => {
   return (
     <section className={css.section}>
       <div className="container">
-        <h2 className={css.title}>Інструменти</h2>
         <div className={css.wrapper}>
           <p className={css.text}>
             {isOwner
@@ -24,7 +23,7 @@ const ProfilePlaceHolder = ({ isOwner }: ProfilePlaceHolderProps) => {
               ? 'Мерщій обулікуйте своє перше оголошення, щоб почати отримувати пасивний дохід'
               : 'У нас є великий вибір інструментів від інших користувачів'}
           </p>
-          <Link href={buttonPath} className={css.button}>
+          <Link href={buttonPath} className={`button button--primary ${css.btn}`}>
             {buttonText}
           </Link>
         </div>
