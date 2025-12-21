@@ -104,6 +104,7 @@ width: 100%;
   font-weight: 400;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
+  resize: none;
 }
 .textarea:focus {
   border: 2px solid #8808cc;
