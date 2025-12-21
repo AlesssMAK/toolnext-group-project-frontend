@@ -1,6 +1,6 @@
 'use client';
 
-import css from './BookingToolForm.module.css'
+import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -14,7 +14,7 @@ registerLocale('uk', uk);
 
 type Props = {
   toolId: string;
-  pricePerDay: number; 
+  pricePerDay: number;
 };
 
 interface MyFormValues {
@@ -27,7 +27,7 @@ interface MyFormValues {
   deliveryBranch: string;
 }
 
-export default function BookingForm({toolId, pricePerDay}: Props) {
+export default function BookingForm({ toolId, pricePerDay }: Props) {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
@@ -85,7 +85,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
             credentials: 'include',
             body: JSON.stringify({
               ...values,
-              toolId, 
+              toolId,
               startDate: values.startDate?.toISOString().split('T')[0],
               endDate: values.endDate?.toISOString().split('T')[0],
             }),
@@ -113,7 +113,7 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
     >
       {({ setFieldValue, values, isSubmitting }) => {
         const bookingDays = getBookingDays(values.startDate, values.endDate);
-        const totalPrice = bookingDays * pricePerDay; 
+        const totalPrice = bookingDays * pricePerDay;
 
         return (
           <div className={css.container}>
@@ -210,8 +210,10 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
                     </li>
                 </ul>
 
-                  <ul className={`${css.blok_button} flex justify-between items-center pt-2`}>
-                    <li>
+                <ul
+                  className={`${css.blok_button} flex justify-between items-center pt-2`}
+                >
+                  <li>
                     <span className="font-medium">
                 Ціна: {totalPrice} грн 
                 {/* {bookingDays > 0 && (
@@ -220,27 +222,26 @@ export default function BookingForm({toolId, pricePerDay}: Props) {
                     ({bookingDays} дн. × {pricePerDay} грн)
                   </span>
                 )} */}
-              </span>
-                    </li>
-                    <li>
-                      <button className={css.button_boking} type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
-              </button>
-                    </li>
-                  </ul>
+                    </span>
+                  </li>
+                  <li>
+                    <button
+                      className={css.button_boking}
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
+                    </button>
+                  </li>
+                </ul>
 
-            {serverWarning && (
-              <p className="text-orange-600 font-medium">{serverWarning}</p>
-            )}
-            </Form>
+                {serverWarning && (
+                  <p className="text-orange-600 font-medium">{serverWarning}</p>
+                )}
+              </Form>
             </div>
         );
       }}
     </Formik>
   );
 }
-
-
-
-
-               

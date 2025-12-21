@@ -10,6 +10,7 @@ import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -105,7 +106,7 @@ export default function LoginForm() {
           >
             {formik.isSubmitting ? 'Завантаження...' : 'Увійти'}
           </button>
-
+          <Link href="/forgot-password">Забули пароль?</Link>
           <p className={css.loginLink}>
             Не маєте аккаунту? <a href="/auth/register">Реєстрація</a>
           </p>

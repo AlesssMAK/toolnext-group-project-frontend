@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { resetPassword } from "@/lib/api/auth";
+import style from "./reset-password.module.css";
 
 export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
@@ -49,36 +50,47 @@ export default function ResetPasswordPage() {
 
 
     return (
-        <section>
-            <h1>Reset password</h1>
+        <section className={style.mainContent}>
+      <div className={style.formSection}>
+        <form onSubmit={handleSubmit} className={style.form}>
+          <h1 className={style.formTitle}>Reset password</h1>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="New password"
-                    required
-                    minLength={8}
-                />
+          <div className={style.formGroup}>
+            <input
+              className={style.input}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="New password"
+              required
+              minLength={8}
+            />
+          </div>
 
-                <input
-                    type="password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                    placeholder="Confirm new password"
-                    required
-                    minLength={8}
-                />
+          <div className={style.formGroup}>
+            <input
+              className={style.input}
+              type="password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder="Confirm new password"
+              required
+              minLength={8}
+            />
+          </div>
 
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Saving...' : 'Reset password'}
-                </button>
+          <button
+            type="submit"
+            className={style.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Saving...' : 'Reset password'}
+          </button>
 
-            </form>
-
-            {message && <p>{ message}</p>}
-        </section>
+          {message && <p className={style.infoText}>{message}</p>}
+        </form>
+      </div>
+    </section>
     );
 }
 
