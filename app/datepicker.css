@@ -1,73 +1,110 @@
-/* контейнер календаря */
 .air-datepicker {
-  border: 2px solid var(--color-electric-violet-light);
-  background-color: var(--color-electric-violet-lightest);
-  border-radius: 6px;
-  padding: 16px 0px 0px;
+  margin: 0 auto;
   width: 335px;
-  height: 373px;
+  /* height: 437px; */
+}
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
 }
 
-/* два місяці поруч */
-/* .air-datepicker-body--day-names, */
-.air-datepicker-body--cells {
-  gap: 2px;
-}
-
-/* шапка */
-.air-datepicker-nav {
-  /* border-bottom: none; */
-  padding: 8px 12px;
-}
-
-/* назва місяця */
-.air-datepicker-nav--title {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  color: var(--color-scheme-3-text);
-}
-
-/* стрілки */
-.air-datepicker-nav--action {
-  border-radius: 50%;
-}
-.air-datepicker-nav--action:hover {
-  background: #f0f0f0;
-}
-
-/* день */
 .air-datepicker-cell {
-    border-radius: none;
-  border: 1px solid var(--color-electric-violet-light);
-  height: 36px;
-  background-color: var(--color-electric-violet-lighter);
+  border: 2px solid var(--color-scheme-1-border);
 }
 
-/* disabled */
+/* .air-datepicker,
+.air-datepicker-cell {
+  border-radius: 0;
+} */
+
+.air-datepicker-body--day-name {
+  border: 2px solid var(--color-scheme-1-border);
+  width: 47px;
+  height: 56px;
+}
 .air-datepicker-cell.-disabled- {
-  color: #ccc;
+  color: #b0b0b0;
+  text-decoration: line-through;
 }
 
-/* сьогодні */
-.air-datepicker-cell.-current- {
-  border: 1px solid var(--color-electric-violet-light);
-}
-
-/* початок / кінець */
-/* .air-datepicker-cell.-range-from-,
+.air-datepicker-cell.-in-range-,
+.air-datepicker-cell.-range-from-,
 .air-datepicker-cell.-range-to- {
-  background: #1e90ff;
-  color: #fff;
-} */
-
-/* між датами */
-/* .air-datepicker-cell.-in-range- {
-  background: rgba(30, 144, 255, 0.15);
-} */
-
-/* hover */
-.air-datepicker-cell:not(.-disabled-):hover {
-  background: #e8f1ff;
+  background-color: #e8d9ff;
+  color: #000;
 }
+
+.air-datepicker-cell:hover {
+  background-color: inherit;
+}
+
+.air-datepicker-nav {
+  border-bottom: 1.5px solid #000;
+  padding: 8px;
+}
+
+.air-datepicker-nav--title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+
+  .air-datepicker {
+    width: 704px;
+    transform: scale(1.1);
+  }
+  .calendarWrapper {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .air-datepicker-cell {
+    border: 2px solid var(--color-scheme-1-border);
+  }
+  
+  /* .air-datepicker,
+  .air-datepicker-cell {
+    border-radius: 0;
+  } */
+  
+  .air-datepicker-body--day-name {
+    width: 100px;
+    height: 56px; 
+  }
+  .air-datepicker-cell.-disabled- {
+    color: #b0b0b0;
+    text-decoration: line-through;
+  }
+  
+  .air-datepicker-cell.-in-range-,
+  .air-datepicker-cell.-range-from-,
+  .air-datepicker-cell.-range-to- {
+    background-color: #e8d9ff;
+    color: #000;
+  }
+  
+  .air-datepicker-cell:hover {
+    background-color: inherit;
+  }
+  
+  .air-datepicker-nav {
+    border-bottom: 1.5px solid #000;
+    padding: 8px;
+  }
+  
+  .air-datepicker-nav--title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+ 
+}
+
+/* Styles for Desktop devices */
+@media screen and (min-width: 1440px) {
+  .air-datepicker {
+    width: 864px;
+    transform: scale(1.1);
+  }
+}
+

@@ -1,6 +1,5 @@
 import BookingToolForm from '@/components/BookingToolForm/BookingToolForm';
-// import Link from 'next/link';
-import styles from './BookingToolPage.module.css';
+import css from './BookingToolPage.module.css';
 import { getToolById } from '@/lib/api/tools';
 
 type PageProps = {
@@ -14,7 +13,7 @@ const BookingToolPage = async ({ params }: PageProps) => {
   const tool = await getToolById(toolId);
 
   return (
-    <section className={`${styles.containerConfirmation} container`}>
+    <section className={css.containerConfirmation}>
       <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} />
     </section>
   );

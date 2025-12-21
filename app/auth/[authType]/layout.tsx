@@ -38,6 +38,7 @@ export default function AuthLayout({
         height={900}
         className={css.imageSection}
       />
+      <Link href="/forgot-password">Forgot password?</Link>
     </div>
   );
 }

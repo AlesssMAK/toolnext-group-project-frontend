@@ -79,8 +79,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          //process.env.NEXT_PUBLIC_API_URL = 'api/bookings';
-          const res = await fetch('http://localhost:3030/api/bookings', {
+          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/categories', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -101,7 +100,6 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               );
               return;
             }
-
             throw new Error('Сталася помилка бронювання');
           }
 
@@ -118,172 +116,167 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         const totalPrice = bookingDays * pricePerDay;
 
         return (
-          <section className={css.section}>
-            <div className={css.container}>
-              <h2 className={`${css.titleBooking} text-xl font-semibold`}>
-                Підтвердження бронювання
-              </h2>
-              <Form
-                className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}
-              >
-                <ul className={css.blok_fameli_city}>
-                  <li>
-                    <label className={css.labels} htmlFor="userFirstname">
-                      Ім'я
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="userFirstname"
-                      placeholder="Ваше імʼя"
-                    />
-                    <ErrorMessage
-                      name="userFirstname"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                  <li>
-                    <label className={css.labels} htmlFor="userLastname">
-                      Прізвище
-                    </label>
-                    <Field
-                      className={css.inputs}
-                      name="userLastname"
-                      placeholder="Прізвище"
-                    />
-                    <ErrorMessage
-                      name="userLastname"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                </ul>
-
-                <ul className={css.blok_phone}>
-                  <li>
-                    <label className={css.labels} htmlFor="userPhone">
-                      Номер телефону
-                    </label>
-                    <Field
-                      className={css.inputs_phone}
-                      name="userPhone"
-                      placeholder="+38 (XXX) XXX XX XX"
-                    />
-                    <ErrorMessage
-                      name="userPhone"
-                      component="p"
-                      className="text-red-600 text-sm"
-                    />
-                  </li>
-                </ul>
-
-                <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                  <label className={css.labels}>
-                    Виберіть період бронювання
+          <div className={css.container}>
+            <h2 className={`${css.titleBooking} text-xl font-semibold`}>
+              Підтвердження бронювання
+            </h2>
+            <Form
+              className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}
+            >
+              <ul className={css.blok_fameli_city}>
+                <li>
+                  <label className={css.labels} htmlFor="userFirstname">
+                    Ім'я
                   </label>
-                  <ul>
-                    <li>
-                      <DatePicker
-                        className={css.inputs}
-                        selected={values.startDate}
-                        onChange={(date: Date | null) =>
-                          setFieldValue('startDate', date)
-                        }
-                        locale="uk"
-                        dateFormat="dd.MM.yyyy"
-                        placeholderText="Початкова дата"
-                      />
-                    </li>
-                    <li>
-                      <DatePicker
-                        className={css.inputs}
-                        selected={values.endDate}
-                        onChange={(date: Date | null) =>
-                          setFieldValue('endDate', date)
-                        }
-                        locale="uk"
-                        dateFormat="dd.MM.yyyy"
-                        placeholderText="Кінцева дата"
-                      />
-                    </li>
-                  </ul>
-                </div>
+                  <Field
+                    className={css.inputs}
+                    name="userFirstname"
+                    placeholder="Ваше імʼя"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userFirstname"
+                    component="p"
+                  />
+                </li>
+                <li>
+                  <label className={css.labels} htmlFor="userLastname">
+                    Прізвище
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="userLastname"
+                    placeholder="Прізвище"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userLastname"
+                    component="p"
+                  />
+                </li>
+              </ul>
 
-                <ErrorMessage
-                  name="startDate"
-                  component="p"
-                  className="text-red-600 text-sm"
-                />
-                <ErrorMessage
-                  name="endDate"
-                  component="p"
-                  className="text-red-600 text-sm"
-                />
+              <ul className={css.blok_phone}>
+                <li>
+                  <label className={css.labels} htmlFor="userPhone">
+                    Номер телефону
+                  </label>
+                  <Field
+                    className={css.inputs_phone}
+                    name="userPhone"
+                    placeholder="+38 (XXX) XXX XX XX"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="userPhone"
+                    component="p"
+                  />
+                </li>
+              </ul>
 
-                <ul className={css.blok_fameli_city}>
+              <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+                <label className={css.labels}>Виберіть період бронювання</label>
+                <ul>
                   <li>
-                    <label className={css.labels} htmlFor="deliveryCity">
-                      Місто доставки
-                    </label>
-                    <Field
+                    <DatePicker
                       className={css.inputs}
-                      name="deliveryCity"
-                      placeholder="Ваше місто"
+                      selected={values.startDate}
+                      onChange={(date: Date | null) =>
+                        setFieldValue('startDate', date)
+                      }
+                      locale="uk"
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Початкова дата"
                     />
                     <ErrorMessage
-                      name="deliveryCity"
+                      className={`${css.error_message} text-red-600 text-sm`}
+                      name="startDate"
                       component="p"
-                      className="text-red-600 text-sm"
                     />
                   </li>
                   <li>
-                    <label className={css.labels} htmlFor="deliveryBranch">
-                      Відділення Нової Пошти
-                    </label>
-                    <Field
+                    <DatePicker
                       className={css.inputs}
-                      name="deliveryBranch"
-                      placeholder="24"
+                      selected={values.endDate}
+                      onChange={(date: Date | null) =>
+                        setFieldValue('endDate', date)
+                      }
+                      locale="uk"
+                      dateFormat="dd.MM.yyyy"
+                      placeholderText="Кінцева дата"
                     />
                     <ErrorMessage
-                      name="deliveryBranch"
+                      className={`${css.error_message} text-red-600 text-sm`}
+                      name="endDate"
                       component="p"
-                      className="text-red-600 text-sm"
                     />
                   </li>
                 </ul>
+              </div>
 
-                <ul
-                  className={`${css.blok_button} flex justify-between items-center pt-2`}
-                >
-                  <li>
-                    <span className="font-medium">
-                      Ціна: це видалити Ціна: {totalPrice} грн
-                      {/* {bookingDays > 0 && (
+              <ul className={css.blok_fameli_city}>
+                <li>
+                  <label className={css.labels} htmlFor="deliveryCity">
+                    Місто доставки
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="deliveryCity"
+                    placeholder="Ваше місто"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="deliveryCity"
+                    component="p"
+                  />
+                </li>
+                <li>
+                  <label className={css.labels} htmlFor="deliveryBranch">
+                    Відділення Нової Пошти
+                  </label>
+                  <Field
+                    className={css.inputs}
+                    name="deliveryBranch"
+                    placeholder="24"
+                  />
+                  <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                    name="deliveryBranch"
+                    component="p"
+                  />
+                </li>
+              </ul>
+
+              <ul
+                className={`${css.blok_button} flex justify-between items-center pt-2`}
+              >
+                <li>
+                  <span className="font-medium">
+                    Ціна: {totalPrice} грн
+                    {/* {bookingDays > 0 && (
                   <span className="text-sm text-gray-500">
                     {' '}
                     ({bookingDays} дн. × {pricePerDay} грн)
                   </span>
                 )} */}
-                    </span>
-                  </li>
-                  <li>
-                    <button
-                      className={css.button_boking}
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
-                    </button>
-                  </li>
-                </ul>
+                  </span>
+                </li>
+                <li>
+                  <button
+                    className={css.button_boking}
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Зачекайте...' : 'Забронювати'}
+                  </button>
+                </li>
+              </ul>
 
-                {serverWarning && (
-                  <p className="text-orange-600 font-medium">{serverWarning}</p>
-                )}
-              </Form>
-            </div>
-          </section>
+              {serverWarning && (
+                <p className="text-orange-600 font-medium">{serverWarning}</p>
+              )}
+            </Form>
+          </div>
         );
       }}
     </Formik>
