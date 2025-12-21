@@ -112,7 +112,7 @@
   pointer-events: none;
 }
 
-.feedbackSwiperContainer :global(.swiper-pagination-bullet) {
+/* .feedbackSwiperContainer :global(.swiper-pagination-bullet) {
   transform: scale(0.8);
   transition:
     background-color 0.3s ease,
@@ -133,7 +133,59 @@
 .feedbackSwiperContainer
   :global(.swiper-pagination-bullet:has(+ .swiper-pagination-bullet-active)) {
   transform: scale(1);
+} */
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 14px;
 }
+
+/* Базова крапка */
+.dot {
+  border: 0;
+  padding: 0;
+  
+  background-color: var(--color-scheme-1-text, #000);
+  
+  border-radius: 999px;
+  opacity: 0.2;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* Маленькі крайні */
+.dotSmall {
+  width: 8px;
+  height: 8px;
+}
+
+/* Сусідні */
+.dotMid {
+  width: 10px;
+  height: 10px;
+  opacity: 0.55;
+}
+
+/* Центральна активна */
+.dotMain {
+  width: 14px;
+  height: 14px;
+}
+
+/* Активна */
+.dotActive {
+  opacity: 1;
+}
+
+/* Заблокована (якщо знадобиться) */
+.dotDisabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
 
 /* -------Btn--------- */
 
