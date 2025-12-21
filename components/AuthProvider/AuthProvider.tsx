@@ -20,7 +20,6 @@ const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const fetchMe = async (): Promise<User | null> => {
       const user = await getMe();
-      console.log('[AuthProvider] me:', user);
       return user;
     };
 
@@ -29,15 +28,12 @@ const AuthProvider = ({ children }: Props) => {
 
       try {
         const user = await fetchMe();
-        console.log(user);
 
         if (user) {
           setUser(user);
           return;
         }
       } catch (e) {
-        console.log(e);
-
         if (axios.isAxiosError(e) && e.response?.status === 401) {
           try {
             const sessionChecked = await checkSession();

@@ -8,10 +8,13 @@ import { getToolById } from '@/lib/api/tools';
 
 import styles from './ToolPreview.module.css';
 import { getUserById } from '@/lib/api/serverApi';
+import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export default function ToolDetails() {
   const params = useParams();
   const toolId = params?.toolId as string;
+  const user = useAuthStore(s => s.user);
 
   const { data: tool, isError } = useQuery({
     queryKey: ['tool', toolId],
@@ -27,14 +30,18 @@ export default function ToolDetails() {
   if (isError || !tool) {
     return <p className={styles.notFound}>Sorry, tool not found!</p>;
   }
-  if (!owner) {
-    return <p className={styles.loading}>Loading owner...</p>;
-  }
+
+  const isOwner = Boolean(user?.id && user.id === tool.owner);
 
   return (
-    <section className={`${styles.page} container`}>
-      <ToolGallery images={[tool.images]} />
-      <ToolInfoBlock tool={tool} owner={owner} />
+    <section className={styles.page}>
+      <div className="container">
+        <div className={styles.toolInfoContainer}>
+          <ToolGallery images={[tool.images]} />
+          <ToolInfoBlock tool={tool} owner={owner} />
+        </div>
+      </div>
+      <FeedbacksBlock variant="tool" toolId={tool._id} isOwner={isOwner} />
     </section>
   );
 }

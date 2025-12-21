@@ -6,12 +6,12 @@ interface ProfilePlaceHolderProps {
 }
 
 const ProfilePlaceHolder = ({ isOwner }: ProfilePlaceHolderProps) => {
-  const buttonPath = isOwner ? '/tools/new' : '/';
+  const buttonPath = isOwner ? 'manage-tools/new' : '/';
   const buttonText = isOwner ? 'Опублікувати інструмент' : 'Всі інструменти';
 
   return (
     <section className={css.section}>
-      <div className='container'>
+      <div className="container">
         <h2 className={css.title}>Інструменти</h2>
         <div className={css.wrapper}>
           <p className={css.text}>
