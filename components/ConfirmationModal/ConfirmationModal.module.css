@@ -48,7 +48,7 @@
     line-height: 120%;
     letter-spacing: -0.01em;
     line-height: 1.2;
-    color: var(--color-black);
+    color: var(--color-neutral-darkest);
 }
 
 .actions {
@@ -74,8 +74,8 @@
 .cancelBtn {
     width: 100%;
     background: var(--color-white);
-    border: 2px solid var(--color-black);
-    color: var(--color-black);
+    border: 2px solid, var(--color-neutral-darkest);
+    color: var(--color-neutral-darkest);
 }
 
 
@@ -92,7 +92,7 @@
 .confirmBtn.primary:hover,
 .confirmBtn.primary:focus-visible {
     border-color: var(--color-electric-violet-light);
-    color: var(--color-black);
+    color: var(--color-neutral-darkest);
     outline: none;
 }
 
@@ -104,7 +104,7 @@
 .confirmBtn.danger:focus-visible {
     background: #fee2e2;
     border-color: var(--color-red-light);
-    color: var(--color-black);
+    color: var(--color-neutral-darkest);
     outline: none;
 }
 
