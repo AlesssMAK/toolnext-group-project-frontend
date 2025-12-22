@@ -8,11 +8,6 @@ export function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get('accessToken')?.value;
 
-  console.log('[MW]', {
-    path: pathname,
-    hasAccess: Boolean(accessToken),
-  });
-
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route));
   const isPrivateRoute = privateRoutes.some(
     route => pathname === route || pathname.startsWith(`${route}/`)

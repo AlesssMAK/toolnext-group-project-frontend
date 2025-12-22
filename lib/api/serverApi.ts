@@ -23,8 +23,6 @@ export async function getServerMe(): Promise<User> {
     headers: { Cookie: cookieStore.toString() },
   });
 
-  console.log('[PROFILE PAGE] data:', data);
-
   return data.data;
 }
 
