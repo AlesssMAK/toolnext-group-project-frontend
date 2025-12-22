@@ -20,7 +20,6 @@ const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const fetchMe = async (): Promise<User | null> => {
       const user = await getMe();
-      console.log('AUTHPROVIDER 1', user);
       return user;
     };
 
@@ -29,7 +28,6 @@ const AuthProvider = ({ children }: Props) => {
 
       try {
         const user = await fetchMe();
-        console.log('AUTHPROVIDER 2', user);
 
         if (user) {
           setUser(user);
