@@ -69,14 +69,14 @@
   font-weight: 600;
   font-size: 10px;
   line-height: 150%;
-  color: var(--color-black);
+  color: var(--color-scheme-1-text);
   white-space: nowrap;
 }
 
 .divider {
   width: 1px;
   height: 39px;
-  background: var(--color-black);
+  background: var(--color-scheme-1-text);
 }
 
 .avatarPlaceholder {
@@ -90,6 +90,11 @@
   background-color: var(--color-electric-violet);
   color: var(--color-white);
   border: 2px solid var(--color-electric-violet);
+}
+
+.logoutBtn {
+  width: 24px;
+  height: 24px;
 }
 
 .logoutBtn:hover,

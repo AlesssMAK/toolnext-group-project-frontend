@@ -135,7 +135,6 @@
   transform: scale(1);
 } */
 
-
 .pagination {
   display: flex;
   align-items: center;
@@ -147,9 +146,9 @@
 .dot {
   border: 0;
   padding: 0;
-  
+
   background-color: var(--color-scheme-1-text, #000);
-  
+
   border-radius: 999px;
   opacity: 0.2;
   cursor: pointer;
@@ -185,7 +184,6 @@
   opacity: 0.2;
   cursor: default;
 }
-
 
 /* -------Btn--------- */
 
@@ -223,9 +221,9 @@
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
-  border-color: var(--color-black);
+  border-color: var(--color-neutral-darkest);
 }
 
 .arrowBtn:disabled .btnIcon {
-  fill: var(--color-black);
+  fill: var(--color-neutral-darkest);
 }

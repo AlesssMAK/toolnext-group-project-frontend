@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: Props) => {
             const sessionChecked = await checkSession();
 
             if (!sessionChecked) {
-              // clearIsAuthenticated();
+              clearIsAuthenticated();
               return;
             }
 
@@ -49,26 +49,26 @@ const AuthProvider = ({ children }: Props) => {
               return;
             }
 
-            // clearIsAuthenticated();
+            clearIsAuthenticated();
             return;
           } catch (err) {
             console.error('AuthProvider refresh/me error:', err);
-            // clearIsAuthenticated();
+            clearIsAuthenticated();
             return;
           }
         }
 
         console.error('AuthProvider getMe error:', e);
-        // clearIsAuthenticated();
+        clearIsAuthenticated();
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [setLoading, setUser]);
+  }, [setLoading, setUser, clearIsAuthenticated]);
 
-  return children;
+  return <>{children}</>;
 };
 
 export default AuthProvider;
