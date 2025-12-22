@@ -3,12 +3,11 @@
   gap: 16px;
 }
 
-.deleteIcon {
-  outline: 1px solid red;
-}
+/* .deleteIcon {
+} */
 
 .deleteBtn {
-  padding: 8px;
+  padding: 4px;
   width: 40px;
   height: 40px;
 }

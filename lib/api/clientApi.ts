@@ -111,6 +111,7 @@ export const updateMyAvatar = async (file: File) => {
 
   return res.data;
 };
+
 interface deleteToolRequest {
   toolId: string;
 }
