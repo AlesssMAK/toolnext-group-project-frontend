@@ -1,13 +1,10 @@
 .container {
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 48px;
 
-    max-width: 375px;
-    margin: 0 auto;
-
+    width: 100%;
 }
 
 .titleBooking {
@@ -30,11 +27,11 @@
 
 .formBoking {
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
 
+    width: 100%;
     height: 732px;
 }
 
@@ -80,10 +77,16 @@
     height: 72px;
 }
 
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .blok_calendar {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 24px;
 }
 
 .blok_calendar ul {
@@ -182,7 +185,16 @@
     background: var(--color-electric-violet-lighter);
 }
 
-@media screen and (min-width: 740px) {
+@media screen and (min-width: 768px) {
+    .container {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 48px;
+
+        width: 100%;
+    }
+
     .titleBooking {
         font-size: 30px;
 
@@ -215,9 +227,10 @@
         width: 704px;
     }
 
+
     .blok_calendar {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row;
+        gap: 24px;
 
         width: 704px;
         height: 72px;
@@ -259,6 +272,19 @@
 }
 
 @media screen and (min-width: 1440px) {
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 48px;
+
+        width: 1312px;
+        height: 526px;
+        max-width: 1312px;
+
+    }
+
     .titleBooking {
         font-weight: 700;
         font-size: 42px;
@@ -268,7 +294,8 @@
     }
 
     .formBoking {
-        width: 100%;
+        justify-content: center;
+        width: 864px;
         height: 428px;
     }
 
