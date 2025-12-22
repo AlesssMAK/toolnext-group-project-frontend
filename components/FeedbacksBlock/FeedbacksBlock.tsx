@@ -83,17 +83,18 @@ const FeedbacksBlock = ({
   const isUserPage = Boolean(userId);
   const isMainPage = !toolId && !userId;
 
-  const syncPageState = (swiper: SwiperClass) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
+  const syncPageState = (swiper?: SwiperClass | null) => {
+    if (!swiper || swiper.destroyed) return;
+
+    setIsBeginning(!!swiper.isBeginning);
+    setIsEnd(!!swiper.isEnd);
 
     setActivePage(swiper.snapIndex ?? 0);
 
     const total = swiper.snapGrid?.length ?? 1;
     setPagesCount(total);
     const spg =
-      typeof swiper.params.slidesPerGroup === 'number' &&
-      swiper.params.slidesPerGroup > 0
+      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
         ? swiper.params.slidesPerGroup
         : 1;
     setGroupNow(spg);

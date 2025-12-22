@@ -6,9 +6,9 @@ import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 import { getServerMe, getToolsByUserId } from '@/lib/api/serverApi';
 import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
 
-export const metadata: Metadata = {
-  title: 'My Profile',
-  description: '',
+export const metadata = {
+  title: 'Профіль користувача',
+  description: 'Особистий кабінет',
 };
 
 const Profile = async () => {
@@ -18,7 +18,7 @@ const Profile = async () => {
 
   return (
     <main>
-      <UserProfile name={user.name} avatar={user.avatar} />
+      <UserProfile name={user.name} avatar={user.avatar} isOwner={true} />
       {tools.length > 0 ? (
         <ToolsGrid
           tools={tools}

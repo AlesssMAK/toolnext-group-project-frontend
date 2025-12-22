@@ -3,10 +3,13 @@
   gap: 16px;
 }
 
+/* .deleteIcon {
+} */
+
 .deleteBtn {
+  padding: 4px;
   width: 40px;
   height: 40px;
-  padding: 6px;
 }
 
 .editBtn {

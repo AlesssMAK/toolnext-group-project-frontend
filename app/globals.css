@@ -50,23 +50,19 @@
   --color-red-light: #ea3131;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+.html {
+  scroll-behavior: smooth;
+}
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 body {
   color: var(--color-black);
-  background: var(--color-neutral-lightest);
+  background: var(--color-scheme-3-background);
   font-family: var(--font-Inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,12 +97,6 @@ h6 {
   margin: 0;
   padding: 0;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
 
 .container {
   min-width: 320px;
@@ -159,13 +149,13 @@ section {
 
 .button--primary:hover,
 .button--primary:focus-visible {
-  color: var(--color-black);
-  background-color: var(--color-white);
+  color: var(--color-neutral-darkest);
+  background-color: transparent;
   outline: none;
 }
 
 .button--primary:active {
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
   background: var(--color-electric-violet-lighter);
 }
 
@@ -177,9 +167,9 @@ section {
 }
 
 .button--secondary {
-  border-color: var(--color-black);
-  background: var(--color-white);
-  color: var(--color-black);
+  border-color: varvar(--color-neutral-darkest);
+  background: transparent;
+  color: var(--color-neutral-darkest);
 }
 
 .button--secondary:hover {
