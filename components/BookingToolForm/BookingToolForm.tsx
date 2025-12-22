@@ -1,11 +1,11 @@
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { uk } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -124,6 +124,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         const totalPrice = bookingDays * pricePerDay;
 
         return (
+          <div className="container">
           <div className={css.container}>
             <h2 className={`${css.titleBooking} text-xl font-semibold`}>
               Підтвердження бронювання
@@ -182,12 +183,11 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 </li>
               </ul>
 
-              <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+                <div className={css.calendar}>
                 <label className={css.labels}>Виберіть період бронювання</label>
-                <ul>
-                  <li>
-                    <DatePicker
-                      className={css.inputs}
+              <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+    
+                    <DatePicker 
                       selected={values.startDate}
                       onChange={(date: Date | null) =>
                         setFieldValue('startDate', date)
@@ -195,16 +195,15 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                       locale="uk"
                       dateFormat="dd.MM.yyyy"
                       placeholderText="Початкова дата"
+                      customInput={<input className={css.inputs} name="startDate" />}
                     />
                     <ErrorMessage
                       className={`${css.error_message} text-red-600 text-sm`}
                       name="startDate"
                       component="p"
                     />
-                  </li>
-                  <li>
+               
                     <DatePicker
-                      className={css.inputs}
                       selected={values.endDate}
                       onChange={(date: Date | null) =>
                         setFieldValue('endDate', date)
@@ -212,15 +211,15 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                       locale="uk"
                       dateFormat="dd.MM.yyyy"
                       placeholderText="Кінцева дата"
+                      customInput={<input className={css.inputs} name="startDate" />}
                     />
                     <ErrorMessage
                       className={`${css.error_message} text-red-600 text-sm`}
                       name="endDate"
                       component="p"
                     />
-                  </li>
-                </ul>
-              </div>
+                  </div>
+                  </div>
 
               <ul className={css.blok_fameli_city}>
                 <li>
@@ -284,7 +283,8 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 <p className="text-orange-600 font-medium">{serverWarning}</p>
               )}
             </Form>
-          </div>
+            </div>
+            </div>
         );
       }}
     </Formik>
