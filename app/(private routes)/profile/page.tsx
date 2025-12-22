@@ -6,9 +6,9 @@ import ToolsGrid from '@/components/ToolsGrid/ToolsGrid';
 import { getServerMe, getToolsByUserId } from '@/lib/api/serverApi';
 import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
 
-export const metadata: Metadata = {
-  title: 'My Profile',
-  description: '',
+export const metadata = {
+  title: 'Профіль користувача',
+  description: 'Особистий кабінет',
 };
 
 const Profile = async () => {
