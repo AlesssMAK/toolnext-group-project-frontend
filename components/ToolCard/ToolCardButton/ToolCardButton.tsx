@@ -46,8 +46,8 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
             type="button"
           >
             <svg
-              width="40"
-              height="40"
+              width="17"
+              height="19"
               className={css.deleteIcon}
               aria-hidden="true"
             >

@@ -2,14 +2,13 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
-import { login, LoginRequest } from '@/lib/api/clientApi';
+import { getMe, login, LoginRequest } from '@/lib/api/clientApi';
 import { ApiError } from '@/app/api/api';
 import css from './LoginForm.module.css';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LoginForm() {
@@ -40,11 +39,18 @@ export default function LoginForm() {
           password: values.password,
         };
         const user = await login(payload);
-        setUser(user);
+        const me = await getMe();
+        if (!me) {
+          throw new Error('getMe повернув null після логіну');
+        }
+
+        setUser(me);
+        console.log('USER LOGIN', user);
+        console.log('USER LOGIN ME:', me);
+
         toast.success('Вітаю, Ви увійшли 👌');
         const next = searchParams.get('next') || '/';
-        console.log('LOGIN URL PARAMS:', searchParams.toString());
-        console.log('NEXT:', searchParams.get('next'));
+        router.refresh();
         router.replace(next);
       } catch (err) {
         const apiError = err as ApiError;

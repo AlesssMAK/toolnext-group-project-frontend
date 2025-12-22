@@ -10,14 +10,13 @@
   font-size: 44px;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
 } */
 
 .wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
-
 }
 
 .text {
@@ -27,7 +26,7 @@
   /* line-height: 34px; */
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
 }
 
 .subtext {
@@ -36,28 +35,26 @@
 
   /* line-height: 27px; */
   line-height: 1.5;
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
 }
 
 .btn {
   width: 100%;
 }
 
-
 /* Styles for Tablet devices */
 
 @media only screen and (min-width: 768px) {
-
-    .btn {
-        width: auto;
-        max-width: max-content;
-    }
+  .btn {
+    width: auto;
+    max-width: max-content;
+  }
 }
 
 /* Styles for Desktop devices */
 
 @media only screen and (min-width: 1440px) {
-        .section {
-            padding-bottom: 112px;
-        }
+  .section {
+    padding-bottom: 112px;
+  }
 }

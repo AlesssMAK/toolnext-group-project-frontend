@@ -61,7 +61,7 @@ body {
 }
 
 body {
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
   background: var(--color-scheme-3-background);
   font-family: var(--font-Inter);
   -webkit-font-smoothing: antialiased;
