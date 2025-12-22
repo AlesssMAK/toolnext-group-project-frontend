@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import ConfirmationModal from '@/components/ConfirmationModal/ConfirmationModal.client';
+import { deleteTool } from '@/lib/api/clientApi';
 
 export default function DeleteToolModal() {
   const router = useRouter();
@@ -13,15 +14,9 @@ export default function DeleteToolModal() {
   };
 
   const handleConfirm = async () => {
-    const res = await fetch(`/api/tools/${toolId}`, { method: 'DELETE' });
-    const data = await res.json().catch(() => null);
-
-    if (!res.ok) {
-      throw new Error(data?.error || data?.message || 'Не вдалося видалити інструмент');
-    }
-
+    await deleteTool({ toolId });
     closeModal();
-    setTimeout(() => router.refresh(), 0);
+    window.location.href = '/profile';
   };
 
   return (

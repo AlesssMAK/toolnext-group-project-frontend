@@ -1,6 +1,6 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation} from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -49,9 +49,9 @@ const FeedbacksBlock = ({
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
 
-  const [activePage, setActivePage] = useState(0);   
-  const [pagesCount, setPagesCount] = useState(1);     
-  const [groupNow, setGroupNow] = useState(1);  
+  const [activePage, setActivePage] = useState(0);
+  const [pagesCount, setPagesCount] = useState(1);
+  const [groupNow, setGroupNow] = useState(1);
 
   const setPrevEl = (el: HTMLButtonElement | null) => {
     prevRef.current = el;
@@ -77,18 +77,19 @@ const FeedbacksBlock = ({
   const isUserPage = Boolean(userId);
   const isMainPage = !toolId && !userId;
 
-  const syncPageState = (swiper: SwiperClass) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
+  const syncPageState = (swiper?: SwiperClass | null) => {
+    if (!swiper || swiper.destroyed) return;
+
+    setIsBeginning(!!swiper.isBeginning);
+    setIsEnd(!!swiper.isEnd);
 
     setActivePage(swiper.snapIndex ?? 0);
 
     const total = swiper.snapGrid?.length ?? 1;
     setPagesCount(total);
-    const spg =
-      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
-        ? swiper.params.slidesPerGroup
-        : 1;
+    const spgRaw = swiper.params?.slidesPerGroup;
+    const spg = typeof spgRaw === 'number' && spgRaw > 0 ? spgRaw : 1;
+
     setGroupNow(spg);
   };
 
@@ -147,7 +148,7 @@ const FeedbacksBlock = ({
               onSlideChange={swiper => {
                 syncPageState(swiper);
               }}
-              onBreakpoint={(swiper) => {
+              onBreakpoint={swiper => {
                 requestAnimationFrame(() => syncPageState(swiper));
               }}
               slidesPerView={1}
@@ -195,10 +196,14 @@ const FeedbacksBlock = ({
 
             <div className={style.feedbackSwiperContainer}>
               <div className={style.pagination} aria-label="Pagination">
-                {getWindow5(activePage, pagesCount).map((i) => {
+                {getWindow5(activePage, pagesCount).map(i => {
                   const dist = Math.abs(i - activePage);
                   const sizeClass =
-                    dist === 0 ? style.dotMain : dist === 1 ? style.dotMid : style.dotSmall;
+                    dist === 0
+                      ? style.dotMain
+                      : dist === 1
+                        ? style.dotMid
+                        : style.dotSmall;
 
                   return (
                     <button
