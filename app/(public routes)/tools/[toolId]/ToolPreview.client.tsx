@@ -27,6 +27,8 @@ export default function ToolDetails() {
     enabled: !!tool?.owner,
   });
 
+  if (!owner) notFound();
+
   if (isError || !tool) {
     return <p className={styles.notFound}>Sorry, tool not found!</p>;
   }
