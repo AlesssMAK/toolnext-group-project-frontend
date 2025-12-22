@@ -13,6 +13,8 @@ import EmptyUserPersonalFeedbacks from './EmptyFeedback/EmptyUserPersonalFeedbac
 import { Rating } from '../RatingIcon/RatingIcon';
 import type { Swiper as SwiperClass } from 'swiper';
 import { FeedbacksBlockProps } from '@/types/feedback';
+import FeedbackFormModal from '../FeedbackFormModal/FeedbackFormModal';
+import Modal from '../Modal/Modal';
 
 export type FeedbacksVariant = 'home' | 'tool' | 'profile';
 
@@ -44,6 +46,10 @@ const FeedbacksBlock = ({
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [navReady, setNavReady] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
@@ -87,9 +93,10 @@ const FeedbacksBlock = ({
 
     const total = swiper.snapGrid?.length ?? 1;
     setPagesCount(total);
-    const spgRaw = swiper.params?.slidesPerGroup;
-    const spg = typeof spgRaw === 'number' && spgRaw > 0 ? spgRaw : 1;
-
+    const spg =
+      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
+        ? swiper.params.slidesPerGroup
+        : 1;
     setGroupNow(spg);
   };
 
@@ -127,9 +134,20 @@ const FeedbacksBlock = ({
             {(isToolPage || isUserPage) && 'Відгуки'}{' '}
           </h2>
           {isToolPage && (
-            <button className={`${style.feedbackBtn} button button--secondary`}>
+            <button
+              onClick={() => openModal()}
+              className={`${style.feedbackBtn} button button--secondary`}
+            >
               Залишити відгук
             </button>
+          )}
+          {isOpen && (
+            <Modal onClose={closeModal}>
+              <FeedbackFormModal
+                onClose={closeModal}
+                onSubmit={data => console.log('Feedback submitted:', data)}
+              />
+            </Modal>
           )}
         </div>
         {hasNoFeedbacks && isToolPage && <EmptyFeedbacks />}

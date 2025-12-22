@@ -1,0 +1,178 @@
+.modal {
+  padding: 64px 20px;
+  position: relative;
+  height: 640px;
+  width: 335px;
+  max-width: 768px;
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  fill: #000;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #000;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+}
+
+.input,
+.textarea {
+  padding: 8px 12px;
+  border: 2px solid #000;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 295px;
+  height: 48px;
+  font-family: inherit;
+}
+
+.input:hover,
+.textarea:hover {
+  outline: none;
+  border-color: #8808cc;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #8808cc;
+}
+
+.textarea {
+  resize: vertical;
+  height: 180px;
+  width: 295px;
+}
+
+.starRating {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.starIcon {
+  width: 24px;
+  height: 24px;
+  fill: #e4e5e9;
+  transition: fill 0.2s;
+}
+
+.star.selected .starIcon {
+  fill: #000;
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  border: 2px solid #8808cc;
+  border-radius: 6px;
+  padding: 10px 24px;
+  width: 295px;
+  height: 41px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+  background: #8808cc;
+}
+
+.submitButton:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.submitButton:focus {
+  background-color: #e7cdf4;
+  border: 2px solid #000;
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    width: 704px;
+    height: 640px;
+    padding: 64px 32px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .input,
+  .textarea {
+    width: 640px;
+  }
+
+  .textarea {
+    width: 640px;
+  }
+
+  .submitButton {
+    margin: 0 auto;
+    width: 119px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .modal {
+    width: 768px;
+    height: 724px;
+    gap: 48px;
+    max-width: 768px;
+    padding: 64px;
+  }
+
+  .title {
+    height: 116px;
+    width: 640px;
+    font-size: 51px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+}
