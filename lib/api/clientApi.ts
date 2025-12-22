@@ -100,3 +100,27 @@ export async function fetchFeedbacks({
 
   return data;
 }
+export type CreateFeedbackRequest = {
+  name: string;
+  description: string;
+  rate: number;
+  toolId: string;
+};
+
+export const createFeedback = async (data: CreateFeedbackRequest) => {
+  const res = await fetch('http://localhost:3030/api/feedbacks', {
+    // credentials: "same-origin",
+    credentials: "include",
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to submit feedback');
+  }
+
+  return res.json();
+};

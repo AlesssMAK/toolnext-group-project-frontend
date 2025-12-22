@@ -1,6 +1,6 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation} from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -13,6 +13,8 @@ import EmptyUserPersonalFeedbacks from './EmptyFeedback/EmptyUserPersonalFeedbac
 import { Rating } from '../RatingIcon/RatingIcon';
 import type { Swiper as SwiperClass } from 'swiper';
 import { FeedbacksBlockProps } from '@/types/feedback';
+import FeedbackFormModal from '../FeedbackFormModal/FeedbackFormModal';
+import Modal from '../Modal/Modal';
 
 export type FeedbacksVariant = 'home' | 'tool' | 'profile';
 
@@ -45,13 +47,17 @@ const FeedbacksBlock = ({
   const [isEnd, setIsEnd] = useState(false);
   const [navReady, setNavReady] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
 
-  const [activePage, setActivePage] = useState(0);   
-  const [pagesCount, setPagesCount] = useState(1);     
-  const [groupNow, setGroupNow] = useState(1);  
+  const [activePage, setActivePage] = useState(0);
+  const [pagesCount, setPagesCount] = useState(1);
+  const [groupNow, setGroupNow] = useState(1);
 
   const setPrevEl = (el: HTMLButtonElement | null) => {
     prevRef.current = el;
@@ -86,7 +92,8 @@ const FeedbacksBlock = ({
     const total = swiper.snapGrid?.length ?? 1;
     setPagesCount(total);
     const spg =
-      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
+      typeof swiper.params.slidesPerGroup === 'number' &&
+      swiper.params.slidesPerGroup > 0
         ? swiper.params.slidesPerGroup
         : 1;
     setGroupNow(spg);
@@ -126,9 +133,20 @@ const FeedbacksBlock = ({
             {(isToolPage || isUserPage) && 'Відгуки'}{' '}
           </h2>
           {isToolPage && (
-            <button className={`${style.feedbackBtn} button button--secondary`}>
+            <button
+              onClick={() => openModal()}
+              className={`${style.feedbackBtn} button button--secondary`}
+            >
               Залишити відгук
             </button>
+          )}
+          {isOpen && (
+            <Modal onClose={closeModal}>
+              <FeedbackFormModal
+                onClose={closeModal}
+                onSubmit={data => console.log('Feedback submitted:', data)}
+              />
+            </Modal>
           )}
         </div>
         {hasNoFeedbacks && isToolPage && <EmptyFeedbacks />}
@@ -147,7 +165,7 @@ const FeedbacksBlock = ({
               onSlideChange={swiper => {
                 syncPageState(swiper);
               }}
-              onBreakpoint={(swiper) => {
+              onBreakpoint={swiper => {
                 requestAnimationFrame(() => syncPageState(swiper));
               }}
               slidesPerView={1}
@@ -195,10 +213,14 @@ const FeedbacksBlock = ({
 
             <div className={style.feedbackSwiperContainer}>
               <div className={style.pagination} aria-label="Pagination">
-                {getWindow5(activePage, pagesCount).map((i) => {
+                {getWindow5(activePage, pagesCount).map(i => {
                   const dist = Math.abs(i - activePage);
                   const sizeClass =
-                    dist === 0 ? style.dotMain : dist === 1 ? style.dotMid : style.dotSmall;
+                    dist === 0
+                      ? style.dotMain
+                      : dist === 1
+                        ? style.dotMid
+                        : style.dotSmall;
 
                   return (
                     <button
