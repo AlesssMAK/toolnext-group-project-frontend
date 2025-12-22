@@ -41,10 +41,9 @@ export default function LoginForm() {
         };
         const user = await login(payload);
         setUser(user);
+        console.log('USER LOGIN', user);
         toast.success('Вітаю, Ви увійшли 👌');
-        const next = searchParams.get('next') || '/';
-        console.log('LOGIN URL PARAMS:', searchParams.toString());
-        console.log('NEXT:', searchParams.get('next'));
+        const next = searchParams.get('next') || '/';        
         router.replace(next);
       } catch (err) {
         const apiError = err as ApiError;
