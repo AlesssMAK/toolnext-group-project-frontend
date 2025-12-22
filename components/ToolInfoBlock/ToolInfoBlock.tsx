@@ -14,7 +14,7 @@ export default function ToolInfoBlock({
   owner,
 }: {
   tool: Tool;
-  owner: User;
+  owner?: User;
 }) {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
