@@ -30,9 +30,7 @@ export default function ToolDetails() {
   if (!owner) notFound();
 
   if (isError || !tool) {
-    return (
-      <p className={styles.notFound}>Ми не змогли знайти цей інструмент.</p>
-    );
+    return <p className={styles.notFound}>Ми не змогли знайти цей інструмент.</p>;
   }
 
   const isOwner = Boolean(user?.id && user.id === tool.owner);
