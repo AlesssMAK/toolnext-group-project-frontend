@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import ToolGallery from '@/components/ToolGallery/ToolGallery';
 import ToolInfoBlock from '@/components/ToolInfoBlock/ToolInfoBlock';
@@ -30,7 +30,7 @@ export default function ToolDetails() {
   if (!owner) notFound();
 
   if (isError || !tool) {
-    return <p className={styles.notFound}>Sorry, tool not found!</p>;
+    return <p className={styles.notFound}>Ми не змогли знайти цей інструмент.</p>;
   }
 
   const isOwner = Boolean(user?.id && user.id === tool.owner);
