@@ -1,5 +1,3 @@
-'use client';
-
 import dynamic from 'next/dynamic';
 
 const AuthRequestModalPage = dynamic(
@@ -10,3 +8,4 @@ const AuthRequestModalPage = dynamic(
 export default function Page() {
   return <AuthRequestModalPage />;
 }
+
