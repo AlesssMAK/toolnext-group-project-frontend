@@ -293,6 +293,7 @@
 
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

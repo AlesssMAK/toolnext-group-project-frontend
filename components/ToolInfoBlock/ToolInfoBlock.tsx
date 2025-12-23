@@ -14,11 +14,13 @@ export default function ToolInfoBlock({
   owner,
 }: {
   tool: Tool;
-  owner: User;
+  owner?: User;
 }) {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  console.log(tool);
 
   const handleBookClick = () => {
     if (isAuthenticated) {

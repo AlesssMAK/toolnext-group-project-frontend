@@ -1,6 +1,6 @@
 import { User } from '@/types/user';
 import nextServer from './api';
-import { UserToolsResponse } from '@/types/tool';
+import { UserToolsResponse, Category } from '@/types/tool';
 import { feedbacksProps, feedbacksRequestProps } from '@/types/feedback';
 
 export type RegisterRequest = {
@@ -100,6 +100,30 @@ export async function fetchFeedbacks({
 
   return data;
 }
+export type CreateFeedbackRequest = {
+  name: string;
+  description: string;
+  rate: number;
+  toolId: string;
+};
+
+export const createFeedback = async (data: CreateFeedbackRequest) => {
+  const res = await fetch('http://localhost:3030/api/feedbacks', {
+    // credentials: "same-origin",
+    credentials: "include",
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to submit feedback');
+  }
+
+  return res.json();
+};
 
 export const updateMyAvatar = async (file: File) => {
   const formData = new FormData();
@@ -111,6 +135,7 @@ export const updateMyAvatar = async (file: File) => {
 
   return res.data;
 };
+
 interface deleteToolRequest {
   toolId: string;
 }
@@ -121,3 +146,9 @@ export async function deleteTool({ toolId }: deleteToolRequest) {
   );
   return data;
 }
+
+export const getCategories = async (): Promise<Category[]> => {
+  const res = await nextServer.get('/categories');
+
+  return res.data?.data ?? [];
+};

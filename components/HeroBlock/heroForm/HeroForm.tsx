@@ -1,17 +1,14 @@
 'use client';
-
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styles from './HeroForm.module.css';
 import { useRouter } from 'next/navigation';
-
 const validationSchema = Yup.object({
   search: Yup.string()
     .min(2, 'Пошуковий запит має містити мінімум 2 символи')
     .max(100, 'Пошуковий запит має містити максимум 100 символів')
     .required("Це поле обов'язкове"),
 });
-
 const HeroForm = () => {
   const router = useRouter();
   const formik = useFormik({
@@ -23,7 +20,6 @@ const HeroForm = () => {
       router.push('/tools?search=' + values.search);
     },
   });
-
   return (
     <form onSubmit={formik.handleSubmit} className={styles.form}>
       <div className={styles.inputWrapper}>
@@ -55,5 +51,4 @@ const HeroForm = () => {
     </form>
   );
 };
-
 export default HeroForm;

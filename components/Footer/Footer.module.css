@@ -94,7 +94,7 @@
 }
 
 .text_container {
-  border-top: 2px solid var(--color-black);
+  border-top: 2px solid var(--color-neutral-darkest);
   padding-top: 32px;
 }
 
@@ -102,7 +102,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 150%;
-  color: var(--color-black);
+  color: var(--color-neutral-darkest);
   text-align: center;
 }
 

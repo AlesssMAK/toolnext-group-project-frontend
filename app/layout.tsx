@@ -20,16 +20,20 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'ToolNext',
-  description: '',
+  title: {
+    default: 'ToolNext',
+    template: '%s | ToolNext',
+  },
+  description:
+    'Сервіс оренди професійних інструментів для дому та бізнесу.',
   openGraph: {
     type: 'website',
-    url: '',
     title: 'ToolNext',
-    description: '',
+    description:
+      'Оренда інструментів по всій Україні.',
     images: [
       {
-        url: '',
+        url: 'https://toolnext.com/og.jpg',
         width: 1200,
         height: 630,
         alt: 'ToolNext',
@@ -37,6 +41,7 @@ export const metadata: Metadata = {
     ],
   },
 };
+
 
 export default function RootLayout({
   modal,

@@ -19,7 +19,7 @@ export default function LogoutModal() {
     clearIsAuthenticated();
 
     closeModal();
-    setTimeout(() => router.refresh(), 0);
+    window.location.href = '/';
   };
 
   return (
