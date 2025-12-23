@@ -1,3 +1,5 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const LogoutModalPage = dynamic(
@@ -8,4 +10,3 @@ const LogoutModalPage = dynamic(
 export default function Page() {
   return <LogoutModalPage />;
 }
-
