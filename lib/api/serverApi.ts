@@ -28,7 +28,6 @@ export async function getServerMe(): Promise<User> {
 
 export async function getUserById(userId: string): Promise<User> {
   const { data } = await nextServer.get<UserResponse>(`/users/${userId}`);
-  console.log(data.data);
 
   return data.data;
 }
