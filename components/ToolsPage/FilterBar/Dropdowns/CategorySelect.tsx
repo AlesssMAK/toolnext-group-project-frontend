@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../FilterBar.module.css';
 import FiltersDropdown from './FiltersDropdown';
 import { getCategories } from '@/lib/api/clientApi';
-import { Category } from '@/types/tool'
+import { Category } from '@/types/tool';
 
 interface Props {
   selectedTag: string;
