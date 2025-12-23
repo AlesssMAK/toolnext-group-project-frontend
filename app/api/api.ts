@@ -1,8 +1,10 @@
 import axios, { AxiosError } from 'axios';
 
 export type ApiError = AxiosError<{ message: string }>;
+const baseURL = process.env.NEXT_PUBLIC_API_URL + '/api';
 
 export const api = axios.create({
-  baseURL: 'https://toolnext-group-project-backend.onrender.com/api',
+  baseURL,
   withCredentials: true,
 });
+
