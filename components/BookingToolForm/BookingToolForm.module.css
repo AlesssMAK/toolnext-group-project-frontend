@@ -353,11 +353,6 @@
 } */
 
 .container {
-  /* width: 100%; */
-  /* min-width: 320px; */
-  /* max-width: 375px; */
-  margin: 0 auto;
-  padding: 0 16px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -369,7 +364,7 @@
   justify-content: flex-start;
   flex-direction: column;
   text-align: center;
-
+  max-width: 335px;
   word-break: break-word;
 
   font-weight: 700;
@@ -390,6 +385,7 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  max-width: 335px;
   margin: 0 auto;
 }
 
@@ -443,16 +439,6 @@
   gap: 12px;
   width: 100%;
 }
-
-/* .blok_calendar ul {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 24px;
-
-    height: 104px;
-} */
 
 .labels {
   font-weight: 400;
@@ -540,10 +526,11 @@
   background: var(--color-electric-violet-lighter);
 }
 
-@media screen and (min-width: 740px) {
+@media screen and (min-width: 768px) {
   .titleBooking {
     font-size: 30px;
     width: 704px;
+    max-width: none;
     height: 36px;
     gap: 16px;
   }

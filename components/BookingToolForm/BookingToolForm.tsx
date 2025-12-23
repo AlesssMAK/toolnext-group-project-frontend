@@ -302,6 +302,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
+import { createBooking } from '@/lib/api/clientApi';
 
 type Props = {
   toolId: string;
@@ -377,21 +378,15 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          const res = await fetch('http://localhost:3030/api/bookings', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({
-              ...values,
-              toolId,
-              startDate: values.startDate?.toISOString().split('T')[0],
-              endDate: values.endDate?.toISOString().split('T')[0],
-            }),
-          });
-
-          if (!res.ok) {
-            throw new Error('Сталася помилка бронювання');
+          if (!values.startDate || !values.endDate) {
+            throw new Error('Оберіть дати бронювання');
           }
+          await createBooking({
+            ...values,
+            toolId,
+            startDate: values.startDate?.toISOString().split('T')[0],
+            endDate: values.endDate?.toISOString().split('T')[0],
+          });
 
           router.push('/confirm/booking');
         } catch (err: any) {
@@ -407,82 +402,86 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
 
         return (
           <section className={css.section}>
-            <div className={css.container}>
-              <h2 className={css.titleBooking}>Підтвердження бронювання</h2>
+            <div className="container">
+              <div className={css.container}>
+                <h2 className={css.titleBooking}>Підтвердження бронювання</h2>
 
-              <Form className={css.formBoking}>
-                {/* Імʼя + Прізвище */}
-                <ul className={css.blok_fameli_city}>
-                  <li>
-                    <label className={css.labels}>Імʼя</label>
-                    <Field className={css.inputs} name="userFirstname" />
-                    <ErrorMessage name="userFirstname" component="p" />
-                  </li>
-                  <li>
-                    <label className={css.labels}>Прізвище</label>
-                    <Field className={css.inputs} name="userLastname" />
-                    <ErrorMessage name="userLastname" component="p" />
-                  </li>
-                </ul>
+                <Form className={css.formBoking}>
+                  {/* Імʼя + Прізвище */}
+                  <ul className={css.blok_fameli_city}>
+                    <li>
+                      <label className={css.labels}>Імʼя</label>
+                      <Field className={css.inputs} name="userFirstname" />
+                      <ErrorMessage name="userFirstname" component="p" />
+                    </li>
+                    <li>
+                      <label className={css.labels}>Прізвище</label>
+                      <Field className={css.inputs} name="userLastname" />
+                      <ErrorMessage name="userLastname" component="p" />
+                    </li>
+                  </ul>
 
-                {/* Телефон */}
-                <ul className={css.blok_phone}>
-                  <li>
-                    <label className={css.labels}>Номер телефону</label>
-                    <Field className={css.inputs_phone} name="userPhone" />
-                    <ErrorMessage name="userPhone" component="p" />
-                  </li>
-                </ul>
+                  {/* Телефон */}
+                  <ul className={css.blok_phone}>
+                    <li>
+                      <label className={css.labels}>Номер телефону</label>
+                      <Field className={css.inputs_phone} name="userPhone" />
+                      <ErrorMessage name="userPhone" component="p" />
+                    </li>
+                  </ul>
 
-                {/* КАЛЕНДАР */}
-                <div className={css.blok_calendar}>
-                  <label className={css.labels}>
-                    Виберіть період бронювання
-                  </label>
-                  <DateRangePicker
-                    onSelect={(from, to) => {
-                      setFieldValue('startDate', from);
-                      setFieldValue('endDate', to);
-                    }}
-                  />
+                  {/* КАЛЕНДАР */}
+                  <div className={css.blok_calendar}>
+                    <label className={css.labels}>
+                      Виберіть період бронювання
+                    </label>
+                    <DateRangePicker
+                      onSelect={(from, to) => {
+                        setFieldValue('startDate', from);
+                        setFieldValue('endDate', to);
+                      }}
+                    />
 
-                  <ErrorMessage name="startDate" component="p" />
-                  <ErrorMessage name="endDate" component="p" />
-                </div>
+                    <ErrorMessage name="startDate" component="p" />
+                    <ErrorMessage name="endDate" component="p" />
+                  </div>
 
-                {/* Доставка */}
-                <ul className={css.blok_fameli_city}>
-                  <li>
-                    <label className={css.labels}>Місто доставки</label>
-                    <Field className={css.inputs} name="deliveryCity" />
-                    <ErrorMessage name="deliveryCity" component="p" />
-                  </li>
-                  <li>
-                    <label className={css.labels}>Відділення Нової Пошти</label>
-                    <Field className={css.inputs} name="deliveryBranch" />
-                    <ErrorMessage name="deliveryBranch" component="p" />
-                  </li>
-                </ul>
+                  {/* Доставка */}
+                  <ul className={css.blok_fameli_city}>
+                    <li>
+                      <label className={css.labels}>Місто доставки</label>
+                      <Field className={css.inputs} name="deliveryCity" />
+                      <ErrorMessage name="deliveryCity" component="p" />
+                    </li>
+                    <li>
+                      <label className={css.labels}>
+                        Відділення Нової Пошти
+                      </label>
+                      <Field className={css.inputs} name="deliveryBranch" />
+                      <ErrorMessage name="deliveryBranch" component="p" />
+                    </li>
+                  </ul>
 
-                {/* Ціна + кнопка */}
+                  {/* Ціна + кнопка */}
 
-                <div className={css.blok_button}>
-                  <span>
-                    Ціна: {totalPrice} грн
-                    {bookingDays > 0 && ` (${bookingDays} дн.)`}
-                  </span>
+                  <div className={css.blok_button}>
+                    <span>
+                      Ціна: {totalPrice} грн
+                      {bookingDays > 0 && ` (${bookingDays} дн.)`}
+                    </span>
 
-                  <button
-                    className={css.button_boking}
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    Забронювати
-                  </button>
-                </div>
+                    <button
+                      className={css.button_boking}
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Забронювати
+                    </button>
+                  </div>
 
-                {serverWarning && <p>{serverWarning}</p>}
-              </Form>
+                  {serverWarning && <p>{serverWarning}</p>}
+                </Form>
+              </div>
             </div>
           </section>
         );

@@ -4,15 +4,17 @@ import css from './BookingToolPage.module.css';
 import { getToolById } from '@/lib/api/tools';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     toolId: string;
-  };
+  }>;
 };
 
-export async function generateMetadata(
-  { params }: PageProps
-): Promise<Metadata> {
-  const tool = await getToolById(params.toolId);
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { toolId } = await params;
+
+  const tool = await getToolById(toolId);
 
   return {
     title: `Бронювання: ${tool.name}`,
@@ -21,17 +23,16 @@ export async function generateMetadata(
 }
 
 const BookingToolPage = async ({ params }: PageProps) => {
-  const tool = await getToolById(params.toolId);
+  const { toolId } = await params;
+
+  const tool = await getToolById(toolId);
+  console.log(tool);
 
   return (
     <section className={css.containerConfirmation}>
-      <BookingToolForm
-        toolId={params.toolId}
-        pricePerDay={tool.pricePerDay}
-      />
+      <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} />
     </section>
   );
 };
 
 export default BookingToolPage;
-

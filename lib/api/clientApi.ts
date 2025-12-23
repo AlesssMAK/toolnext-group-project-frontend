@@ -139,3 +139,14 @@ export const getCategories = async (): Promise<Category[]> => {
 
   return res.data?.data ?? [];
 };
+
+interface CreateBookingRequest {
+  toolId: string;
+  startDate: string;
+  endDate: string;
+}
+
+export const createBooking = async (data: CreateBookingRequest) => {
+  const res = await nextServer.post('/bookings', data);
+  return res.data;
+};
