@@ -4,10 +4,7 @@ import { cookies } from 'next/headers';
 import { isAxiosError } from 'axios';
 import { logErrorResponse } from '@/app/api/_utils/utils';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { userId: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
 
@@ -16,7 +13,6 @@ export async function GET(
 
     const res = await api.get('/tools', {
       params: {
-        owner: params.userId,
         page,
         perPage,
       },
@@ -41,6 +37,7 @@ export async function GET(
     );
   }
 }
+
 
 export async function POST(request: NextRequest) {
   try {
