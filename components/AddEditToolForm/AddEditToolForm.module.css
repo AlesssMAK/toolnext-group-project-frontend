@@ -1,24 +1,13 @@
-
 .form {
   height: 100%;
   width: 100%;
-
-  @media screen and (min-width: 1440px) {
-    display: flex;
-    gap: 32px;
-  }
-} 
+}
 .flexContainer {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: 24px;
-
-  @media screen and (min-width: 1440px) {
-    margin-bottom: 72px;
-    width: 150%;
-  }
 }
 
 .formFields {
@@ -53,16 +42,6 @@
   object-fit: contain;
   display: block;
   overflow: hidden;
-
-  @media screen and (min-width: 768px) {
-    max-height: 470px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    max-height: 575px;
-  }
-
-
 }
 
 .placeholderText {
@@ -71,13 +50,9 @@
 
 .toolsWrapper {
   width: 100%;
-
-  @media screen and (min-width: 768px) {
-    max-width: 704px;
-  }
 }
 
-.placeholder{
+.placeholder {
   border-radius: 16px;
   margin-bottom: 24px;
   margin-top: 8px;
@@ -94,28 +69,49 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip:rect(0, 0, 0, 0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-
 }
-.uploadButton{
+.uploadButton {
   margin-top: 24px;
 }
-.input, .select {
+.input,
+.select {
   width: 100%;
   box-sizing: border-box;
   margin-top: 8px;
   border: 2px solid #000;
   border-radius: 6px;
-  padding: 12px;
-  height: 48px;
+  padding: 8px 12px;
+  height: 43px;
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
   color: rgba(0, 0, 0, 0.6);
 }
+
+.select {
+  width: 100%;
+  height: 43px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border: 2px solid #000;
+  border-radius: 6px;
+
+  padding: 8px 44px 8px 12px;
+
+  background-color: #fff;
+  background-image: url('/icons/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
 .input:focus {
   border: 2px solid #8808cc;
   outline: none;
@@ -135,12 +131,12 @@
   color: #c40202;
 }
 
-.button{
+.button {
   width: max-content;
   width: 100%;
 }
 
-.textarea{
+.textarea {
   width: 100%;
   box-sizing: border-box;
   margin-top: 12px;
@@ -160,7 +156,7 @@
   outline: none;
 }
 
-.textareaRent{
+.textareaRent {
   height: 70px;
 }
 
@@ -169,13 +165,41 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  padding-bottom: 72px; 
+  padding-bottom: 72px;
   padding-top: 32px;
+}
 
-  @media screen and (min-width: 1440px) {
+@media screen and (min-width: 768px) {
+  .toolsWrapper {
+    max-width: 704px;
+  }
+
+  .previewImg {
+    max-height: 470px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .form {
+    display: flex;
+    gap: 32px;
+  }
+
+  .margin {
+    margin-bottom: 72px;
+  }
+
+  .buttonGroup {
     max-width: 415px;
     padding-top: 36px;
     padding-bottom: 0px;
   }
-}
 
+  .previewImg {
+    max-height: 575px;
+  }
+
+  .flexContainer {
+    flex: 1;
+  }
+}
