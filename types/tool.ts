@@ -26,3 +26,8 @@ export interface UserToolsResponse {
     };
   };
 }
+
+export interface Category {
+  _id: string;
+  title: string;
+}

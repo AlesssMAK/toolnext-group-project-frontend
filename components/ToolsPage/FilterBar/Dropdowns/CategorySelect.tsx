@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../FilterBar.module.css';
 import FiltersDropdown from './FiltersDropdown';
-import { CATEGORY_NAMES } from '../constants';
+import { getCategories } from '@/lib/api/clientApi';
+import { Category } from '@/types/tool'
 
 interface Props {
   selectedTag: string;
@@ -10,24 +11,41 @@ interface Props {
 
 export default function CategorySelect({ selectedTag, onSelect }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const onDocPointerDown = (e: PointerEvent) => {
-      const el = wrapperRef.current;
-      if (!el) return;
-      if (!el.contains(e.target as Node)) setIsOpen(false);
+    const loadCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (e) {
+        console.error('Failed to load categories', e);
+      }
     };
+
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    const onDocPointerDown = (e: PointerEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener('pointerdown', onDocPointerDown, true);
     return () =>
       document.removeEventListener('pointerdown', onDocPointerDown, true);
   }, []);
 
   const label = useMemo(() => {
-    if (selectedTag && CATEGORY_NAMES[selectedTag])
-      return CATEGORY_NAMES[selectedTag];
-    return 'Всі категорії';
-  }, [selectedTag]);
+    const found = categories.find(c => c._id === selectedTag);
+    return found ? found.title : 'Всі категорії';
+  }, [selectedTag, categories]);
 
   const handleSelect = (id: string) => {
     onSelect(id);
@@ -37,7 +55,9 @@ export default function CategorySelect({ selectedTag, onSelect }: Props) {
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.selectWrapper} ${isOpen ? styles.selectWrapperOpen : ''}`}
+      className={`${styles.selectWrapper} ${
+        isOpen ? styles.selectWrapperOpen : ''
+      }`}
     >
       <button
         type="button"
@@ -49,11 +69,11 @@ export default function CategorySelect({ selectedTag, onSelect }: Props) {
         <span className={styles.selectLabel}>{label}</span>
       </button>
 
-      {isOpen && (
+      {isOpen && categories.length > 0 && (
         <FiltersDropdown
           selectedTag={selectedTag}
           handleSelect={handleSelect}
-          categoryNames={CATEGORY_NAMES}
+          categories={categories}
         />
       )}
     </div>

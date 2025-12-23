@@ -1,6 +1,6 @@
 import { User } from '@/types/user';
 import nextServer from './api';
-import { UserToolsResponse } from '@/types/tool';
+import { UserToolsResponse, Category } from '@/types/tool';
 import { feedbacksProps, feedbacksRequestProps } from '@/types/feedback';
 
 export type RegisterRequest = {
@@ -146,3 +146,9 @@ export async function deleteTool({ toolId }: deleteToolRequest) {
   );
   return data;
 }
+
+export const getCategories = async (): Promise<Category[]> => {
+  const res = await nextServer.get('/categories');
+
+  return res.data?.data ?? [];
+};
