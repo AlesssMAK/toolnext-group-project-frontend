@@ -38,6 +38,10 @@
 
 .close:hover {
     opacity: 1;
+    color: var(--color-electric-violet-light);
+    transition:
+            transform 0.2s ease,
+            color 0.2s ease;
 }
 
 .title {
@@ -63,6 +67,10 @@
 
 .cancelBtn,
 .confirmBtn {
+    width: 100%;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
     height: 44px;
     border-radius: 6px;
     font-weight: 500;
@@ -151,7 +159,11 @@
     .modal {
         padding: 64px;
     }
-
+.title {
+    max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+}
     .actions {
         flex-direction: row;
         justify-content: center;
@@ -167,6 +179,7 @@
 @media screen and (min-width: 1440px) {
     .title {
     font-size: 42px;
+    max-width: 640px;
 }
     .cancelBtn,
     .confirmBtn {

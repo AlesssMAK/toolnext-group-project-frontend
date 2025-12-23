@@ -15,6 +15,8 @@ import type { Swiper as SwiperClass } from 'swiper';
 import { FeedbacksBlockProps } from '@/types/feedback';
 import FeedbackFormModal from '../FeedbackFormModal/FeedbackFormModal';
 import Modal from '../Modal/Modal';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export type FeedbacksVariant = 'home' | 'tool' | 'profile';
 
@@ -43,6 +45,8 @@ const FeedbacksBlock = ({
   isOwner = false,
   variant = 'home',
 }: FeedbacksBlockProps) => {
+  const router = useRouter();
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [navReady, setNavReady] = useState(false);
@@ -51,6 +55,14 @@ const FeedbacksBlock = ({
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const handleLeaveFeedbackClick = () => {
+    if (!isAuthenticated) {
+      router.push('/confirm/auth-request');
+      return;
+    }
+    openModal();
+  };
+  
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -135,7 +147,7 @@ const FeedbacksBlock = ({
           </h2>
           {isToolPage && (
             <button
-              onClick={() => openModal()}
+              onClick={handleLeaveFeedbackClick}
               className={`${style.feedbackBtn} button button--secondary`}
             >
               Залишити відгук
