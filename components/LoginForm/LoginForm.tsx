@@ -43,11 +43,7 @@ export default function LoginForm() {
         if (!me) {
           throw new Error('getMe повернув null після логіну');
         }
-
         setUser(me);
-        console.log('USER LOGIN', user);
-        console.log('USER LOGIN ME:', me);
-
         toast.success('Вітаю, Ви увійшли 👌');
         const next = searchParams.get('next') || '/';
         router.refresh();

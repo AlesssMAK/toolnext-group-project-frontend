@@ -6,8 +6,6 @@ import { User } from '@/types/user';
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/store/authStore';
 import { Tool } from '@/types/tool';
-import { useState } from 'react';
-import AuthRequiredModal from '../AuthRequiredModal/AuthRequiredModal';
 
 export default function ToolInfoBlock({
   tool,
@@ -18,9 +16,6 @@ export default function ToolInfoBlock({
 }) {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-
-  console.log(tool);
 
   const handleBookClick = () => {
     if (isAuthenticated) {
@@ -74,7 +69,6 @@ export default function ToolInfoBlock({
       >
         Забронювати
       </button>
-      
     </section>
   );
 }
