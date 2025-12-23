@@ -24,7 +24,7 @@ export default function ToolInfoBlock({
     if (isAuthenticated) {
       router.push(`/manage-tools/${tool._id}/booking`);
     } else {
-      setIsAuthModalOpen(true);
+      router.push('/confirm/auth-request');
     }
   };
 
@@ -72,10 +72,7 @@ export default function ToolInfoBlock({
       >
         Забронювати
       </button>
-      <AuthRequiredModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-      />
+      
     </section>
   );
 }

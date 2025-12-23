@@ -16,46 +16,54 @@ export default function AuthRequiredModal({ isOpen, onClose }: Props) {
 
   if (!isOpen) return null;
 
-  const handleLogin = () => {
-    setIsSubmitting(true);
-    onClose();
-    router.push('/auth/login');
-  };
+  const goTo = (path: string) => {
+    if (isSubmitting) return;
 
-  const handleRegister = () => {
     setIsSubmitting(true);
+
     onClose();
-    router.push('/auth/register');
+
+    setTimeout(() => {
+      router.push(path);
+    }, 0);
   };
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={() => !isSubmitting && onClose()}>
       <div className={css.modal}>
         <h2 className={css.title}>Спочатку авторизуйтесь</h2>
         <p className={css.text}>
-          Щоб забрронювати інструмент, треба спочатку зареєструватись, або
+          Щоб забронювати інструмент, треба спочатку зареєструватись, або
           авторизуватись на платформі
         </p>
 
         <div className={css.actions}>
           <button
+            type="button"
             className={css.login}
-            onClick={handleLogin}
+            onClick={() => goTo('/auth/login')}
             disabled={isSubmitting}
           >
             Вхід
           </button>
 
           <button
+            type="button"
             className={css.register}
-            onClick={handleRegister}
+            onClick={() => goTo('/auth/register')}
             disabled={isSubmitting}
           >
             Реєстрація
           </button>
         </div>
 
-        <button className={css.close} onClick={onClose}>
+        <button
+          type="button"
+          className={css.close}
+          onClick={() => !isSubmitting && onClose()}
+          aria-label="Закрити"
+          disabled={isSubmitting}
+        >
           <svg aria-hidden="true" className={css.closeIcon}>
             <use href="/sprite.svg#close" />
           </svg>
