@@ -254,7 +254,7 @@ export default function AddEditToolForm({
             <label>
               Категорія
               <select
-                className={`${css.input} ${formik.touched.category && formik.errors.category ? css.error : ''}`}
+                className={`${css.input} ${css.select} ${formik.touched.category && formik.errors.category ? css.error : ''}`}
                 {...formik.getFieldProps('category')}
               >
                 <option value="">Категорія</option>
@@ -294,7 +294,7 @@ export default function AddEditToolForm({
           </div>
 
           {/* Характеристики */}
-          <div className={css.formGroup}>
+          <div className={`${css.formGroup} ${css.margin}`}>
             <label>
               Характеристики
               <textarea
