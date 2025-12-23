@@ -3,33 +3,42 @@ import styles from '../FilterBar.module.css';
 type Props = {
   selectedTag: string;
   handleSelect: (value: string) => void;
-  categoryNames: Record<string, string>;
+  categories: {
+    _id: string;
+    title: string;
+  }[];
 };
+
 
 const FiltersDropdown = ({
   selectedTag,
   handleSelect,
-  categoryNames,
+  categories,
 }: Props) => {
   return (
     <ul className={styles.dropdown} role="listbox">
       <li
-        className={`${styles.option} ${!selectedTag ? styles.optionSelected : ''}`}
+        className={`${styles.option} ${
+          !selectedTag ? styles.optionSelected : ''
+        }`}
         role="option"
         aria-selected={!selectedTag}
         onClick={() => handleSelect('')}
       >
         Всі категорії
       </li>
-      {Object.entries(categoryNames).map(([key, name]) => (
+
+      {categories.map(({ _id, title }) => (
         <li
-          key={key}
-          className={`${styles.option} ${selectedTag === key ? styles.optionSelected : ''}`}
+          key={_id}
+          className={`${styles.option} ${
+            selectedTag === _id ? styles.optionSelected : ''
+          }`}
           role="option"
-          aria-selected={selectedTag === key}
-          onClick={() => handleSelect(key)}
+          aria-selected={selectedTag === _id}
+          onClick={() => handleSelect(_id)}
         >
-          {name}
+          {title}
         </li>
       ))}
     </ul>
