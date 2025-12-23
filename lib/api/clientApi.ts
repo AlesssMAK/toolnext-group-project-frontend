@@ -108,21 +108,8 @@ export type CreateFeedbackRequest = {
 };
 
 export const createFeedback = async (data: CreateFeedbackRequest) => {
-  const res = await fetch('http://localhost:3030/api/feedbacks', {
-    // credentials: "same-origin",
-    credentials: "include",
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to submit feedback');
-  }
-
-  return res.json();
+  const res = await nextServer.post('/feedbacks', data);
+  return res.data;
 };
 
 export const updateMyAvatar = async (file: File) => {
