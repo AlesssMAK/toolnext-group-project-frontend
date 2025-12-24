@@ -1,4 +1,5 @@
 import styles from '../FilterBar.module.css';
+import { CustomClassName } from './type';
 
 type Props = {
   selectedTag: string;
@@ -7,6 +8,9 @@ type Props = {
     _id: string;
     title: string;
   }[];
+  customClassName?: {
+    [key in CustomClassName]?: string;
+  };
 };
 
 
