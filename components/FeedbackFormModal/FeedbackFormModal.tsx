@@ -9,9 +9,10 @@ import styles from './FeedbackFormModal.module.css';
 interface FeedbackFormModalProps {
   onClose: () => void;
   onSubmit: (data: {name:string; description: string; rate: number }) => void;
+  toolId: string;
 }
 
-const FeedbackFormModal = ({ onClose, onSubmit }: FeedbackFormModalProps) => {
+const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps) => {
   const [name, setName] = useState('');
   const [description, setReview] = useState('');
   const [rate, setRating] = useState(0);
@@ -19,7 +20,7 @@ const FeedbackFormModal = ({ onClose, onSubmit }: FeedbackFormModalProps) => {
   const queryClient = useQueryClient();
 
   // !@@@
-  const toolId = "692db3ffab59e437964311d4";
+  // const toolId = "692db3ffab59e437964311d4";
 
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
@@ -41,7 +42,7 @@ const FeedbackFormModal = ({ onClose, onSubmit }: FeedbackFormModalProps) => {
   }, []);
 
   const createFeedbackMutate = useMutation({
-    mutationFn: (data: {name: string; description: string; rate: number; toolId: string }) => createFeedback(data),
+    mutationFn: (data: {name: string; description: string; rate: number; toolId:string }) => createFeedback(data),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['feedback'] });
       onSubmit({name, description, rate });
