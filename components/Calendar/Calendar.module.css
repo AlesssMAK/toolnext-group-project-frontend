@@ -21,7 +21,6 @@
     font-weight: bold;
 }
 
-/* місяць */
 .monthNav {
     display: flex;
     align-items: center;
@@ -31,7 +30,6 @@
 
 }
 
-/* тиждень */
 .month {
     font-weight: 700;
     font-size: 16px;
@@ -78,7 +76,6 @@
     padding: 10px 0;
     border: 1px solid #000000;
     cursor: pointer;
-    transition: background 0.2s ease;
 }
 
 .dayCell:last-child {
@@ -89,16 +86,46 @@
     border-bottom: 2px solid #000000;
 }
 
-.dayCell:hover {
+/* .dayCell:hover {
+    transform: scale(1.1);
+    border: 1px solid var(--color-electric-violet-lighter);
     background: var(--color-electric-violet-lighter);
-}
+} */
 
 .today {
-    border: 2px solid var(--color-electric-violet);
+    border: 3px solid var(--color-electric-violet);
     font-weight: bold;
-    background: var(--color-electric-violet-lighter);
 }
 
 .selected {
     background: var(--color-electric-violet-lighter);
+}
+
+@media screen and (min-width: 768px) {
+    .calendar {
+        max-width: 704px;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden;
+    }
+
+    .header {}
+
+    .monthNav {}
+
+    .month {}
+
+    .navBtn {}
+
+    .grid {}
+
+    .dayName {}
+
+    .dayCell {}
+}
+
+@media screen and (min-width: 1440px) {
+    .calendar {
+        max-width: 864px;
+    }
 }

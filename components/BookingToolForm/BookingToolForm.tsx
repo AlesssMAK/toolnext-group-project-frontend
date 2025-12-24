@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { uk } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from '@/components/Calendar/Calendar'
+import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -181,23 +182,19 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 </li>
               </ul>
 
-              <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                  <Calendar
-                    onSelect={(from, to) => {
-                setFieldValue('startDate', from);
-                setFieldValue('endDate', to);
-              }}
-                  />
-                  {serverWarning && (
-                    <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
-                      name="startDate" component="p" />
-                    //  <ErrorMessage
-                    //   className={`${css.error_message} text-red-600 text-sm`}
-                    //   name="endDate"
-                    //   component="p"
-                    // />
-                  )}
+                <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
+                  <label className={css.labels}>
+                      Виберіть період бронювання
+                    </label>
+                    <DateRangePicker
+                      onSelect={(from, to) => {
+                        setFieldValue('startDate', from);
+                        setFieldValue('endDate', to);
+                      }}
+                    />
+
+                    <ErrorMessage name="startDate" component="p" />
+                    <ErrorMessage name="endDate" component="p" />
               </div>
 
               <ul className={css.blok_fameli_city}>
@@ -269,40 +266,3 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
     </Formik>
   );
 }
-
-  {/* <ul>
-                  <li>
-                    <DatePicker
-                      className={css.inputs}
-                      selected={values.startDate}
-                      onChange={(date: Date | null) =>
-                        setFieldValue('startDate', date)
-                      }
-                      locale="uk"
-                      dateFormat="dd.MM.yyyy"
-                      placeholderText="Початкова дата"
-                    />
-                    <ErrorMessage
-                      className={`${css.error_message} text-red-600 text-sm`}
-                      name="startDate"
-                      component="p"
-                    />
-                  </li>
-                  <li>
-                    <DatePicker
-                      className={css.inputs}
-                      selected={values.endDate}
-                      onChange={(date: Date | null) =>
-                        setFieldValue('endDate', date)
-                      }
-                      locale="uk"
-                      dateFormat="dd.MM.yyyy"
-                      placeholderText="Кінцева дата"
-                    />
-                    <ErrorMessage
-                      className={`${css.error_message} text-red-600 text-sm`}
-                      name="endDate"
-                      component="p"
-                    />
-                  </li>
-   </ul> */}
