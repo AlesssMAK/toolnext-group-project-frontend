@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import CategorySelect from '../ToolsPage/FilterBar/Dropdowns/CategorySelect';
+import { Category } from '../../types/tool';
 
 type Props = {
   initialData?: any;
@@ -200,7 +202,7 @@ export default function AddEditToolForm({
                       sizes="(max-width: 480px) 375px, (max-width: 1024px) 768px, 1440px"
                     />
                     <label
-                      className={`${css.photoLabel} button button--secondary`}
+                      className={`${css.uploadPhotoButton} button button--secondary`}
                     >
                       Завантажити фото
                       <input
@@ -251,20 +253,15 @@ export default function AddEditToolForm({
 
           {/* Категорія */}
           <div className={css.formGroup}>
-            <label>
-              Категорія
-              <select
-                className={`${css.input} ${css.select} ${formik.touched.category && formik.errors.category ? css.error : ''}`}
-                {...formik.getFieldProps('category')}
-              >
-                <option value="">Категорія</option>
-                {categories.map(cat => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.title}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <CategorySelect
+              onSelect={category => {
+                formik.setFieldValue('category', category);
+              }}
+              selectedTag={formik.values.category}
+              customClassName={{
+                wrapper: css.categorySelectWrapper,
+              }}
+            />
           </div>
 
           {/* Умови оренди*/}

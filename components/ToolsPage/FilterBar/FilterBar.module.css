@@ -138,6 +138,7 @@
 
   .dropdown {
     border: 2px solid var(--color-electric-violet-light);
+    border-top: none;
     border-radius: 0 0 6px 6px;
   }
 }

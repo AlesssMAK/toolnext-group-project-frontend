@@ -28,7 +28,7 @@ const EditToolsPage = async ({ params }: PageEditToolProps) => {
   };
 
   return (
-    <section>
+    <section className="container">
       <AddEditToolForm initialData={initialData} isEditMode={true} />
     </section>
   );
