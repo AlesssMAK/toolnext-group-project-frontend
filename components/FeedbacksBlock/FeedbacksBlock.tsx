@@ -153,11 +153,12 @@ const FeedbacksBlock = ({
               Залишити відгук
             </button>
           )}
-          {isOpen && (
+          {isOpen && toolId && (
             <Modal onClose={closeModal}>
               <FeedbackFormModal
                 onClose={closeModal}
                 onSubmit={data => console.log('Feedback submitted:', data)}
+                toolId={toolId}
               />
             </Modal>
           )}
