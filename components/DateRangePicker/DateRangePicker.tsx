@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import AirDatepicker from 'air-datepicker';
 import localeUk from 'air-datepicker/locale/uk';
+import 'air-datepicker/air-datepicker.css';
 import css from './DateRangePicker.module.css';
 
 type Props = {

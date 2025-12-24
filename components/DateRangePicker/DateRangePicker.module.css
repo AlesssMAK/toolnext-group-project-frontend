@@ -1,1 +1,72 @@
+/* DateRangePicker.module.css */
 
+/* твій контейнер */
+.calendar {
+    /* базові змінні AirDatepicker */
+    --adp-color-primary: #6c63ff;
+    /* головний акцентний колір */
+    --adp-color-hover: #ececff;
+    /* фон при наведенні */
+    --adp-color-selected: #6c63ff;
+    /* вибрані дати */
+    --adp-color-in-range: #dcdcff;
+    /* дати всередині діапазону */
+    --adp-cell-size: 42px;
+    /* розмір клітинки */
+    --adp-border-radius: 8px;
+    /* скруглення */
+    --adp-font-family: 'Inter', sans-serif;
+    --adp-font-size: 14px;
+}
+
+/* глобальні стилі для внутрішніх класів бібліотеки */
+:global(.air-datepicker) {
+    width: 100%;
+    max-width: 360px;
+    border: 2px solid #6c63ff;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* верхня панель (місяць/рік) */
+:global(.air-datepicker-nav) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px dotted #6c63ff;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+}
+
+/* стилізація окремих назв днів */
+:global(.air-datepicker-body--day-name) {
+    /* padding: 6px 0; */
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+}
+
+/* клітинки дат */
+:global(.air-datepicker-cell) {}
+
+/* вибрані дати */
+:global(.air-datepicker-cell.-selected-) {}
+
+/* діапазон */
+:global(.air-datepicker-cell.-in-range-) {}
+
+/* початок і кінець діапазону */
+:global(.air-datepicker-cell.-range-from-),
+:global(.air-datepicker-cell.-range-to-) {}
+
+/* сьогоднішня дата */
+:global(.air-datepicker-cell.-current-) {}
+
+/* hover-ефект */
+:global(.air-datepicker-cell:hover) {}
