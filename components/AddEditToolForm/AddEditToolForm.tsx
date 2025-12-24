@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import CategorySelect from '../ToolsPage/FilterBar/Dropdowns/CategorySelect';
 import { Category } from '../../types/tool';
+import { getCategories } from '@/lib/api/clientApi';
 
 type Props = {
   initialData?: any;
@@ -29,16 +30,8 @@ export default function AddEditToolForm({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + '/api/categories'
-        );
-        const data = await res.json();
-
-        if (data.status === 'success') {
-          setCategories(data.data);
-        } else {
-          toast.error('Не вдалося завантажити категорії');
-        }
+        const categories = await getCategories();
+        setCategories(categories);
       } catch (error) {
         toast.error('Помилка під час завантаження категорій');
       }
