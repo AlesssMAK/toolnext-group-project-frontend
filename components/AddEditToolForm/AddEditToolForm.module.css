@@ -119,6 +119,12 @@
   width: 100%;
 }
 
+.uploadPhotoButton {
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
 .textarea {
   width: 100%;
   box-sizing: border-box;

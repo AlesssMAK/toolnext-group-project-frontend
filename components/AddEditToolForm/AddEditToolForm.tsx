@@ -202,7 +202,7 @@ export default function AddEditToolForm({
                       sizes="(max-width: 480px) 375px, (max-width: 1024px) 768px, 1440px"
                     />
                     <label
-                      className={`${css.photoLabel} button button--secondary`}
+                      className={`${css.uploadPhotoButton} button button--secondary`}
                     >
                       Завантажити фото
                       <input
