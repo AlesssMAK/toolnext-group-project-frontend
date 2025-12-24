@@ -60,17 +60,6 @@ export async function getMe(): Promise<User | null> {
   }
 }
 
-// export type UpdateUserRequest = {
-//   username: string;
-// };
-
-// export const updateMe = async (payload: UpdateUserRequest) => {
-//   const res = await nextServer.patch<User>('/users/me/avatar', payload);
-//   return res.data;
-// };
-
-// Клієнтський запит для підвантаження інструментів користувача, використовую для пагінації (кнопка "Показати більше")
-
 export async function getUserToolsClient(
   userId: string,
   page = 1,
@@ -100,6 +89,7 @@ export async function fetchFeedbacks({
 
   return data;
 }
+
 export type CreateFeedbackRequest = {
   name: string;
   description: string;
@@ -127,9 +117,13 @@ interface deleteToolRequest {
   toolId: string;
 }
 
+export interface DeleteToolResponse {
+  status: 'success';
+}
+
 export async function deleteTool({ toolId }: deleteToolRequest) {
-  const { data } = await nextServer.delete<deleteToolRequest>(
-    `tools/${toolId}`
+  const { data } = await nextServer.delete<DeleteToolResponse>(
+    `/tools/${toolId}`
   );
   return data;
 }
@@ -137,7 +131,7 @@ export async function deleteTool({ toolId }: deleteToolRequest) {
 export const getCategories = async (): Promise<Category[]> => {
   const res = await nextServer.get('/categories');
 
-  return res.data?.data ?? [];
+  return res.data.data ?? [];
 };
 
 interface CreateBookingRequest {

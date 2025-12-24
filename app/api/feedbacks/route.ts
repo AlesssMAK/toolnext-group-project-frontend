@@ -6,21 +6,23 @@ import { logErrorResponse } from '@/app/api/_utils/utils';
 
 export async function GET(request: NextRequest) {
   try {
+    const cookieStore = await cookies();
+
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
-    const limit = Number(request.nextUrl.searchParams.get('limit') ?? 10);
-    const search = request.nextUrl.searchParams.get('search') ?? undefined;
-    const categories =
-      request.nextUrl.searchParams.get('categories') ?? undefined;
+    const perPage = Number(request.nextUrl.searchParams.get('perPage') ?? 10);
 
-    console.log('TOOLS PROXY HIT', request.url);
-    console.log('API BASE URL:', api.defaults.baseURL);
+    const toolId = request.nextUrl.searchParams.get('toolId');
+    const userId = request.nextUrl.searchParams.get('userId');
 
-    const res = await api.get('/tools', {
+    const res = await api.get('/feedbacks', {
       params: {
         page,
-        limit,
-        ...(search ? { search } : {}),
-        ...(categories ? { categories } : {}),
+        perPage,
+        ...(toolId && { toolId }),
+        ...(userId && { userId }),
+      },
+      headers: {
+        Cookie: cookieStore.toString(),
       },
     });
 
@@ -29,7 +31,10 @@ export async function GET(request: NextRequest) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
-        { error: error.message, response: error.response?.data },
+        {
+          error: error.message,
+          response: error.response?.data,
+        },
         { status: error.response?.status ?? 500 }
       );
     }
@@ -44,10 +49,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
-
     const body = await request.json();
 
-    const res = await api.post('/tools', body, {
+    const res = await api.post('/feedbacks', body, {
       headers: {
         Cookie: cookieStore.toString(),
         'Content-Type': 'application/json',
@@ -58,12 +62,15 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
+
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status }
+        { status: error.response?.status ?? 500 }
       );
     }
+
     logErrorResponse({ message: (error as Error).message });
+
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }
