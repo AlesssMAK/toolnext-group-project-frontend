@@ -12,9 +12,6 @@ export async function GET(request: NextRequest) {
     const categories =
       request.nextUrl.searchParams.get('categories') ?? undefined;
 
-    console.log('TOOLS PROXY HIT', request.url);
-    console.log('API BASE URL:', api.defaults.baseURL);
-
     const res = await api.get('/tools', {
       params: {
         page,

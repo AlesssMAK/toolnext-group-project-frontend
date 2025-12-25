@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import css from './ToolInfoBlock.module.css';
-import { Owner, User } from '@/types/user';
+import { User } from '@/types/user';
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/store/authStore';
 import { Tool } from '@/types/tool';
@@ -12,7 +12,7 @@ export default function ToolInfoBlock({
   owner,
 }: {
   tool: Tool;
-  owner?: Owner;
+  owner?: User;
 }) {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
