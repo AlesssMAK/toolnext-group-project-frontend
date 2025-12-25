@@ -126,6 +126,54 @@
   transform: scale(1);
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 14px;
+}
+
+/* Базова крапка */
+.dot {
+  border: 0;
+  padding: 0;
+  background: var(--color-black);
+  border-radius: 999px;
+  opacity: 0.2;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* Маленькі крайні */
+.dotSmall {
+  width: 8px;
+  height: 8px;
+}
+
+/* Сусідні */
+.dotMid {
+  width: 10px;
+  height: 10px;
+  opacity: 0.55;
+}
+
+/* Центральна активна */
+.dotMain {
+  width: 14px;
+  height: 14px;
+}
+
+/* Активна */
+.dotActive {
+  opacity: 1;
+}
+
+/* Заблокована (якщо знадобиться) */
+.dotDisabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
 @media only screen and (min-width: 768px) {
   .feedbackBtn {
     padding: 8px 28px;

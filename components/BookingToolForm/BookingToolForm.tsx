@@ -42,24 +42,56 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
     return diffDays > 0 ? diffDays : 0;
   };
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const validationSchema = Yup.object({
-    userFirstname: Yup.string().min(2).max(50).required('Вкажіть імʼя'),
-    userLastname: Yup.string().min(2).max(50).required('Вкажіть прізвище'),
+    userFirstname: Yup.string()
+      .trim()
+      .min(2, 'Мінімум 2 символи')
+      .max(50, 'Максимум 50 символів')
+      .required('Вкажіть імʼя'),
+    
+    userLastname: Yup.string()
+      .trim()
+      .min(2, 'Мінімум 2 символи')
+      .max(50, 'Максимум 50 символів')
+      .required('Вкажіть прізвище'),
+    
     userPhone: Yup.string()
+      .transform((v) => (v ? v.replace(/\s/g, '') : v))
       .matches(/^\+?[0-9\s\-()]{7,20}$/, 'Невірний формат телефону')
       .required('Вкажіть номер телефону'),
+    
     startDate: Yup.date()
+      .nullable()
       .required('Оберіть дату початку')
-      .min(new Date(), 'Дата не може бути в минулому'),
+      .min(today, 'Дата не може бути в минулому'),
+    
     endDate: Yup.date()
+      .nullable()
       .required('Оберіть дату завершення')
-      .when('startDate', (startDate, schema) =>
-        startDate
-          ? schema.min(startDate, 'Дата завершення має бути пізніше')
-          : schema
-      ),
-    deliveryCity: Yup.string().min(2).required('Вкажіть місто'),
-    deliveryBranch: Yup.string().min(1).required('Вкажіть відділення'),
+      .when(['startDate'], (values, schema) => {
+    const [startDate] = values as [Date | null];
+
+    if (!startDate) return schema;
+
+    const nextDay = new Date(startDate);
+    nextDay.setHours(0, 0, 0, 0);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    return schema.min(nextDay, 'Мінімум 1 день оренди');
+  }),
+    
+    deliveryCity: Yup.string()
+      .trim()
+      .min(2, 'Мінімум 2 символи')
+      .required('Вкажіть місто'),
+    
+    deliveryBranch: Yup.string()
+      .trim()
+      .min(1)
+      .required('Вкажіть відділення'),
   });
 
   return (
