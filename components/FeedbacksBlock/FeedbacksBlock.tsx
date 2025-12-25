@@ -62,7 +62,7 @@ const FeedbacksBlock = ({
     }
     openModal();
   };
-  
+
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -106,7 +106,8 @@ const FeedbacksBlock = ({
     const total = swiper.snapGrid?.length ?? 1;
     setPagesCount(total);
     const spg =
-      typeof swiper.params.slidesPerGroup === 'number' && swiper.params.slidesPerGroup > 0
+      typeof swiper.params.slidesPerGroup === 'number' &&
+      swiper.params.slidesPerGroup > 0
         ? swiper.params.slidesPerGroup
         : 1;
     setGroupNow(spg);
@@ -147,6 +148,7 @@ const FeedbacksBlock = ({
           </h2>
           {isToolPage && (
             <button
+              type="button"
               onClick={handleLeaveFeedbackClick}
               className={`${style.feedbackBtn} button button--secondary`}
             >

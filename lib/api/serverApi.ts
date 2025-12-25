@@ -1,7 +1,7 @@
 'use server';
 import { cookies } from 'next/headers';
 import nextServer from './api';
-import { User } from '@/types/user';
+import { Owner, OwnerResponse, User } from '@/types/user';
 import { UserResponse } from '@/types/user';
 import { UserToolsResponse } from '@/types/tool';
 
@@ -26,8 +26,9 @@ export async function getServerMe(): Promise<User> {
   return data.data;
 }
 
-export async function getUserById(userId: string): Promise<User> {
-  const { data } = await nextServer.get<UserResponse>(`/users/${userId}`);
+export async function getUserById(userId: string): Promise<Owner> {
+  const { data } = await nextServer.get<OwnerResponse>(`/users/${userId}`);
+  console.log('getUserById', data.data);
 
   return data.data;
 }

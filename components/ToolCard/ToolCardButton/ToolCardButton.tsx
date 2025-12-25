@@ -34,6 +34,7 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
       {isOwner ? (
         <div className={css.btnContainer}>
           <ButtonComponent
+            type="button"
             onClick={handleEdit}
             className={`button button--secondary ${css.editBtn}`}
           >
@@ -57,6 +58,7 @@ export const ToolCardButton: React.FC<ToolCardButtonProps> = ({
         </div>
       ) : (
         <ButtonComponent
+          type="button"
           onClick={handleView}
           className={`button button--secondary ${className}`}
         >

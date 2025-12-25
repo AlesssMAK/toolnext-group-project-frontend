@@ -3,9 +3,6 @@
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { uk } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
-import Calendar from '@/components/Calendar/Calendar'
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -53,20 +50,25 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
       .required('Вкажіть номер телефону'),
 
     startDate: Yup.date()
-    .nullable()
-    .typeError('Вкажіть коректну дату початку')
-    .required('Оберіть дату початку')
-    .min(startOfToday, 'Дата не може бути в минулому'),
+      .nullable()
+      .typeError('Вкажіть коректну дату початку')
+      .required('Оберіть дату початку')
+      .min(startOfToday, 'Дата не може бути в минулому'),
 
-  endDate: Yup.date()
-    .nullable()
-    .typeError('Вкажіть коректну дату завершення')
-    .required('Оберіть дату завершення')
-    .test('is-after-start', 'Дата завершення має бути пізніше за початок', function (value) {
-      const { startDate } = this.parent;
-      if (!startDate || !value) return true;
-      return value >= startDate;
-    }),
+    endDate: Yup.date()
+      .nullable()
+      .typeError('Вкажіть коректну дату завершення')
+      .required('Оберіть дату завершення')
+      .test(
+        'is-after-start',
+        'Дата завершення має бути пізніше за початок',
+        function (value) {
+          const { startDate } = this.parent as MyFormValues;
+          if (!startDate || !value) return true;
+          return value >= startDate;
+        }
+      ),
+
     deliveryCity: Yup.string().min(2).required('Вкажіть місто'),
     deliveryBranch: Yup.string().min(1).required('Вкажіть відділення'),
   });
@@ -87,7 +89,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         setServerWarning(null);
 
         try {
-          const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/bookings', {
+          const res = await fetch('/api/bookings', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -102,17 +104,17 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
           const data = await res.json();
 
           if (!res.ok) {
-            if (data.message?.includes('booked')) {
+            if (data?.message?.includes('booked')) {
               setServerWarning('Інструмент вже зайнятий на вибрані дати');
               return;
             }
-            setServerWarning(data.message || 'Сталася помилка бронювання');
+            setServerWarning(data?.message || 'Сталася помилка бронювання');
             return;
           }
 
           router.push('/confirm/booking');
-        } catch (err: any) {
-          setServerWarning(err.message);
+        } catch (err) {
+          setServerWarning((err as Error).message);
         } finally {
           setSubmitting(false);
         }
@@ -123,18 +125,14 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
         const totalPrice = bookingDays * pricePerDay;
 
         return (
-          <div className="container">
           <div className={css.container}>
-            <h2 className={`${css.titleBooking} text-xl font-semibold`}>
-              Підтвердження бронювання
-            </h2>
-            <Form
-              className={`${css.formBoking} max-w-xl space-y-4 border p-4 rounded`}
-            >
+            <h2 className={css.titleBooking}>Підтвердження бронювання</h2>
+
+            <Form className={css.formBoking}>
               <ul className={css.blok_fameli_city}>
                 <li>
                   <label className={css.labels} htmlFor="userFirstname">
-                    Ім'я
+                    Ім&apos;я
                   </label>
                   <Field
                     className={css.inputs}
@@ -142,11 +140,12 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                     placeholder="Ваше імʼя"
                   />
                   <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
+                    className={css.error_message}
                     name="userFirstname"
                     component="p"
                   />
                 </li>
+
                 <li>
                   <label className={css.labels} htmlFor="userLastname">
                     Прізвище
@@ -157,7 +156,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                     placeholder="Прізвище"
                   />
                   <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
+                    className={css.error_message}
                     name="userLastname"
                     component="p"
                   />
@@ -175,26 +174,33 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                     placeholder="+38 (XXX) XXX XX XX"
                   />
                   <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
+                    className={css.error_message}
                     name="userPhone"
                     component="p"
                   />
                 </li>
               </ul>
 
-                <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                  <label className={css.labels}>
-                      Виберіть період бронювання
-                    </label>
-                    <DateRangePicker
-                      onSelect={(from, to) => {
-                        setFieldValue('startDate', from);
-                        setFieldValue('endDate', to);
-                      }}
-                    />
+              <div className={css.blok_calendar}>
+                <label className={css.labels}>Виберіть період бронювання</label>
 
-                    <ErrorMessage name="startDate" component="p" />
-                    <ErrorMessage name="endDate" component="p" />
+                <DateRangePicker
+                  onSelect={(from, to) => {
+                    setFieldValue('startDate', from);
+                    setFieldValue('endDate', to);
+                  }}
+                />
+
+                <ErrorMessage
+                  className={css.error_message}
+                  name="startDate"
+                  component="p"
+                />
+                <ErrorMessage
+                  className={css.error_message}
+                  name="endDate"
+                  component="p"
+                />
               </div>
 
               <ul className={css.blok_fameli_city}>
@@ -208,11 +214,12 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                     placeholder="Ваше місто"
                   />
                   <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
+                    className={css.error_message}
                     name="deliveryCity"
                     component="p"
                   />
                 </li>
+
                 <li>
                   <label className={css.labels} htmlFor="deliveryBranch">
                     Відділення Нової Пошти
@@ -223,26 +230,16 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                     placeholder="24"
                   />
                   <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
+                    className={css.error_message}
                     name="deliveryBranch"
                     component="p"
                   />
                 </li>
               </ul>
 
-              <ul
-                className={`${css.blok_button} flex justify-between items-center pt-2`}
-              >
+              <ul className={css.blok_button}>
                 <li>
-                  <span className="font-medium">
-                    Ціна: {totalPrice} грн
-                    {/* {bookingDays > 0 && (
-                  <span className="text-sm text-gray-500">
-                    {' '}
-                    ({bookingDays} дн. × {pricePerDay} грн)
-                  </span>
-                )} */}
-                  </span>
+                  <span className={css.totalPrice}>Ціна: {totalPrice} грн</span>
                 </li>
                 <li>
                   <button
@@ -256,11 +253,10 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               </ul>
 
               {serverWarning && (
-                <p className="text-orange-600 font-medium">{serverWarning}</p>
+                <p className={css.serverWarning}>{serverWarning}</p>
               )}
             </Form>
-            </div>
-            </div>
+          </div>
         );
       }}
     </Formik>
