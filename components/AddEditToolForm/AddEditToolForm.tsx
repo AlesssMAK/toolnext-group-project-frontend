@@ -250,7 +250,7 @@ export default function AddEditToolForm({
               onSelect={category => {
                 formik.setFieldValue('category', category);
               }}
-              selectedTag={formik.values.category}
+              selectedTags={formik.values.category}
               customClassName={{
                 wrapper: css.categorySelectWrapper,
               }}
