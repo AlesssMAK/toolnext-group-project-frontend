@@ -32,8 +32,12 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
     };
   }, []);
 
+  const iconId = isOpen
+          ? "keyboard_arrow_up"
+          : "keyboard_arrow_down";
+
   return (
-    <div className={styles.selectWrapper + (isOpen ? ' ' + styles.selectWrapperOpen : '')} ref={wrapperRef}>
+    <div className={`${styles.selectWrapper} ${styles.sortSelectwrapper}` + (isOpen ? ' ' + styles.selectWrapperOpen : '')} ref={wrapperRef}>
       <button
         type="button"
         className={`${styles.select} ${styles.sortSelect}`}
@@ -42,6 +46,14 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
         aria-expanded={isOpen}
       >
         <span className={styles.selectLabel}>{SORT_OPTIONS[value]}</span>
+                <svg
+          width="24"
+          height="24"
+          className={`${styles.icon} ${isOpen ? styles.iconOpen : ''}`}
+          aria-hidden
+        >
+          <use href={`/sprite.svg#${iconId}`} />
+        </svg>
       </button>
       {isOpen && (
         <ul className={styles.dropdown} role="listbox">

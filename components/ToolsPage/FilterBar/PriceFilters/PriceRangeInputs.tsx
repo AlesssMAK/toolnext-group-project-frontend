@@ -45,7 +45,7 @@ export default function PriceRangeInputs({
         name="minPrice"
         inputMode="numeric"
         pattern="[0-9]*"
-        placeholder="Мін. ціна"
+        placeholder="Ціна від"
         value={minStr}
         onChange={e => {
           const next = normalizePriceInput(e.target.value);
@@ -59,7 +59,7 @@ export default function PriceRangeInputs({
         name="maxPrice"
         inputMode="numeric"
         pattern="[0-9]*"
-        placeholder="Макс. ціна"
+        placeholder="Ціна до"
         value={maxStr}
         onChange={e => {
           const next = normalizePriceInput(e.target.value);

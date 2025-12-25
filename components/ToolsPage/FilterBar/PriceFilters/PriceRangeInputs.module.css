@@ -1,34 +1,36 @@
+/* MOBILE FIRST */
+
 .priceInputs {
-  height: 40px;
   display: flex;
   align-items: center;
   gap: 16px;
+}
 
-  & input {
-    height: 100%;
-    width: max-content;
-    box-sizing: border-box;
-    border: 2px solid #000;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 14px;
-    color: var(--color-neutral-darkest);
+.priceInputs input {
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #000;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--color-neutral-darkest);
+  background-color: transparent;
+}
 
-    @media (min-width: 768px) {
-      max-width: 144px;
-    }
+.priceInputs input:focus {
+  border-color: #8808cc;
+  outline: none;
+}
 
-    @media (max-width: 767px) {
-      width: 100%;
-    }
-  }
+.priceInputs input::placeholder {
+  color: var(--opacity-neutral-darkest-60);
+}
 
-  & input:focus {
-    border: 2px solid #8808cc;
-    outline: none;
-  }
+/* TABLET ≥ 768px */
 
-  & input::placeholder {
-    color: var(--opacity-neutral-darkest-60);
+@media (min-width: 768px) {
+  .priceInputs input {
+    max-width: 144px;
   }
 }
