@@ -3,7 +3,7 @@
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { uk } from 'date-fns/locale';
+import { da, uk } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from '@/components/Calendar/Calendar'
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
@@ -106,7 +106,9 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               setServerWarning('Інструмент вже зайнятий на вибрані дати');
               return;
             }
-            setServerWarning(data.message || 'Сталася помилка бронювання');
+            if (data.message) {
+              setServerWarning('Сталася помилка бронювання');
+            }
             return;
           }
 
@@ -183,18 +185,29 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               </ul>
 
                 <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                  <label className={css.labels}>
-                      Виберіть період бронювання
-                    </label>
-                    <DateRangePicker
-                      onSelect={(from, to) => {
-                        setFieldValue('startDate', from);
-                        setFieldValue('endDate', to);
-                      }}
-                    />
+                  <Calendar
+                    onSelect={(from, to) => {
+                setFieldValue('startDate', from);
+                setFieldValue('endDate', to);
+              }}
+                  />
+                  {serverWarning && (
+                    <ErrorMessage
+                    className={`${css.error_message} text-red-600 text-sm`}
+                      name="startDate" component="p" />
+                  )}
+                  {/* <label className={css.labels}>
+                        Виберіть період бронювання
+                      </label>
+                      <DateRangePicker
+                        onSelect={(from, to) => {
+                          setFieldValue('startDate', from);
+                          setFieldValue('endDate', to);
+                        }}
+                      />
 
-                    <ErrorMessage name="startDate" component="p" />
-                    <ErrorMessage name="endDate" component="p" />
+                      <ErrorMessage name="startDate" component="p" />
+                      <ErrorMessage name="endDate" component="p" /> */}
               </div>
 
               <ul className={css.blok_fameli_city}>
