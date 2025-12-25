@@ -85,7 +85,7 @@
   --os-handle-bg: #6c06a3;
   --os-handle-bg-hover: #6c06a3;
   --os-handle-bg-active: #6c06a3;
-  --os-track-bg: transparent;
+
 }
 
 .osWrap :global(.os-scrollbar-handle) {
@@ -101,7 +101,7 @@
   border-radius: 4px;
   width: 3px;
   height: 255px;
-  margin: 3px 7px auto -1px;
+  margin: 3px 7px auto -1.5px;
 }
 /*
 .list {
