@@ -1,9 +1,7 @@
-import { Owner, OwnerResponse, User, UserResponse } from '@/types/user';
+import { User } from '@/types/user';
 import nextServer from './api';
 import { UserToolsResponse, Category } from '@/types/tool';
 import { feedbacksProps, feedbacksRequestProps } from '@/types/feedback';
-import axios from 'axios';
-import apiClient from './apiClient';
 
 export type RegisterRequest = {
   name: string;
@@ -145,9 +143,4 @@ interface CreateBookingRequest {
 export const createBooking = async (data: CreateBookingRequest) => {
   const res = await nextServer.post('/bookings', data);
   return res.data;
-};
-
-export const getClientUserById = async (id: string) => {
-  const { data } = await apiClient.get(`/users/${id}`);
-  return data.data;
 };

@@ -9,7 +9,7 @@ import { getToolById } from '@/lib/api/tools';
 import styles from './ToolPreview.module.css';
 import FeedbacksBlock from '@/components/FeedbacksBlock/FeedbacksBlock';
 import { useAuthStore } from '@/lib/store/authStore';
-import { getClientUserById } from '@/lib/api/clientApi';
+import { getUserById } from '@/lib/api/serverApi';
 
 export default function ToolDetails() {
   const params = useParams();
@@ -27,7 +27,7 @@ export default function ToolDetails() {
 
   const { data: owner } = useQuery({
     queryKey: ['user', tool?.owner],
-    queryFn: () => getClientUserById(tool!.owner),
+    queryFn: () => getUserById(tool!.owner),
     enabled: !!tool?.owner,
   });
 
