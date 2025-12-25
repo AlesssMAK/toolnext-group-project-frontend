@@ -3,11 +3,41 @@
   max-width: 100%;
   --adp-padding: 0px;
   --adp-width: 100%;
+  /* height: 437px; */
+  --adp-day-cell-height: 56px;
 }
 
+/* .air-datepicker.-inline- {
+  height: 437px;
+} */
+
+/* .air-datepicker--content {
+  height: 437px;
+}
+
+.air-datepicker-body {
+  height: 437px;
+} */
+
+.air-datepicker-body--day-names {
+  height: 56px;
+}
+
+/* .air-datepicker-body--cells.-days- {
+  border-radius: 6px;
+  height: 56px;
+
+height: 340px;
+} */
+
 .air-datepicker-cell {
-  border: 2px solid var(--color-scheme-1-border);
   padding: 0px;
+
+  height: 56px; /* мобілка */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-scheme-1-border);
 }
 
 .air-datepicker-body--day-name {
@@ -49,7 +79,7 @@
   }
 
   .air-datepicker-body--day-name {
-    width: 100px;
+    width: 100%;
     height: 56px;
   }
   .air-datepicker-cell.-disabled- {
@@ -84,4 +114,9 @@
   .air-datepicker {
     width: 864px;
   }
+}
+
+.air-datepicker-body--day-name {
+  width: 100%;
+  height: 56px;
 }
