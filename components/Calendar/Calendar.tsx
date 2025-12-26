@@ -133,14 +133,14 @@ while (cells.length < 35) {
 
 // запасний варіант
 
-{/* <Calendar
-                    onSelect={(from, to) => {
-                setFieldValue('startDate', from);
-                setFieldValue('endDate', to);
-              }}
-                  />
-                  {serverWarning && (
-                    <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
-                      name="startDate" component="p" />
-                  )} */}
+              //     <Calendar
+              //       onSelect={(from, to) => {
+              //   setFieldValue('startDate', from);
+              //   setFieldValue('endDate', to);
+              // }}
+              //     />
+              //     {serverWarning && (
+              //       <ErrorMessage
+              //       className={`${css.error_message} text-red-600 text-sm`}
+              //         name="startDate" component="p" />
+              //     )}

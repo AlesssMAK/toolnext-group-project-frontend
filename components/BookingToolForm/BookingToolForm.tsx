@@ -185,18 +185,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
               </ul>
 
                 <div className={`${css.blok_calendar} grid grid-cols-2 gap-3`}>
-                  <Calendar
-                    onSelect={(from, to) => {
-                setFieldValue('startDate', from);
-                setFieldValue('endDate', to);
-              }}
-                  />
-                  {serverWarning && (
-                    <ErrorMessage
-                    className={`${css.error_message} text-red-600 text-sm`}
-                      name="startDate" component="p" />
-                  )}
-                  {/* <label className={css.labels}>
+                  <label className={css.labels}>
                         Виберіть період бронювання
                       </label>
                       <DateRangePicker
@@ -207,7 +196,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                       />
 
                       <ErrorMessage name="startDate" component="p" />
-                      <ErrorMessage name="endDate" component="p" /> */}
+                      <ErrorMessage name="endDate" component="p" />
               </div>
 
               <ul className={css.blok_fameli_city}>
