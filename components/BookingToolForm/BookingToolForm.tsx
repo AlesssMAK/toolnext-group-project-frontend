@@ -3,6 +3,9 @@
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { da, uk } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+import Calendar from '@/components/Calendar/Calendar'
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
