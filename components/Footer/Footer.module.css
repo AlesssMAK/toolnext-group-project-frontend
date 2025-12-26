@@ -134,6 +134,11 @@
     height: 15px;
   }
 
+  .social_links{
+    width: 124px;
+    justify-content: end;
+  }
+
   .social_icon {
     width: 24px;
     height: 24px;
@@ -147,4 +152,9 @@
   .footer_text {
     font-size: 14px;
   }
+
+  .nav_list_item {
+    font-size: 14px;
+  }
 }
+
