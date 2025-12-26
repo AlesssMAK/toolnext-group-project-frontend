@@ -8,6 +8,7 @@ import 'normalize.css';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import { Toaster } from 'react-hot-toast';
+import ScrollToTopButton from '@/components/ScrollToTopBtn/ScrollToTopButton';
 
 const inter = Inter({
   variable: '--font-Inter',
@@ -58,6 +59,7 @@ export default function RootLayout({
           <AuthProvider>
             {modal}
             {children}
+            <ScrollToTopButton showAfter={700} />
           </AuthProvider>
         </TanStackProvider>
       </body>

@@ -64,6 +64,7 @@ export default function ToolInfoBlock({
         )}
       </div>
       <button
+        type="button"
         className={`${css.toolBut} button button--primary`}
         onClick={handleBookClick}
       >

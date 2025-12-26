@@ -5,7 +5,7 @@ import nextServer from '@/lib/api/api';
 
 export interface ToolsFilter {
   search?: string;
-  tag?: string;
+  tags?: string[];
   minPrice?: number | null;
   maxPrice?: number | null;
 }
@@ -22,7 +22,7 @@ export function useToolsPagination(filters: ToolsFilter = {}) {
   useEffect(() => {
     setPage(1);
     setAllTools([]);
-  }, [filters.search, filters.tag, filters.minPrice, filters.maxPrice]);
+  }, [filters.search, filters.tags, filters.minPrice, filters.maxPrice]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['tools', { page, limit, ...filters }],
@@ -31,7 +31,7 @@ export function useToolsPagination(filters: ToolsFilter = {}) {
       params.append('page', page.toString());
       params.append('limit', limit!.toString());
       if (filters.search) params.append('search', filters.search);
-      if (filters.tag) params.append('categories', filters.tag);
+      if (filters.tags?.length) {params.append('categories', filters.tags.join(','));}
       if (filters.minPrice)
         params.append('minPrice', filters.minPrice.toString());
       if (filters.maxPrice)

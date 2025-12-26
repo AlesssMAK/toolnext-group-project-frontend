@@ -1,8 +1,7 @@
 'use server';
 import { cookies } from 'next/headers';
 import nextServer from './api';
-import { User } from '@/types/user';
-import { UserResponse } from '@/types/user';
+import { User, UserResponse } from '@/types/user';
 import { UserToolsResponse } from '@/types/tool';
 
 export async function checkServerSession() {
