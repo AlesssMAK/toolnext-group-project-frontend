@@ -5,7 +5,7 @@ import CategorySelect from './Dropdowns/CategorySelect';
 import PriceRangeInputs from './PriceFilters/PriceRangeInputs';
 import SortDropdown from './Dropdowns/SortSelect';
 import { SortOption } from './types';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 interface FilterBarProps {
   selectedTags: string[];
@@ -30,7 +30,6 @@ export default function FilterBar({
   sort,
   onSortChange,
 }: FilterBarProps) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
 
@@ -40,9 +39,6 @@ export default function FilterBar({
     onMinPriceChange?.(null);
     onMaxPriceChange?.(null);
     onSortChange('popular');
-    if (searchQuery) {
-      router.replace('/tools');
-    }
   };
 
   return (

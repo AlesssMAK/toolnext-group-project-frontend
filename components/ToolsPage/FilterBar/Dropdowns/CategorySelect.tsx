@@ -23,7 +23,14 @@ export default function CategorySelect({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    getCategories().then(setCategories).catch(console.error);
+    getCategories()
+      .then(categories =>
+        setCategories(
+          [...categories].sort((a, b) => a.title.localeCompare(b.title))
+        )
+      )
+      .catch(console.error);
+
   }, []);
 
   useEffect(() => {

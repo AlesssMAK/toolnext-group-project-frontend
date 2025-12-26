@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import FilterBar from './FilterBar/FilterBar';
 import ToolsGrid from './ToolsGrid/ToolsGrid';
 import styles from './ToolsPage.module.css';
@@ -64,6 +64,9 @@ export default function ToolsPage({ search = '' }: ToolsPageProps) {
 
   const [sort, setSort] = useState<SortOption>('popular');
   const [displayedTools, setDisplayedTools] = useState<Tool[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     setDisplayedTools(prev => {
@@ -107,6 +110,10 @@ export default function ToolsPage({ search = '' }: ToolsPageProps) {
       minPrice: null,
       maxPrice: null,
     });
+
+    if (searchQuery) {
+      router.replace('/tools');
+    }
   };
 
   return (
