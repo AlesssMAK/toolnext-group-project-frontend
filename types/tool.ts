@@ -31,3 +31,10 @@ export interface Category {
   _id: string;
   title: string;
 }
+
+export interface ToolsWithPaginationRequest {
+  page: number;
+  limit: number;
+  search?: string;
+  categories?: string;
+}

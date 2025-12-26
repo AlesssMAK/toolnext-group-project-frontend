@@ -2,7 +2,7 @@
   padding: 64px 20px;
   position: relative;
   height: 640px;
-  width: 335px;
+  width: 100%;
   max-width: 768px;
   border-radius: 16px;
   background-color: #fff;
@@ -59,7 +59,7 @@
   border: 2px solid #000;
   border-radius: 6px;
   font-size: 14px;
-  width: 295px;
+  width: 100%;
   height: 48px;
   font-family: inherit;
 }
@@ -79,7 +79,7 @@
 .textarea {
   resize: vertical;
   height: 180px;
-  width: 295px;
+  width: 100%;
 }
 
 .starRating {
@@ -113,7 +113,7 @@
   border: 2px solid #8808cc;
   border-radius: 6px;
   padding: 10px 24px;
-  width: 295px;
+  width: 100%;
   height: 41px;
   font-weight: 500;
   font-size: 14px;

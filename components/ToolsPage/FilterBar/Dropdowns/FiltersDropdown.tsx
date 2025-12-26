@@ -1,47 +1,48 @@
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import 'overlayscrollbars/overlayscrollbars.css';
+
 import styles from '../FilterBar.module.css';
 
 type Props = {
-  selectedTag: string;
-  handleSelect: (value: string) => void;
   categories: {
     _id: string;
     title: string;
   }[];
+  selectedTags: string[];
+  onToggle: (id: string) => void;
 };
 
-
 const FiltersDropdown = ({
-  selectedTag,
-  handleSelect,
   categories,
+  selectedTags,
+  onToggle,
 }: Props) => {
   return (
-    <ul className={styles.dropdown} role="listbox">
-      <li
-        className={`${styles.option} ${
-          !selectedTag ? styles.optionSelected : ''
-        }`}
-        role="option"
-        aria-selected={!selectedTag}
-        onClick={() => handleSelect('')}
+    <div className={styles.dropdown}>
+      <OverlayScrollbarsComponent
+        className={styles.osWrap}
       >
-        Всі категорії
-      </li>
+        <ul role="listbox">
+          {categories.map(({ _id, title }) => {
+            const isSelected = selectedTags.includes(_id);
 
-      {categories.map(({ _id, title }) => (
-        <li
-          key={_id}
-          className={`${styles.option} ${
-            selectedTag === _id ? styles.optionSelected : ''
-          }`}
-          role="option"
-          aria-selected={selectedTag === _id}
-          onClick={() => handleSelect(_id)}
-        >
-          {title}
-        </li>
-      ))}
-    </ul>
+            return (
+              <li
+                key={_id}
+                role="option"
+                aria-selected={isSelected}
+                className={`${styles.option} ${
+                  isSelected ? styles.optionSelected : ''
+                }`}
+                onClick={() => onToggle(_id)}
+              >
+                {title}
+              </li>
+            );
+          })}
+        </ul>
+      </OverlayScrollbarsComponent>
+    </div>
   );
 };
 

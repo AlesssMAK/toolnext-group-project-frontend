@@ -38,8 +38,6 @@ export const Navigation = ({
   const firstLetter = currentUser?.name?.charAt(0).toUpperCase();
   const avatarSrc = currentUser?.avatar?.trim() || '';
   const hasImage = avatarSrc.startsWith('http');
-  console.log('MENU NAV:', user);
-  console.log('MENU NAV AVATAR:', avatarSrc);
 
   return (
     <nav className={`${css.nav} ${css[variant]}`} aria-label="Main navigation">

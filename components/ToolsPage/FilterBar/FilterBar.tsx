@@ -7,8 +7,8 @@ import SortDropdown from './Dropdowns/SortSelect';
 import { SortOption } from './types';
 
 interface FilterBarProps {
-  selectedTag: string;
-  onTagChange: (tag: string) => void;
+  selectedTags: string[];
+  onTagsChange: (tags: string[]) => void;
   onResetSearch: () => void;
   minPrice?: number | null;
   maxPrice?: number | null;
@@ -19,8 +19,8 @@ interface FilterBarProps {
 }
 
 export default function FilterBar({
-  selectedTag,
-  onTagChange,
+  selectedTags,
+  onTagsChange,
   onResetSearch,
   minPrice,
   maxPrice,
@@ -30,16 +30,23 @@ export default function FilterBar({
   onSortChange,
 }: FilterBarProps) {
   const handleResetAll = () => {
-    onTagChange('');
+    onTagsChange([]);
     onResetSearch();
     onMinPriceChange?.(null);
     onMaxPriceChange?.(null);
+    onSortChange('popular');
   };
+
+  
 
   return (
     <div className={styles.filterBar}>
       <div className={styles.filtersGroup}>
-        <CategorySelect selectedTag={selectedTag} onSelect={onTagChange} />
+        <CategorySelect
+          selectedTags={selectedTags}
+          onSelect={onTagsChange}
+        />
+
         <PriceRangeInputs
           minPrice={minPrice ?? null}
           maxPrice={maxPrice ?? null}
@@ -47,14 +54,22 @@ export default function FilterBar({
           onMaxChange={onMaxPriceChange}
         />
       </div>
+
       <div className={styles.sortGroup}>
         <button
           className={styles.resetBtn}
           type="button"
           onClick={handleResetAll}
+          disabled={
+            selectedTags.length === 0 &&
+            minPrice == null &&
+            maxPrice == null &&
+            sort === 'popular'
+          }
         >
           Скинути фільтри
         </button>
+
         <SortDropdown value={sort} onChange={onSortChange} />
       </div>
     </div>

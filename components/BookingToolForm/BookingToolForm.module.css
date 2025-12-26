@@ -1,10 +1,8 @@
-/* .container {
+/* Цей css залишаємо!. від сюди і до !!!! */
+.container {
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
     gap: 48px;
-
-    width: 100%;
 }
 
 .titleBooking {
@@ -13,7 +11,7 @@
     justify-content: flex-start;
     flex-direction: column;
     text-align: center;
-
+    max-width: 335px;
     word-break: break-word;
 
     font-weight: 700;
@@ -23,16 +21,19 @@
 
     height: 100%;
     gap: 16px;
+
+    margin: 0 auto;
 }
 
 .formBoking {
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
-
     width: 100%;
-    height: 732px;
+    max-width: 335px;
+    margin: 0 auto;
 }
 
 .blok_fameli_city {
@@ -41,6 +42,7 @@
     justify-content: flex-start;
     flex-direction: column;
     gap: 24px;
+    width: 100%;
 
     height: 168px;
 }
@@ -62,6 +64,7 @@
     justify-content: flex-start;
     flex-direction: row;
     gap: 24px;
+    width: 100%;
 
     height: 72px;
 }
@@ -77,26 +80,11 @@
     height: 72px;
 }
 
-.calendar {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
 .blok_calendar {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-}
-
-.blok_calendar ul {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 24px;
-
-    height: 104px;
+    gap: 12px;
+    width: 100%;
 }
 
 .labels {
@@ -186,26 +174,16 @@
 }
 
 @media screen and (min-width: 768px) {
-    .container {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: 48px;
-
-        width: 100%;
-    }
-
     .titleBooking {
         font-size: 30px;
-
         width: 704px;
+        max-width: none;
         height: 36px;
         gap: 16px;
     }
 
     .formBoking {
-        width: 704px;
-        height: 428px;
+        max-width: 704px;
     }
 
     .blok_fameli_city {
@@ -227,21 +205,10 @@
         width: 704px;
     }
 
-
     .blok_calendar {
-        flex-direction: row;
-        gap: 24px;
-
-        width: 704px;
-        height: 72px;
-    }
-
-    .blok_calendar ul {
-        flex-direction: row;
-        gap: 24px;
-
-        width: 704px;
-        height: 72px;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
     }
 
     .inputs {
@@ -272,19 +239,6 @@
 }
 
 @media screen and (min-width: 1440px) {
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: 48px;
-
-        width: 1312px;
-        height: 526px;
-        max-width: 1312px;
-
-    }
-
     .titleBooking {
         font-weight: 700;
         font-size: 42px;
@@ -294,9 +248,7 @@
     }
 
     .formBoking {
-        justify-content: center;
-        width: 864px;
-        height: 428px;
+        max-width: 864px;
     }
 
     .blok_fameli_city {
@@ -320,10 +272,6 @@
 
     .blok_calendar {
         width: 864px;
-    }
-
-    .blok_calendar ul {
-        width: 704px;
     }
 
     .inputs {
@@ -350,324 +298,6 @@
 
     line-height: 1.5;
     color: var(--color-red-dark);
-} */
-
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  padding-bottom: 32px;
-  padding-top: 32px;
 }
 
-.titleBooking {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  text-align: center;
-  max-width: 335px;
-  word-break: break-word;
-
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-
-  height: 100%;
-  gap: 16px;
-
-  margin: 0 auto;
-}
-
-.formBoking {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  max-width: 335px;
-  margin: 0 auto;
-}
-
-.blok_fameli_city {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-
-  height: 168px;
-}
-
-.blok_fameli_city li {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 8px;
-
-  width: 100%;
-  height: 72px;
-}
-
-.blok_phone {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 24px;
-  width: 100%;
-
-  height: 72px;
-}
-
-.blok_phone li {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 8px;
-
-  width: 100%;
-  height: 72px;
-}
-
-.blok_calendar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
-
-.labels {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-scheme-3-text);
-}
-
-.inputs {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 24px;
-
-  border: 2px solid var(--color-neutral-darkest);
-  border-radius: 6px;
-  padding: 8px 12px;
-  width: 100%;
-  height: 40px;
-
-  background: var(--opacity-transparent);
-}
-
-.inputs_phone {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  gap: 24px;
-
-  border: 2px solid var(--color-neutral-darkest);
-  border-radius: 6px;
-  padding: 8px 12px;
-  width: 100%;
-  height: 40px;
-
-  background: var(--opacity-transparent);
-}
-
-.blok_button {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 24px;
-
-  width: 100%;
-  height: 92px;
-}
-
-.button_boking {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 8px;
-
-  border: 1px solid var(--color-electric-violet);
-  border-radius: 6px;
-  padding: 10px 24px;
-  width: 100%;
-  height: 44px;
-
-  background: var(--color-electric-violet);
-
-  font-weight: 500;
-  font-size: 16px;
-
-  line-height: 1.5;
-  color: var(--color-white);
-}
-
-.button_boking:hover,
-.button_boking:focus {
-  font-weight: 500;
-  font-size: 16px;
-
-  line-height: 1.5;
-  border: 2px solid var(--color-electric-violet);
-  background-color: var(--color-white);
-  color: var(--color-scheme-1-text);
-}
-
-.button_boking:active {
-  background: var(--color-electric-violet-lighter);
-}
-
-@media screen and (min-width: 768px) {
-  .titleBooking {
-    font-size: 30px;
-    width: 704px;
-    max-width: none;
-    height: 36px;
-    gap: 16px;
-  }
-
-  .formBoking {
-    max-width: 704px;
-  }
-
-  .blok_fameli_city {
-    flex-direction: row;
-
-    width: 704px;
-    height: 72px;
-  }
-
-  .blok_fameli_city li {
-    width: 340px;
-  }
-
-  .blok_phone {
-    width: 704px;
-  }
-
-  .blok_phone li {
-    width: 704px;
-  }
-
-  .blok_calendar {
-    flex-direction: column;
-    gap: 8px;
-    width: 704px;
-  }
-
-  .blok_calendar ul {
-    flex-direction: row;
-    gap: 24px;
-
-    width: 704px;
-    height: 72px;
-  }
-
-  .inputs {
-    gap: 16px;
-
-    width: 340px;
-    height: 40px;
-  }
-
-  .inputs_phone {
-    gap: 8px;
-
-    width: 704px;
-    height: 40px;
-  }
-
-  .blok_button {
-    justify-content: space-between;
-    flex-direction: row;
-
-    width: 704px;
-    height: 44px;
-  }
-
-  .button_boking {
-    width: 155px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .container {
-    padding-bottom: 48px;
-    padding-top: 48px;
-  }
-
-  .titleBooking {
-    font-weight: 700;
-    font-size: 42px;
-
-    width: 768px;
-    height: 50px;
-  }
-
-  .formBoking {
-    max-width: 864px;
-  }
-
-  .blok_fameli_city {
-    flex-direction: row;
-
-    width: 864px;
-    height: 72px;
-  }
-
-  .blok_fameli_city li {
-    width: 420px;
-  }
-
-  .blok_phone {
-    width: 864px;
-  }
-
-  .blok_phone li {
-    width: 864px;
-  }
-
-  .blok_calendar {
-    width: 864px;
-  }
-
-  .blok_calendar ul {
-    width: 704px;
-  }
-
-  .inputs {
-    gap: 8px;
-
-    width: 420px;
-  }
-
-  .inputs_phone {
-    gap: 8px;
-
-    width: 100%;
-  }
-
-  .blok_button {
-    width: 864px;
-  }
-}
-
-.error_message {
-  font-family: var(--second-family);
-  font-weight: 400;
-  font-size: 12px;
-
-  line-height: 1.5;
-  color: var(--color-red-dark);
-}
+/* !!!! */

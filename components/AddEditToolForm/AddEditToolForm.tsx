@@ -6,6 +6,9 @@ import * as Yup from 'yup';
 import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import CategorySelect from '../ToolsPage/FilterBar/Dropdowns/CategorySelect';
+import { Category } from '../../types/tool';
+import { getCategories } from '@/lib/api/clientApi';
 
 type Props = {
   initialData?: any;
@@ -27,16 +30,8 @@ export default function AddEditToolForm({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + '/api/categories'
-        );
-        const data = await res.json();
-
-        if (data.status === 'success') {
-          setCategories(data.data);
-        } else {
-          toast.error('Не вдалося завантажити категорії');
-        }
+        const categories = await getCategories();
+        setCategories(categories);
       } catch (error) {
         toast.error('Помилка під час завантаження категорій');
       }
@@ -200,7 +195,7 @@ export default function AddEditToolForm({
                       sizes="(max-width: 480px) 375px, (max-width: 1024px) 768px, 1440px"
                     />
                     <label
-                      className={`${css.photoLabel} button button--secondary`}
+                      className={`${css.uploadPhotoButton} button button--secondary`}
                     >
                       Завантажити фото
                       <input
@@ -251,20 +246,15 @@ export default function AddEditToolForm({
 
           {/* Категорія */}
           <div className={css.formGroup}>
-            <label>
-              Категорія
-              <select
-                className={`${css.input} ${css.select} ${formik.touched.category && formik.errors.category ? css.error : ''}`}
-                {...formik.getFieldProps('category')}
-              >
-                <option value="">Категорія</option>
-                {categories.map(cat => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.title}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <CategorySelect
+              onSelect={category => {
+                formik.setFieldValue('category', category);
+              }}
+              selectedTags={formik.values.category}
+              customClassName={{
+                wrapper: css.categorySelectWrapper,
+              }}
+            />
           </div>
 
           {/* Умови оренди*/}
