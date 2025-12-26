@@ -144,6 +144,12 @@
   text-decoration: underline;
 }
 
+.resetBtn:disabled {
+  cursor: default;
+  color: #888888;
+  text-decoration: none;
+}
+
 .icon {
   flex-shrink: 0;
   right: 12px;

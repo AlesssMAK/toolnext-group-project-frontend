@@ -38,8 +38,6 @@ interface ToolsFiltersState {
 }
 
 export default function ToolsPage({ search = '' }: ToolsPageProps) {
-  const router = useRouter();
-
   const [filtersState, setFiltersState] = useState<ToolsFiltersState>({
     search,
     tags: [],
@@ -62,8 +60,7 @@ export default function ToolsPage({ search = '' }: ToolsPageProps) {
     ]
   );
 
-  const { tools, loading, hasMore, loadMore } =
-    useToolsPagination(filters);
+  const { tools, loading, hasMore, loadMore } = useToolsPagination(filters);
 
   const [sort, setSort] = useState<SortOption>('popular');
   const [displayedTools, setDisplayedTools] = useState<Tool[]>([]);
@@ -110,8 +107,6 @@ export default function ToolsPage({ search = '' }: ToolsPageProps) {
       minPrice: null,
       maxPrice: null,
     });
-
-    router.push('/tools');
   };
 
   return (
