@@ -87,7 +87,7 @@ export default function AddEditToolForm({
 
       try {
         const formData = new FormData();
-
+        
         Object.entries(values).forEach(([key, value]) => {
           if (key === 'photo' && value instanceof File) {
             formData.append('image', value);
@@ -247,10 +247,13 @@ export default function AddEditToolForm({
           {/* Категорія */}
           <div className={css.formGroup}>
             <CategorySelect
-              onSelect={category => {
-                formik.setFieldValue('category', category);
+              onSelect={ids => {
+                const singleId = ids.length > 0 ? ids[ids.length - 1] : '';
+                formik.setFieldValue('category', singleId);
               }}
-              selectedTags={formik.values.category}
+              selectedTags={
+                formik.values.category ? [formik.values.category] : []
+              }
               customClassName={{
                 wrapper: css.categorySelectWrapper,
               }}

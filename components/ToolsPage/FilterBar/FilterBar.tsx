@@ -5,6 +5,7 @@ import CategorySelect from './Dropdowns/CategorySelect';
 import PriceRangeInputs from './PriceFilters/PriceRangeInputs';
 import SortDropdown from './Dropdowns/SortSelect';
 import { SortOption } from './types';
+import { useSearchParams } from 'next/navigation';
 
 interface FilterBarProps {
   selectedTags: string[];
@@ -29,6 +30,9 @@ export default function FilterBar({
   sort,
   onSortChange,
 }: FilterBarProps) {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+
   const handleResetAll = () => {
     onTagsChange([]);
     onResetSearch();
@@ -37,15 +41,10 @@ export default function FilterBar({
     onSortChange('popular');
   };
 
-  
-
   return (
     <div className={styles.filterBar}>
       <div className={styles.filtersGroup}>
-        <CategorySelect
-          selectedTags={selectedTags}
-          onSelect={onTagsChange}
-        />
+        <CategorySelect selectedTags={selectedTags} onSelect={onTagsChange} />
 
         <PriceRangeInputs
           minPrice={minPrice ?? null}
@@ -64,7 +63,8 @@ export default function FilterBar({
             selectedTags.length === 0 &&
             minPrice == null &&
             maxPrice == null &&
-            sort === 'popular'
+            sort === 'popular' &&
+            !searchQuery
           }
         >
           Скинути фільтри
