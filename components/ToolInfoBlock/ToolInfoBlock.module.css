@@ -5,11 +5,11 @@
 
 .ownerLink {
   padding: 8px 20px;
-  font-size: 12px;
+  font-size: 14px;
   max-height: 37px;
 
   @media screen and (min-width: 330px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -38,7 +38,7 @@
 
 .toolDescr {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #000;
   margin-bottom: 24px;
@@ -77,7 +77,7 @@
 .ownerName {
   margin-bottom: 16px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #000;
 }

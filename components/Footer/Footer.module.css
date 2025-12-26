@@ -39,6 +39,7 @@
   color: var(--color-scheme-1-border);
   transition: 0.3s ease;
 }
+
 .nav_list_link {
   transition: border-bottom 0.3s ease;
 }
@@ -109,6 +110,10 @@
 @media screen and (min-width: 768px) {
   .nav_list {
     flex-direction: row;
+  }
+
+  .nav_list_item {
+    font-size: 14px;
   }
 }
 
