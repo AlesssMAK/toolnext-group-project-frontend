@@ -102,11 +102,14 @@ export default function AddEditToolForm({
 
         const method = isEditMode ? 'PATCH' : 'POST';
 
-        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
-          method,
-          body: formData,
-          credentials: 'include',
-        });
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_BACKEND_API_URL + url,
+          {
+            method,
+            body: formData,
+            credentials: 'include',
+          }
+        );
 
         if (response.status === 401) {
           toast.error('Увійдіть у систему');
@@ -247,10 +250,13 @@ export default function AddEditToolForm({
           {/* Категорія */}
           <div className={css.formGroup}>
             <CategorySelect
-              onSelect={category => {
-                formik.setFieldValue('category', category);
+              onSelect={ids => {
+                const singleId = ids.length > 0 ? ids[ids.length - 1] : '';
+                formik.setFieldValue('category', singleId);
               }}
-              selectedTags={formik.values.category}
+              selectedTags={
+                formik.values.category ? [formik.values.category] : []
+              }
               customClassName={{
                 wrapper: css.categorySelectWrapper,
               }}
