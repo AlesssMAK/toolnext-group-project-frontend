@@ -1,7 +1,8 @@
 .navigationLinkBtn {
-  padding: 8px 20px;
+  padding: 8px 18px;
   height: 40px;
-  width: 254px;
+  width: 248px;
+  font-weight: 500;
 }
 
 .tablet .navigationLinkBtn {
