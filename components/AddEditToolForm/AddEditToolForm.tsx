@@ -7,7 +7,7 @@ import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import CategorySelect from '../ToolsPage/FilterBar/Dropdowns/CategorySelect';
-import { Category } from '../../types/tool';
+import { createTool, updateTool } from '@/lib/api/clientApi';
 import { getCategories } from '@/lib/api/clientApi';
 
 type Props = {
@@ -87,44 +87,30 @@ export default function AddEditToolForm({
 
       try {
         const formData = new FormData();
-        
+
         Object.entries(values).forEach(([key, value]) => {
           if (key === 'photo' && value instanceof File) {
             formData.append('image', value);
           } else if (key === 'photo') {
-            formData.append('imageUrl', value);
-          } else if (value !== null) {
+            if (value) formData.append('imageUrl', String(value));
+          } else if (value !== null && value !== undefined) {
             formData.append(key, String(value));
           }
         });
 
-        const url = isEditMode ? `/api/tools/${initialData.id}` : '/api/tools';
+        const toolId = initialData?._id || initialData?.id;
 
-        const method = isEditMode ? 'PATCH' : 'POST';
+        const result = isEditMode
+          ? await updateTool({ toolId, formData })
+          : await createTool(formData);
 
-        const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
-          method,
-          body: formData,
-          credentials: 'include',
-        });
-
-        if (response.status === 401) {
-          toast.error('Увійдіть у систему');
-          router.push('/login');
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error('Помилка на сервері');
-        }
-
-        const result = await response.json();
+        const idToGo = result.data._id || toolId;
 
         toast.success(
           isEditMode ? 'Оновлено успішно!' : 'Інструмент опубліковано!'
         );
-        router.push(`/tools/${result.data._id || initialData.id}`);
-        router.refresh();
+
+        router.replace(`/tools/${idToGo}`);
       } catch (error) {
         toast.error('Сталася помилка. Спробуйте ще раз.');
       } finally {
