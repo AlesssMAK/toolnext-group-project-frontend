@@ -5,11 +5,13 @@
   justify-content: center;
   align-items: center;
 }
+
 .mainContent {
   width: 100%;
   background-color: #fff;
   height: 100vh;
 }
+
 .form {
   height: 100%;
   width: 100%;
@@ -22,6 +24,7 @@
   height: 100vh;
   gap: 24px;
 }
+
 .formTitle {
   text-align: center;
   font-family: var(--font-family);
@@ -32,16 +35,18 @@
   color: black;
   margin-bottom: 32px;
 }
+
 .formGroup {
   width: 100%;
   display: flex;
   flex-direction: column;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
   color: black;
 }
+
 .input {
   width: 100%;
   box-sizing: border-box;
@@ -52,20 +57,23 @@
   height: 48px;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
   color: rgba(0, 0, 0, 0.6);
 }
+
 .input:focus {
   border: 2px solid #8808cc;
   outline: none;
 }
+
 .error {
   border: 2px solid #c40202;
   color: #c40202;
   border-radius: 6px;
   padding: 8px 12px;
 }
+
 .errorText {
   font-family: var(--font-family);
   font-weight: 400;
@@ -73,13 +81,19 @@
   line-height: 150%;
   color: #c40202;
 }
+
 .submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
   border: 1px solid #8808cc;
   background-color: #8808cc;
   color: #fff;
   font-family: var(--font-family);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
   border-radius: 6px;
   padding: 10px 24px;
@@ -87,28 +101,33 @@
   transition: background-color 0.3s ease;
   margin-bottom: 24px;
 }
+
 .submitButton:hover {
   border: 1px solid #8808cc;
   background-color: #fff;
   color: #000;
 }
+
 .submitButton:focus {
   border: 2px solid #000;
   background-color: #e7cdf4;
   color: black;
 }
+
 .loginLink {
   text-align: center;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
   color: black;
 }
+
 .loginLink a {
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
+
 .imageSection {
   display: none;
 }
@@ -120,6 +139,7 @@
     height: 100%;
   }
 }
+
 @media screen and (min-width: 1440px) {
   .formSection {
     height: auto;

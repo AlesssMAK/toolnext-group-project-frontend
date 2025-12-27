@@ -37,18 +37,20 @@
   line-height: 1.2;
   letter-spacing: -0.01em;
 
-  /* @media (min-width: 1440px) {
-    font-size: 36px;
-  } */
+  @media (min-width: 1440px) {
+    font-size: 42px;
+  }
 }
 
 .feedbackBtn {
   width: 100%;
   max-height: 41px;
+
   @media (min-width: 768px) {
     width: max-content;
     font-size: 14px;
   }
+
   @media (min-width: 1440px) {
     width: max-content;
     font-size: 16px;
@@ -71,11 +73,15 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.5;
+
+  @media (min-width: 1440px) {
+    font-size: 20px;
+  }
 }
 
 .author {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -210,9 +216,11 @@
 .arrowBtn:focus {
   background: var(--color-electric-violet-lighter);
 }
+
 .arrowBtn:active {
   background: var(--color-electric-violet);
 }
+
 .btnIcon:active {
   fill: var(--color-white);
 }
