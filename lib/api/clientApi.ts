@@ -144,3 +144,31 @@ export const createBooking = async (data: CreateBookingRequest) => {
   const res = await nextServer.post('/bookings', data);
   return res.data;
 };
+
+export interface ToolResponse {
+  status: 'success';
+  data: {
+    _id: string;
+  };
+}
+
+export const createTool = async (formData: FormData): Promise<ToolResponse> => {
+  const { data } = await nextServer.post<ToolResponse>('/tools', formData);
+  return data;
+};
+
+interface UpdateToolRequest {
+  toolId: string;
+  formData: FormData;
+}
+
+export const updateTool = async ({
+  toolId,
+  formData,
+}: UpdateToolRequest): Promise<ToolResponse> => {
+  const { data } = await nextServer.patch<ToolResponse>(
+    `/tools/${toolId}`,
+    formData
+  );
+  return data;
+};
