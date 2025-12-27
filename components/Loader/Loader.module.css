@@ -1,0 +1,27 @@
+.wrap {
+    display: grid;
+    place-items: center;
+    gap: 10px;
+}
+
+.text {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    color: var(--color-electric-violet);
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 4px solid var(--opacity-neutral-darkest-20);
+    border-top-color: var(--color-electric-violet);
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
