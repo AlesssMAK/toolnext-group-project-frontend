@@ -42,12 +42,11 @@ export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
 
-    const body = await request.json();
+    const formData = await request.formData();
 
-    const res = await api.post('/tools', body, {
+    const res = await api.post('/tools', formData, {
       headers: {
         Cookie: cookieStore.toString(),
-        'Content-Type': 'application/json',
       },
     });
 
@@ -57,9 +56,10 @@ export async function POST(request: NextRequest) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status }
+        { status: error.response?.status ?? 500 }
       );
     }
+
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
       { error: 'Internal Server Error' },
