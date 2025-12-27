@@ -27,6 +27,7 @@ interface MyFormValues {
 }
 
 export default function BookingForm({ toolId, pricePerDay }: Props) {
+  console.log(toolId)
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
