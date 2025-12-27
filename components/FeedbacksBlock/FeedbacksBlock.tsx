@@ -39,6 +39,24 @@ function getWindow5(active: number, total: number) {
   return Array.from({ length: 5 }, (_, i) => start + i);
 }
 
+const PER_PAGE = 10;
+
+function resolveTotalPages(firstPageData: any) {
+  if (typeof firstPageData?.totalPages === 'number' && firstPageData.totalPages > 0) {
+    return firstPageData.totalPages;
+  }
+
+  const totalItems = firstPageData?.totalItems ?? firstPageData?.total ?? firstPageData?.count;
+  const perPage = firstPageData?.perPage ?? PER_PAGE;
+
+  if (typeof totalItems === 'number' && totalItems >= 0 && typeof perPage === 'number' && perPage > 0) {
+    return Math.max(1, Math.ceil(totalItems / perPage));
+  }
+
+  return 1;
+}
+
+
 const FeedbacksBlock = ({
   toolId,
   userId,
@@ -83,10 +101,35 @@ const FeedbacksBlock = ({
 
   const { data, isSuccess } = useQuery({
     queryKey: ['feedbackKey', toolId, userId],
-    queryFn: () => fetchFeedbacks({ page: 1, toolId, userId }),
+    queryFn: async () => {
+      const first = await fetchFeedbacks({ page: 1, toolId, userId });
+
+      const totalPages = resolveTotalPages(first);
+
+      if (totalPages <= 1) return first;
+
+      const rest = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, idx) =>
+          fetchFeedbacks({ page: idx + 2, toolId, userId })
+        )
+      );
+
+      const mergedFeedbacks = [first?.feedbacks ?? [], ...rest.map(r => r?.feedbacks ?? [])].flat();
+
+      // Повертаємо той самий формат, але з об’єднаними feedbacks
+      return {
+        ...first,
+        feedbacks: mergedFeedbacks,
+        totalPages,
+      };
+    },
   });
 
-  const allFeedbacks = data?.feedbacks ?? [];
+  const allFeedbacksRaw = data?.feedbacks ?? [];
+
+  const allFeedbacks = Array.from(
+  new Map(allFeedbacksRaw.map((f: any) => [String(f._id), f])).values()
+);
 
   const hasFeedbacks = isSuccess && allFeedbacks.length > 0;
   const hasNoFeedbacks = isSuccess && allFeedbacks.length === 0;
