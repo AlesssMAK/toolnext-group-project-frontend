@@ -64,10 +64,10 @@ export default function RegistrationForm() {
       } catch (err) {
         const apiError = err as ApiError;
 
-        if (apiError.response?.status === 400) {
-          toast.error('Перевірте правильність введених даних');
+        if (apiError.response?.status === 409) {
+          toast.error('Користувач з таким email вже існує');
         } else {
-          toast.error('Сталася помилка. Спробуйте пізніше');
+          toast.error('Перевірте правильність введених даних');
         }
       } finally {
         setSubmitting(false);

@@ -54,7 +54,7 @@ export default function LoginForm() {
         if (apiError.response?.status === 400) {
           toast.error('Перевірте правильність введених даних');
         } else {
-          toast.error('Сталася помилка. Спробуйте пізніше');
+          toast.error('Перевірте правильність введених даних');
         }
       } finally {
         setSubmitting(false);
