@@ -39,6 +39,7 @@
   color: var(--color-scheme-1-border);
   transition: 0.3s ease;
 }
+
 .nav_list_link {
   transition: border-bottom 0.3s ease;
 }
@@ -110,6 +111,10 @@
   .nav_list {
     flex-direction: row;
   }
+
+  .nav_list_item {
+    font-size: 14px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
@@ -134,7 +139,7 @@
     height: 15px;
   }
 
-  .social_links{
+  .social_links {
     width: 124px;
     justify-content: end;
   }
@@ -157,4 +162,3 @@
     font-size: 14px;
   }
 }
-
