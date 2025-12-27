@@ -15,8 +15,8 @@ export default function ToolGallery({ images }: Props) {
   useEffect(() => setMounted(true), []);
 
   const mainSrc = useMemo(() => {
-    if (!mounted) return mainImage; // SSR + first client render = same
-    return `${mainImage}?v=${Date.now()}`; // тільки після mount
+    if (!mounted) return mainImage;
+    return `${mainImage}?v=${Date.now()}`;
   }, [mounted, mainImage]);
 
   if (!images?.length) return null;

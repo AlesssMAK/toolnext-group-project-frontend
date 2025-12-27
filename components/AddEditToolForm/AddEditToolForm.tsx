@@ -7,12 +7,21 @@ import css from './AddEditToolForm.module.css';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import CategorySelect from '../ToolsPage/FilterBar/Dropdowns/CategorySelect';
-import { createTool, updateTool } from '@/lib/api/clientApi';
-import { getCategories } from '@/lib/api/clientApi';
+import { createTool, updateTool, getCategories } from '@/lib/api/clientApi';
 
 type Props = {
   initialData?: any;
   isEditMode?: boolean;
+};
+
+type FormValues = {
+  name: string;
+  pricePerDay: string | number;
+  category: string;
+  rentalTerms: string;
+  description: string;
+  specifications: string;
+  photo: File | string | null;
 };
 
 export default function AddEditToolForm({
@@ -22,7 +31,9 @@ export default function AddEditToolForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(initialData?.photo || '');
-  const [isPhotoUploaded, setIsPhotoUploaded] = useState(false);
+  const [isPhotoUploaded, setIsPhotoUploaded] = useState(
+    Boolean(initialData?.photo)
+  );
   const [categories, setCategories] = useState<
     { _id: string; title: string }[]
   >([]);
@@ -59,17 +70,43 @@ export default function AddEditToolForm({
 
     rentalTerms: Yup.string()
       .min(20, 'Мінімум 20 символів')
-      .max(2000, 'Максимум 1000 символів')
+      .max(1000, 'Максимум 1000 символів')
       .required('Додайте умови оренди'),
 
     specifications: Yup.string()
+      .required('Додайте характеристики')
       .max(1000, 'Характеристики не можуть перевищувати 1000 символів')
-      .nullable(),
+      .test(
+        'spec-format',
+        'Формат: "Назва: значення" (кожен рядок з двокрапкою). Напр.: "Вага: 7кг"',
+        value => {
+          if (!value) return false;
+
+          const lines = value
+            .split('\n')
+            .map(l => l.trim())
+            .filter(Boolean);
+
+          return lines.every(line => {
+            const parts = line.split(':');
+            if (parts.length !== 2) return false;
+
+            const key = parts[0].trim();
+            const val = parts[1].trim();
+
+            const keyOk = /^[\p{L}\d][\p{L}\d\s-]{1,}$/u.test(key);
+
+            const valOk = /^[\p{L}\d][\p{L}\d\s.,+\-/%()]{0,}$/u.test(val);
+
+            return keyOk && valOk;
+          });
+        }
+      ),
 
     photo: Yup.mixed().required('Додайте фото інструменту'),
   });
 
-  const formik = useFormik({
+  const formik = useFormik<FormValues>({
     initialValues: {
       name: initialData?.name || '',
       pricePerDay: initialData?.pricePerDay || '',
@@ -81,6 +118,8 @@ export default function AddEditToolForm({
     },
     enableReinitialize: true,
     validationSchema,
+    validateOnBlur: true,
+    validateOnChange: true,
 
     onSubmit: async values => {
       setIsLoading(true);
@@ -109,7 +148,6 @@ export default function AddEditToolForm({
         toast.success(
           isEditMode ? 'Оновлено успішно!' : 'Інструмент опубліковано!'
         );
-
         router.replace(`/tools/${idToGo}`);
       } catch (error) {
         toast.error('Сталася помилка. Спробуйте ще раз.');
@@ -119,10 +157,24 @@ export default function AddEditToolForm({
     },
   });
 
+  const showError = (field: keyof FormValues) =>
+    (formik.touched[field] || formik.submitCount > 0) &&
+    Boolean(formik.errors[field]);
+
+  const errorText = (field: keyof FormValues) =>
+    showError(field) ? String(formik.errors[field]) : '';
+
+  const inputClass = (field: keyof FormValues) =>
+    `${css.input} ${showError(field) ? css.error : ''}`;
+
+  const textareaClass = (field: keyof FormValues) =>
+    `${css.textarea} ${showError(field) ? css.error : ''}`;
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setIsPhotoUploaded(false);
     const file = e.target.files?.[0];
     if (!file) return;
+
+    formik.setFieldTouched('photo', true, false);
 
     if (!file.type.startsWith('image/')) {
       toast.error('Тільки зображення');
@@ -147,12 +199,13 @@ export default function AddEditToolForm({
   return (
     <div className={css.formSection}>
       <form onSubmit={formik.handleSubmit} className={css.form}>
-        {/* Фото */}
         <div className={css.formFields}>
+          {/* Фото */}
           <div className={css.formGroup}>
             <div className={css.photoWrapper}>
               <div className={css.previewContainer}>
                 <span className={css.placeholderText}>Фото інструменту</span>
+
                 {isPhotoUploaded ? (
                   <>
                     <img
@@ -165,6 +218,7 @@ export default function AddEditToolForm({
                       onClick={() => {
                         setPreviewUrl('');
                         formik.setFieldValue('photo', null);
+                        formik.setFieldTouched('photo', true, false);
                         setIsPhotoUploaded(false);
                       }}
                       className="button button--secondary"
@@ -195,8 +249,8 @@ export default function AddEditToolForm({
                 )}
               </div>
 
-              {formik.touched.photo && formik.errors.photo && (
-                <p className={css.errorText}>{formik.errors.photo as string}</p>
+              {showError('photo') && (
+                <p className={css.errorText}>{errorText('photo')}</p>
               )}
             </div>
           </div>
@@ -206,12 +260,13 @@ export default function AddEditToolForm({
             <label>
               Назва
               <input
-                className={`${css.input} ${
-                  formik.touched.name && formik.errors.name ? css.error : ''
-                }`}
+                className={inputClass('name')}
                 {...formik.getFieldProps('name')}
               />
             </label>
+            {showError('name') && (
+              <p className={css.errorText}>{errorText('name')}</p>
+            )}
           </div>
 
           {/* Ціна */}
@@ -220,14 +275,13 @@ export default function AddEditToolForm({
               Ціна/день
               <input
                 type="number"
-                className={`${css.input} ${
-                  formik.touched.pricePerDay && formik.errors.pricePerDay
-                    ? css.error
-                    : ''
-                }`}
+                className={inputClass('pricePerDay')}
                 {...formik.getFieldProps('pricePerDay')}
               />
             </label>
+            {showError('pricePerDay') && (
+              <p className={css.errorText}>{errorText('pricePerDay')}</p>
+            )}
           </div>
 
           {/* Категорія */}
@@ -236,29 +290,32 @@ export default function AddEditToolForm({
               onSelect={ids => {
                 const singleId = ids.length > 0 ? ids[ids.length - 1] : '';
                 formik.setFieldValue('category', singleId);
+                formik.setFieldTouched('category', true, false); // ✅ важливо
               }}
               selectedTags={
                 formik.values.category ? [formik.values.category] : []
               }
               customClassName={{
-                wrapper: css.categorySelectWrapper,
+                wrapper: `${css.categorySelectWrapper} ${showError('category') ? css.error : ''}`,
               }}
             />
+            {showError('category') && (
+              <p className={css.errorText}>{errorText('category')}</p>
+            )}
           </div>
 
-          {/* Умови оренди*/}
+          {/* Умови оренди */}
           <div className={css.formGroup}>
             <label>
               Умови оренди
               <input
-                className={`${css.input} ${
-                  formik.touched.rentalTerms && formik.errors.rentalTerms
-                    ? css.error
-                    : ''
-                }`}
+                className={inputClass('rentalTerms')}
                 {...formik.getFieldProps('rentalTerms')}
               />
             </label>
+            {showError('rentalTerms') && (
+              <p className={css.errorText}>{errorText('rentalTerms')}</p>
+            )}
           </div>
 
           {/* Опис */}
@@ -266,10 +323,18 @@ export default function AddEditToolForm({
             <label>
               Опис
               <textarea
-                className={css.textarea}
+                className={`${css.textarea} ${
+                  (formik.touched.description || formik.submitCount > 0) &&
+                  formik.errors.description
+                    ? css.error
+                    : ''
+                }`}
                 {...formik.getFieldProps('description')}
               />
             </label>
+            {showError('description') && (
+              <p className={css.errorText}>{errorText('description')}</p>
+            )}
           </div>
 
           {/* Характеристики */}
@@ -277,12 +342,19 @@ export default function AddEditToolForm({
             <label>
               Характеристики
               <textarea
-                className={css.textarea}
-                placeholder={`Вага: 7кг
-Потужність: 4кBт`}
+                className={`${css.textarea} ${
+                  (formik.touched.specifications || formik.submitCount > 0) &&
+                  formik.errors.specifications
+                    ? css.error
+                    : ''
+                }`}
+                placeholder={`Вага: 7кг\nПотужність: 4кBт`}
                 {...formik.getFieldProps('specifications')}
               />
             </label>
+            {showError('specifications') && (
+              <p className={css.errorText}>{errorText('specifications')}</p>
+            )}
           </div>
         </div>
 
