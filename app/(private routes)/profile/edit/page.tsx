@@ -1,5 +1,3 @@
-// app/(private routes)/profile/edit/page.tsx
-
 'use client';
 
 import css from './EditPage.module.css';
@@ -8,6 +6,20 @@ import AvatarPicker from '@/components/AvatarPicker/AvatarPicker';
 import { getMe, updateMyAvatar } from '@/lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Редагування профілю | ToolNext",
+  description: "Оновіть свій аватар та інформацію профілю на платформі ToolNext.",
+  metadataBase: new URL("https://toolnext-group-project-frontend.vercel.app"),
+  openGraph: {
+    title: "Редагування профілю | ToolNext",
+    description: "Оновіть аватар та налаштуйте свій профіль на платформі ToolNext.",
+    url: "https://toolnext-group-project-frontend.vercel.app",
+    siteName: "ToolNext",
+    type: "website",
+  },
+};
 
 const EditProfile = () => {
   const router = useRouter();

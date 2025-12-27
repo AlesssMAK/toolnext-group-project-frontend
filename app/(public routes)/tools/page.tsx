@@ -17,6 +17,15 @@ export const metadata: Metadata = {
     'прокат інструментів',
     'будівельні інструменти',
   ],
+  metadataBase: new URL('https://toolnext-group-project-frontend.vercel.app'),
+  openGraph: {
+    title: 'Всі інструменти - Оренда інструментів | ToolNext',
+    description:
+      'Великий каталог інструментів в оренду. Будівельні, садові, електроінструменти за доступними цінами.',
+    url: 'https://toolnext-group-project-frontend.vercel.app',
+    siteName: 'ToolNext',
+    type: 'website',
+  },
 };
 
 interface PageProps {
