@@ -157,6 +157,23 @@ export default function AddEditToolForm({
     },
   });
 
+  useEffect(() => {
+    if (!isEditMode) return;
+
+    const existingPhoto = initialData?.photo;
+
+    if (existingPhoto) {
+      setPreviewUrl(existingPhoto);
+      setIsPhotoUploaded(true);
+      formik.setFieldValue('photo', existingPhoto, false);
+    } else {
+      setPreviewUrl('');
+      setIsPhotoUploaded(false);
+      formik.setFieldValue('photo', null, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditMode, initialData?.photo]);
+
   const showError = (field: keyof FormValues) =>
     (formik.touched[field] || formik.submitCount > 0) &&
     Boolean(formik.errors[field]);
