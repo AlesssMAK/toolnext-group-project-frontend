@@ -16,9 +16,9 @@ export default function ForgotPasswordPage() {
         setMessage('');
         try {
             await requestResetEmail(email);
-            setMessage('If this email exists, a reset link has been sent.');
+            setMessage('Якщо обліковий запис з такою поштою існує, ми надішлемо лист із посиланням для відновлення.');
         } catch {
-            setMessage('Something went wrong. Please try again later.');
+            setMessage('Не вдалося надіслати лист. Спробуйте ще раз трохи пізніше.');
         } finally {
             setIsLoading(false);
         }
@@ -28,15 +28,16 @@ export default function ForgotPasswordPage() {
         <section className={style.mainContent}>
             <div className={style.formSection}>
                 <form onSubmit={handleSubmit} className={style.form}>
-                <h1 className={style.formTitle}>Forgot password</h1>
+                <h1 className={style.formTitle}>Відновлення пароля</h1>
 
                     <div className={style.formGroup}>
                         <input
                             className={style.input}
                             type="email"
+                            autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email"
+                            placeholder="Ваша електронна пошта"
                             required
                         />
                     </div>
@@ -46,7 +47,7 @@ export default function ForgotPasswordPage() {
                     className={style.submitButton}
                     disabled={isLoading}
                 >
-                {isLoading ? 'Sending...' : 'Send reset link'}
+                {isLoading ? 'Надсилаємо…' : 'Отримати посилання'}
                 </button>
 
                 {message && <p className={style.infoText}>{message}</p>}
