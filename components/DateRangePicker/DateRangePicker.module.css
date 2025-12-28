@@ -38,8 +38,38 @@
   overflow: hidden;
 }
 
-/* верхня панель (місяць/рік) */
+/* верхня панель (місяць/рік) */ 
+
 .calendar :global(.air-datepicker-nav) {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px dotted var(--color-scheme-1-border);
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+
+.calendar :global(.air-datepicker-nav--title) {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+}
+
+.calendar :global(.dp-year) {
+  justify-self: start;
+ 
+}
+
+.calendar :global(.dp-month) {
+  justify-self: end;
+  text-transform: capitalize;
+}
+
+
+/* .calendar :global(.air-datepicker-nav) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,6 +79,38 @@
   font-size: 16px;
   color: #000;
 }
+
+.calendar :global(.air-datepicker-nav--title) {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+} */
+/* 
+.calendar :global(.dp-year) {
+  
+} */
+
+/* .calendar :global(.air-datepicker-nav--action) {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.calendar :global(.air-datepicker-nav--action[data-action='prev']) {
+  order: 1;
+}
+
+.calendar :global(.air-datepicker-nav--title) {
+  order: 2;
+}
+
+.calendar :global(.air-datepicker-nav--action[data-action='next']) {
+  order: 3;
+}
+
+.calendar :global(.dp-month) {
+  text-transform: capitalize;
+} */
 
 /* стилізація окремих назв днів */
 .calendar :global(.air-datepicker-body--day-name) {
