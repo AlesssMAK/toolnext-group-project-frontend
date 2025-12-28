@@ -1,59 +1,113 @@
 /* DateRangePicker.module.css
 
 /* твій контейнер */
-/* .calendar { */
-    /* базові змінні AirDatepicker */
-    /* --adp-color-primary: #6c63ff; */
-    /* головний акцентний колір */
-    /* --adp-color-hover: #ececff; */
-    /* фон при наведенні */
-    /* --adp-color-selected: #6c63ff; */
-    /* вибрані дати */
-    /* --adp-color-in-range: #dcdcff; */
-    /* дати всередині діапазону */
-    /* --adp-cell-size: 42px; */
-    /* розмір клітинки */
-    /* --adp-border-radius: 8px; */
-    /* скруглення */
-    /* --adp-font-family: 'Inter', sans-serif;
-    --adp-font-size: 14px;
-} */
+.calendar {
+  /* базові змінні AirDatepicker */
+  --adp-color-primary: #6c63ff;
+  /* головний акцентний колір */
+  --adp-color-hover: #ececff;
+  /* фон при наведенні */
+  --adp-color-selected: #6c63ff;
+  /* вибрані дати */
+  --adp-color-in-range: #dcdcff;
+  /* дати всередині діапазону */
+  --adp-cell-size: 42px;
+  /* розмір клітинки */
+  --adp-border-radius: 8px;
+  /* скруглення */
+  --adp-font-family: 'Inter', sans-serif;
+  --adp-font-size: 14px;
+}
 
 /* глобальні стилі для внутрішніх класів бібліотеки */
-/* :global(.air-datepicker) {
-    width: 100%;
-    max-width: 360px;
-    border: 2px solid #6c63ff;
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
-    background: #fff;
-    overflow: hidden;
-} */
+.calendar :global(.air-datepicker) {
+  width: 100%;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  overflow: hidden;
+}
+
+.calendar :global(.air-datepicker-nav) {
+  border-bottom: none !important;
+}
+
+.calendar :global(.air-datepicker--content) {
+  border: 1px solid var(--color-scheme-1-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
 
 /* верхня панель (місяць/рік) */
-/* :global(.air-datepicker-nav) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    border-bottom: 1px dotted #6c63ff;
-    font-weight: bold;
-    font-size: 16px;
-    color: #000;
-} */
+.calendar :global(.air-datepicker-nav) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px dotted var(--color-scheme-1-border);
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
 
 /* стилізація окремих назв днів */
-/* :global(.air-datepicker-body--day-name) { */
-    /* padding: 6px 0; */
-    /* text-align: center;
-    font-weight: bold;
-    font-size: 12px;
-    color: #000;
-    border-bottom: 1px solid #ccc; */
-/* } */
+.calendar :global(.air-datepicker-body--day-name) {
+  text-transform: none;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  text-align: center;
+  color: #222730;
+
+  @media (min-width: 1440px) {
+    font-size: 20px;
+  }
+}
+
+.calendar :global(.air-datepicker-cell) {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: center;
+  color: #222730;
+
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
+}
 
 /* клітинки дат */
-/* :global(.air-datepicker-cell) {} */
+.calendar :global(.air-datepicker-cell) {
+  border: 1px solid var(--color-scheme-1-border);
+  height: 56px;
+}
+
+.calendar :global(.air-datepicker-cell),
+.calendar :global(.air-datepicker-body--day-name) {
+  border-radius: 0 !important;
+  border: 1px solid var(--color-scheme-1-border);
+}
+
+.calendar :global(.air-datepicker-cell.-selected-),
+.calendar :global(.air-datepicker-cell.-range-from-),
+.calendar :global(.air-datepicker-cell.-range-to-),
+.calendar :global(.air-datepicker-cell.-in-range-) {
+  border-radius: 0 !important;
+  border: 1px solid var(--color-scheme-1-border);
+}
+
+.calendar :global(.air-datepicker-body--day-names) {
+  margin: 0;
+  padding: 0;
+}
+
+.calendar :global(.air-datepicker-cell-day) {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: center;
+  color: #222730;
+}
 
 /* вибрані дати */
 /* :global(.air-datepicker-cell.-selected-) {} */
@@ -69,4 +123,9 @@
 /* :global(.air-datepicker-cell.-current-) {} */
 
 /* hover-ефект */
-/* :global(.air-datepicker-cell:hover) {} */ 
+/* :global(.air-datepicker-cell:hover) {} */
+
+.calendar :global(.air-datepicker-cell.is-booked) {
+  color: rgba(0, 0, 0, 0.35);
+  cursor: not-allowed;
+}

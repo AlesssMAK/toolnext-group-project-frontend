@@ -26,11 +26,14 @@ const BookingToolPage = async ({ params }: PageProps) => {
   const { toolId } = await params;
 
   const tool = await getToolById(toolId);
-  console.log(tool);
 
   return (
     <section className={css.containerConfirmation}>
-      <BookingToolForm toolId={toolId} pricePerDay={tool.pricePerDay} />
+      <BookingToolForm
+        toolId={toolId}
+        pricePerDay={tool.pricePerDay}
+        bookedDates={tool.bookedDates}
+      />
     </section>
   );
 };
