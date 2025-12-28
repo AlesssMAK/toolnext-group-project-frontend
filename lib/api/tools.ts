@@ -15,19 +15,24 @@ export const getToolsWithPagination = async (
   page: number,
   limit: number,
   search?: string,
-  tag?: string
+  tag?: string,
+  minPrice?: number | null,
+  maxPrice?: number | null,
+  sort?: string
 ) => {
   const params = new URLSearchParams({
-    page: page.toString(),
-    limit: limit.toString(),
+    page: String(page),
+    limit: String(limit),
     ...(search ? { search } : {}),
     ...(tag ? { categories: tag } : {}),
+    ...(minPrice != null ? { minPrice: String(minPrice) } : {}),
+    ...(maxPrice != null ? { maxPrice: String(maxPrice) } : {}),
+    ...(sort ? { sort } : {}),
   });
+
   const res = await nextServer.get(`/tools?${params.toString()}`);
 
-  if (!res.data) {
-    throw new Error('Failed to fetch tools');
-  }
+  if (!res.data) throw new Error('Failed to fetch tools');
 
   return res.data;
 };
