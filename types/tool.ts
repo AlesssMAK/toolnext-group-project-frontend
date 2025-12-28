@@ -1,5 +1,10 @@
 import { Feedback } from './feedback';
 
+export interface BookedDateRange {
+  startDate: string;
+  endDate: string;
+}
+
 export interface Tool {
   _id: string;
   owner: string;
@@ -11,7 +16,7 @@ export interface Tool {
   rating: number;
   specifications: Record<string, string>;
   rentalTerms: string;
-  bookedDates: string[];
+  bookedDates: BookedDateRange[];
   feedbacks: Feedback[];
 }
 
