@@ -91,7 +91,7 @@ export async function fetchFeedbacks({
 }
 
 export type CreateFeedbackRequest = {
-  name: string;
+  // name: string;
   description: string;
   rate: number;
   toolId: string;
