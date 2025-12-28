@@ -23,11 +23,12 @@ export interface feedbacksProps {
   userId?: string;
 }
 
-export type FeedbacksVariant = 'home' | 'tool';
+export type FeedbacksVariant = 'home' | 'tool' | 'profile';
 
 export interface FeedbacksBlockProps {
   toolId?: string;
   userId?: string;
   isOwner?: boolean;
   variant?: FeedbacksVariant;
+  forProfile?: boolean;
 }

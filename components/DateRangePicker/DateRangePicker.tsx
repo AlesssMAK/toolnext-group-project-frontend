@@ -13,7 +13,7 @@ type BookedDateRange = {
 
 type Props = {
   bookedDates: BookedDateRange[];
-  onSelect: (from: Date | null, to: Date | null) => void;
+  onSelect: (from: string | null, to: string | null) => void;
 };
 
 function toISO(d: Date) {
@@ -80,10 +80,16 @@ export default function DateRangePicker({ bookedDates, onSelect }: Props) {
       },
 
       onSelect({ date }) {
-        const from = Array.isArray(date) ? (date[0] ?? null) : null;
-        const to = Array.isArray(date) ? (date[1] ?? null) : null;
+        const fromDate = Array.isArray(date) ? (date[0] ?? null) : null;
+        const toDate = Array.isArray(date) ? (date[1] ?? null) : null;
+
+        const from = fromDate ? toISO(fromDate) : null;
+        const to = toDate ? toISO(toDate) : null;
 
         onSelect(from, to);
+
+        console.log('from local:', from);
+        console.log('from local (YYYY-MM-DD):', from);
       },
     });
 

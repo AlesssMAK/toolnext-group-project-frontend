@@ -101,6 +101,15 @@ export default function BookingForm({
       onSubmit={async (values, { setSubmitting }) => {
         setServerWarning(null);
 
+        const toLocalISODate = (d: Date) => {
+          const x = new Date(d);
+          x.setHours(0, 0, 0, 0);
+          const y = x.getFullYear();
+          const m = String(x.getMonth() + 1).padStart(2, '0');
+          const day = String(x.getDate()).padStart(2, '0');
+          return `${y}-${m}-${day}`;
+        };
+
         try {
           const res = await fetch('/api/bookings', {
             method: 'POST',
@@ -109,8 +118,10 @@ export default function BookingForm({
             body: JSON.stringify({
               ...values,
               toolId,
-              startDate: values.startDate?.toISOString().split('T')[0],
-              endDate: values.endDate?.toISOString().split('T')[0],
+              startDate: values.startDate
+                ? toLocalISODate(values.startDate)
+                : null,
+              endDate: values.endDate ? toLocalISODate(values.endDate) : null,
             }),
           });
 

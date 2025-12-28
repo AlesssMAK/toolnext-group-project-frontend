@@ -15,6 +15,7 @@ const Profile = async () => {
   const user = await getServerMe();
 
   const { tools, pagination } = await getToolsByUserId(user.id, 1, 8);
+  console.log(user.id);
 
   return (
     <main>
@@ -31,7 +32,12 @@ const Profile = async () => {
       ) : (
         <ProfilePlaceHolder isOwner={true} />
       )}
-      <FeedbacksBlock variant="tool" userId={user.id} isOwner={true} />
+      <FeedbacksBlock
+        variant="tool"
+        userId={user.id}
+        isOwner={true}
+        forProfile
+      />
     </main>
   );
 };
