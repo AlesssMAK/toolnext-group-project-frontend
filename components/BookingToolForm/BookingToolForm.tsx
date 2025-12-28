@@ -3,13 +3,11 @@
 import css from './BookingToolForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { da, uk } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
-import Calendar from '@/components/Calendar/Calendar';
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { calcDaysInclusive } from '@/utils/date';
 
 type BookedDateRange = {
   startDate: string;
@@ -26,10 +24,18 @@ interface MyFormValues {
   userFirstname: string;
   userLastname: string;
   userPhone: string;
-  startDate: Date | null;
-  endDate: Date | null;
+
+  // ✅ ISO strings
+  startDate: string | null;
+  endDate: string | null;
+
   deliveryCity: string;
   deliveryBranch: string;
+}
+
+function parseISOToMidnight(iso: string) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d, 0, 0, 0, 0);
 }
 
 export default function BookingForm({
@@ -39,20 +45,6 @@ export default function BookingForm({
 }: BookingFormProps) {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
-
-  console.log(bookedDates);
-
-  const getBookingDays = (start: Date | null, end: Date | null): number => {
-    if (!start || !end) return 0;
-
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-
-    const diffTime = endDate.getTime() - startDate.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return diffDays > 0 ? diffDays : 0;
-  };
 
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
@@ -64,23 +56,29 @@ export default function BookingForm({
       .matches(/^\+?[0-9\s\-()]{7,20}$/, 'Невірний формат телефону')
       .required('Вкажіть номер телефону'),
 
-    startDate: Yup.date()
+    startDate: Yup.string()
       .nullable()
-      .typeError('Вкажіть коректну дату початку')
       .required('Оберіть дату початку')
-      .min(startOfToday, 'Дата не може бути в минулому'),
+      .test('not-in-past', 'Дата не може бути в минулому', value => {
+        if (!value) return false;
+        const d = parseISOToMidnight(value);
+        return d.getTime() >= startOfToday.getTime();
+      }),
 
-    endDate: Yup.date()
+    endDate: Yup.string()
       .nullable()
-      .typeError('Вкажіть коректну дату завершення')
       .required('Оберіть дату завершення')
       .test(
         'is-after-start',
-        'Дата завершення має бути пізніше за початок',
+        'Дата завершення має бути пізніше або рівна початку',
         function (value) {
           const { startDate } = this.parent as MyFormValues;
           if (!startDate || !value) return true;
-          return value >= startDate;
+
+          const s = parseISOToMidnight(startDate).getTime();
+          const e = parseISOToMidnight(value).getTime();
+
+          return e >= s;
         }
       ),
 
@@ -103,15 +101,6 @@ export default function BookingForm({
       onSubmit={async (values, { setSubmitting }) => {
         setServerWarning(null);
 
-        const toLocalISODate = (d: Date) => {
-          const x = new Date(d);
-          x.setHours(0, 0, 0, 0);
-          const y = x.getFullYear();
-          const m = String(x.getMonth() + 1).padStart(2, '0');
-          const day = String(x.getDate()).padStart(2, '0');
-          return `${y}-${m}-${day}`;
-        };
-
         try {
           const res = await fetch('/api/bookings', {
             method: 'POST',
@@ -120,10 +109,8 @@ export default function BookingForm({
             body: JSON.stringify({
               ...values,
               toolId,
-              startDate: values.startDate
-                ? toLocalISODate(values.startDate)
-                : null,
-              endDate: values.endDate ? toLocalISODate(values.endDate) : null,
+              startDate: values.startDate,
+              endDate: values.endDate,
             }),
           });
 
@@ -147,7 +134,11 @@ export default function BookingForm({
       }}
     >
       {({ setFieldValue, values, isSubmitting }) => {
-        const bookingDays = getBookingDays(values.startDate, values.endDate);
+        // ✅ перевірочні логи (тимчасово)
+        console.log('FORMIK startDate:', values.startDate);
+        console.log('FORMIK endDate:', values.endDate);
+
+        const bookingDays = calcDaysInclusive(values.startDate, values.endDate);
         const totalPrice = bookingDays * pricePerDay;
 
         return (
