@@ -11,6 +11,14 @@ export async function GET(request: NextRequest) {
     const search = request.nextUrl.searchParams.get('search') ?? undefined;
     const categories =
       request.nextUrl.searchParams.get('categories') ?? undefined;
+    const minPrice = request.nextUrl.searchParams.get('minPrice')
+      ? Number(request.nextUrl.searchParams.get('minPrice'))
+      : undefined;
+    const maxPrice = request.nextUrl.searchParams.get('maxPrice')
+      ? Number(request.nextUrl.searchParams.get('maxPrice'))
+      : undefined;
+
+    const sort = request.nextUrl.searchParams.get('sort') ?? undefined;
 
     const res = await api.get('/tools', {
       params: {
@@ -18,6 +26,9 @@ export async function GET(request: NextRequest) {
         limit,
         ...(search ? { search } : {}),
         ...(categories ? { categories } : {}),
+        ...(Number.isFinite(minPrice as number) ? { minPrice } : {}),
+        ...(Number.isFinite(maxPrice as number) ? { maxPrice } : {}),
+        ...(sort ? { sort } : {}),
       },
     });
 
