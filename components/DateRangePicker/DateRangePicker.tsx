@@ -80,16 +80,35 @@ export default function DateRangePicker({ bookedDates, onSelect }: Props) {
       },
 
       onSelect({ date }) {
-        const fromDate = Array.isArray(date) ? (date[0] ?? null) : null;
-        const toDate = Array.isArray(date) ? (date[1] ?? null) : null;
+        if (!date) {
+          onSelect(null, null);
+          return;
+        }
 
-        const from = fromDate ? toISO(fromDate) : null;
-        const to = toDate ? toISO(toDate) : null;
+        if (!Array.isArray(date)) {
+          const iso = toISO(date);
 
-        onSelect(from, to);
+          onSelect(iso, iso);
 
-        console.log('from local:', from);
-        console.log('from local (YYYY-MM-DD):', from);
+          dp.selectDate([date, date], { silent: true });
+          return;
+        }
+
+        const d1 = date[0] ?? null;
+        const d2 = date[1] ?? null;
+
+        if (d1 && d2) {
+          onSelect(toISO(d1), toISO(d2));
+          return;
+        }
+
+        if (d1 && !d2) {
+          onSelect(toISO(d1), toISO(d1));
+          dp.selectDate([d1, d1], { silent: true });
+          return;
+        }
+
+        onSelect(null, null);
       },
     });
 
