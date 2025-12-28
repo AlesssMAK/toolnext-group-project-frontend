@@ -40,6 +40,8 @@ export default function BookingForm({
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
 
+  console.log(bookedDates);
+
   const getBookingDays = (start: Date | null, end: Date | null): number => {
     if (!start || !end) return 0;
 
@@ -47,7 +49,7 @@ export default function BookingForm({
     const endDate = new Date(end);
 
     const diffTime = endDate.getTime() - startDate.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays > 0 ? diffDays : 0;
   };
