@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
 import style from './FeedbacksBlock.module.css';
-import { fetchFeedbacks, getUserFeedbacks } from '@/lib/api/clientApi';
+import { fetchFeedbacks, getUserFeedbacks, getUserToolsClient } from '@/lib/api/clientApi';
 import EmptyFeedbacks from './EmptyFeedback/EmptyFeedbacks';
 import EmptyUserFeedbacks from './EmptyFeedback/EmptyUserFeedbacks';
 import { useEffect, useState, useRef } from 'react';
@@ -144,28 +144,43 @@ const FeedbacksBlock = ({
   const isProfileMode = Boolean(userId) && forProfile === true;
 
   const { data: profileData, isSuccess: isProfileSuccess } = useQuery({
-    queryKey: ['userOwnerFeedbacks', userId, forProfile],
+    queryKey: ['userReceivedFeedbacks', userId, forProfile],
     enabled: isProfileMode,
     queryFn: async () => {
-      const first = await getUserFeedbacks(userId!, 1, PER_PAGE);
+      const firstTools = await getUserToolsClient(userId!, 1, 50);
+      const totalPages = firstTools.pagination.totalPages;
+      const allTools = [...firstTools.tools];
 
-      const totalPages = first?.totalPages ?? 1;
-      const firstFeedbacks = first?.feedbacks ?? [];
+      if (totalPages > 1) {
+        const rest = await Promise.all(
+          Array.from({ length: totalPages - 1 }, (_, idx) =>
+            getUserToolsClient(userId!, idx + 2, 50)
+          )
+        );
+        allTools.push(...rest.flatMap(r => r.tools));
+      }
 
-      if (totalPages <= 1) return { feedbacks: firstFeedbacks };
+      const feedbacksPromises = allTools.map(async (tool) => {
+        const first = await fetchFeedbacks({ page: 1, toolId: tool._id });
+        const totalPages = resolveTotalPages(first);
+        if (totalPages <= 1) return first.feedbacks || [];
 
-      const rest = await Promise.all(
-        Array.from({ length: totalPages - 1 }, (_, idx) =>
-          getUserFeedbacks(userId as string, idx + 2, PER_PAGE)
-        )
-      );
+        const rest = await Promise.all(
+          Array.from({ length: totalPages - 1 }, (_, idx) =>
+            fetchFeedbacks({ page: idx + 2, toolId: tool._id })
+          )
+        );
+        return [
+          ...(first.feedbacks || []),
+          ...rest.flatMap(r => r.feedbacks || []),
+        ];
+      });
+      const feedbacksResults = await Promise.all(feedbacksPromises);
 
-      return {
-        feedbacks: [
-          ...firstFeedbacks,
-          ...rest.flatMap((r: any) => r?.feedbacks ?? []),
-        ],
-      };
+      const allFeedbacks = feedbacksResults.flat();
+      const receivedFeedbacks = allFeedbacks.filter(f => f.userId !== userId);
+
+      return { feedbacks: receivedFeedbacks };
     },
   });
 
