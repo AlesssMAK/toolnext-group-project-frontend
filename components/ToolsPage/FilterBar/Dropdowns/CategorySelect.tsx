@@ -65,16 +65,15 @@ export default function CategorySelect({
     }
   };
 
-  const iconId = isOpen
-          ? "keyboard_arrow_up"
-          : "keyboard_arrow_down";
+  const iconId = isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
 
   return (
     <div
       ref={wrapperRef}
-      className={`${styles.selectWrapper} ${
-        isOpen ? styles.selectWrapperOpen : ''
-      } ${styles.categorySelect} ${customClassName?.wrapper ?? ''}`}
+      className={`${styles.selectWrapper} 
+        ${isOpen ? styles.selectWrapperOpen : ''}
+        ${styles.categorySelect ? styles.categorySelect : ''}
+        ${customClassName?.wrapper ?? ''}`}
     >
       <button
         type="button"
