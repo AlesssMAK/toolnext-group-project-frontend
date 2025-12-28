@@ -6,13 +6,6 @@ type PageEditToolProps = {
   }>;
 };
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Редагування інструменту | ToolNext',
-  description: 'Сторінка редагування інформації про інструмент у сервісі ToolNext',
-};
-
 const EditToolsPage = async ({ params }: PageEditToolProps) => {
   const { toolId } = await params;
   const tool = await getToolById(toolId);
