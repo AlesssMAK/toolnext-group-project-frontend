@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { useQuery } from '@tanstack/react-query';
 import style from './FeedbacksBlock.module.css';
-import { fetchFeedbacks } from '@/lib/api/clientApi';
+import { fetchFeedbacks, getUserFeedbacks } from '@/lib/api/clientApi';
 import EmptyFeedbacks from './EmptyFeedback/EmptyFeedbacks';
 import EmptyUserFeedbacks from './EmptyFeedback/EmptyUserFeedbacks';
 import { useEffect, useState, useRef } from 'react';
@@ -18,7 +18,12 @@ import Modal from '../Modal/Modal';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
 
-export type FeedbacksVariant = 'home' | 'tool' | 'profile';
+type UIFeedback = {
+  _id: string;
+  rate: number;
+  description: string;
+  name: string;
+};
 
 function getWindow5(active: number, total: number) {
   if (total <= 5) return Array.from({ length: total }, (_, i) => i);
@@ -42,26 +47,35 @@ function getWindow5(active: number, total: number) {
 const PER_PAGE = 10;
 
 function resolveTotalPages(firstPageData: any) {
-  if (typeof firstPageData?.totalPages === 'number' && firstPageData.totalPages > 0) {
+  if (
+    typeof firstPageData?.totalPages === 'number' &&
+    firstPageData.totalPages > 0
+  ) {
     return firstPageData.totalPages;
   }
 
-  const totalItems = firstPageData?.totalItems ?? firstPageData?.total ?? firstPageData?.count;
+  const totalItems =
+    firstPageData?.totalItems ?? firstPageData?.total ?? firstPageData?.count;
   const perPage = firstPageData?.perPage ?? PER_PAGE;
 
-  if (typeof totalItems === 'number' && totalItems >= 0 && typeof perPage === 'number' && perPage > 0) {
+  if (
+    typeof totalItems === 'number' &&
+    totalItems >= 0 &&
+    typeof perPage === 'number' &&
+    perPage > 0
+  ) {
     return Math.max(1, Math.ceil(totalItems / perPage));
   }
 
   return 1;
 }
 
-
 const FeedbacksBlock = ({
   toolId,
   userId,
   isOwner = false,
   variant = 'home',
+  forProfile,
 }: FeedbacksBlockProps) => {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
@@ -114,9 +128,11 @@ const FeedbacksBlock = ({
         )
       );
 
-      const mergedFeedbacks = [first?.feedbacks ?? [], ...rest.map(r => r?.feedbacks ?? [])].flat();
+      const mergedFeedbacks = [
+        first?.feedbacks ?? [],
+        ...rest.map(r => r?.feedbacks ?? []),
+      ].flat();
 
-      // Повертаємо той самий формат, але з об’єднаними feedbacks
       return {
         ...first,
         feedbacks: mergedFeedbacks,
@@ -125,14 +141,45 @@ const FeedbacksBlock = ({
     },
   });
 
-  const allFeedbacksRaw = data?.feedbacks ?? [];
+  const isProfileMode = Boolean(userId) && forProfile === true;
 
-  const allFeedbacks = Array.from(
-  new Map(allFeedbacksRaw.map((f: any) => [String(f._id), f])).values()
-);
+  const { data: profileData, isSuccess: isProfileSuccess } = useQuery({
+    queryKey: ['userOwnerFeedbacks', userId, forProfile],
+    enabled: isProfileMode,
+    queryFn: async () => {
+      const first = await getUserFeedbacks(userId!, 1, PER_PAGE);
 
-  const hasFeedbacks = isSuccess && allFeedbacks.length > 0;
-  const hasNoFeedbacks = isSuccess && allFeedbacks.length === 0;
+      const totalPages = first?.totalPages ?? 1;
+      const firstFeedbacks = first?.feedbacks ?? [];
+
+      if (totalPages <= 1) return { feedbacks: firstFeedbacks };
+
+      const rest = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, idx) =>
+          getUserFeedbacks(userId as string, idx + 2, PER_PAGE)
+        )
+      );
+
+      return {
+        feedbacks: [
+          ...firstFeedbacks,
+          ...rest.flatMap((r: any) => r?.feedbacks ?? []),
+        ],
+      };
+    },
+  });
+
+  const source = isProfileMode ? profileData : data;
+  const sourceSuccess = isProfileMode ? isProfileSuccess : isSuccess;
+
+  const allFeedbacksRaw = (source?.feedbacks ?? []) as UIFeedback[];
+
+  const allFeedbacks: UIFeedback[] = Array.from(
+    new Map(allFeedbacksRaw.map(f => [String(f._id), f])).values()
+  );
+
+  const hasFeedbacks = sourceSuccess && allFeedbacks.length > 0;
+  const hasNoFeedbacks = sourceSuccess && allFeedbacks.length === 0;
 
   const isToolPage = Boolean(toolId);
   const isUserPage = Boolean(userId);

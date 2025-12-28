@@ -83,6 +83,9 @@
 }
 
 .submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #8808cc;
   background-color: #8808cc;
   color: #fff;
@@ -94,6 +97,9 @@
   padding: 10px 24px;
   height: 41px;
   transition: background-color 0.3s ease;
+  @media screen and (min-width: 1440px) {
+    height: 44px;
+  }
 }
 
 .submitButton:hover {

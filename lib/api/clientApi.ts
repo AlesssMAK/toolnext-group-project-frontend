@@ -172,3 +172,29 @@ export const updateTool = async ({
   );
   return data;
 };
+
+export const getUserFeedbacks = async (
+  userId: string,
+  page: number = 1,
+  perPage: number = 10,
+  sortBy?: string,
+  sortOrder?: 'asc' | 'desc'
+) => {
+  if (!userId) throw new Error('userId is required');
+  const params = new URLSearchParams({
+    page: String(page),
+    perPage: String(perPage),
+    ...(sortBy ? { sortBy } : {}),
+    ...(sortOrder ? { sortOrder } : {}),
+  });
+
+  const res = await nextServer.get(
+    `/users/${userId}/feedbacks?${params.toString()}`
+  );
+
+  console.log(res.data);
+
+  if (!res.data) throw new Error('Failed to fetch user feedbacks');
+
+  return res.data;
+};
