@@ -21,17 +21,17 @@ export default function ResetPasswordPage() {
         setMessage('');
 
         if (!token) {
-            setMessage('Reset token is missing. Please open the link from your email again.')
+            setMessage('Посилання недійсне або застаріле. Спробуйте відновити пароль ще раз.')
             return;
         }
 
         if (password.length < 8) {
-            setMessage('Password must be at least 8 characters.')
+            setMessage('Пароль має містити щонайменше 8 символів.')
             return;
         }
 
         if (password !== confirm) {
-            setMessage('Passwords do not match.');
+            setMessage('Паролі не збігаються. Перевірте, будь ласка.');
             return;
         }
 
@@ -39,10 +39,10 @@ export default function ResetPasswordPage() {
 
         try {
             await resetPassword(token, password);
-            setMessage('Password updated successfully. Redirecting to login...');
-            setTimeout(() => router.push('/login'), 1200);
+            setMessage('Готово! Пароль оновлено. Переходимо до входу…');
+            setTimeout(() => router.push('/auth/login'), 1200);
         } catch {
-            setMessage('Invalid or expired token. Please request a new reset link.');
+            setMessage('Посилання недійсне або застаріле. Запросіть нове для відновлення пароля.');
         } finally {
             setIsLoading(false);
         }
@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
         <section className={style.mainContent}>
       <div className={style.formSection}>
         <form onSubmit={handleSubmit} className={style.form}>
-          <h1 className={style.formTitle}>Reset password</h1>
+          <h1 className={style.formTitle}>Створіть новий пароль</h1>
 
           <div className={style.formGroup}>
             <input
@@ -61,7 +61,7 @@ export default function ResetPasswordPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="New password"
+              placeholder="Новий пароль"
               required
               minLength={8}
             />
@@ -73,7 +73,7 @@ export default function ResetPasswordPage() {
               type="password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
-              placeholder="Confirm new password"
+              placeholder="Повторіть пароль"
               required
               minLength={8}
             />
@@ -84,7 +84,7 @@ export default function ResetPasswordPage() {
             className={style.submitButton}
             disabled={isLoading}
           >
-            {isLoading ? 'Saving...' : 'Reset password'}
+            {isLoading ? 'Зберігаємо…' : 'Змінити пароль'}
           </button>
 
           {message && <p className={style.infoText}>{message}</p>}
@@ -94,7 +94,3 @@ export default function ResetPasswordPage() {
     );
 }
 
-
-// import Link from 'next/link';
-
-// <Link href="/forgot-password">Forgot password?</Link>
