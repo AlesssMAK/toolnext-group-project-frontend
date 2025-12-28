@@ -5,15 +5,21 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { da, uk } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import Calendar from '@/components/Calendar/Calendar'
+import Calendar from '@/components/Calendar/Calendar';
 import DateRangePicker from '../DateRangePicker/DateRangePicker';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-type Props = {
+type BookedDateRange = {
+  startDate: string;
+  endDate: string;
+};
+
+type BookingFormProps = {
   toolId: string;
   pricePerDay: number;
+  bookedDates?: BookedDateRange[];
 };
 
 interface MyFormValues {
@@ -26,10 +32,15 @@ interface MyFormValues {
   deliveryBranch: string;
 }
 
-export default function BookingForm({ toolId, pricePerDay }: Props) {
-  console.log(toolId)
+export default function BookingForm({
+  toolId,
+  pricePerDay,
+  bookedDates,
+}: BookingFormProps) {
   const router = useRouter();
   const [serverWarning, setServerWarning] = useState<string | null>(null);
+
+  console.log(bookedDates);
 
   const getBookingDays = (start: Date | null, end: Date | null): number => {
     if (!start || !end) return 0;
@@ -189,6 +200,7 @@ export default function BookingForm({ toolId, pricePerDay }: Props) {
                 <label className={css.labels}>Виберіть період бронювання</label>
 
                 <DateRangePicker
+                  bookedDates={bookedDates ?? []}
                   onSelect={(from, to) => {
                     setFieldValue('startDate', from);
                     setFieldValue('endDate', to);

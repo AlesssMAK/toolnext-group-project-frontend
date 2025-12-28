@@ -44,7 +44,11 @@ export default function FilterBar({
   return (
     <div className={styles.filterBar}>
       <div className={styles.filtersGroup}>
-        <CategorySelect selectedTags={selectedTags} onSelect={onTagsChange} />
+        <CategorySelect
+          selectedTags={selectedTags}
+          onSelect={onTagsChange}
+          customClassName={{ wrapper: styles.toolsPageCategoryWrapper }}
+        />
 
         <PriceRangeInputs
           minPrice={minPrice ?? null}
