@@ -60,6 +60,12 @@ export default function DateRangePicker({ bookedDates, onSelect }: Props) {
       locale: localeUk,
       dateFormat: 'dd.MM.yyyy',
       minDate: new Date(),
+      navTitles: {
+        days: `
+           <span class="dp-year">yyyy</span>
+           <span class="dp-month">MMMM</span>
+        `,
+      },
 
       onRenderCell({ date, cellType }) {
         if (cellType !== 'day') return;
