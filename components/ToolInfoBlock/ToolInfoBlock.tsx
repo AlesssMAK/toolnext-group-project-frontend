@@ -24,6 +24,8 @@ export default function ToolInfoBlock({
       router.push('/confirm/auth-request');
     }
   };
+  const avatarSrc = owner?.avatar?.trim() || '';
+  const hasImage = avatarSrc.startsWith('http');
 
   return (
     <section className={css.toolInfo}>
@@ -31,11 +33,17 @@ export default function ToolInfoBlock({
       <p className={css.toolPrice}>{tool.pricePerDay} грн/день</p>
       {owner && (
         <div className={css.toolOwner}>
-          <img
-            src={owner.avatar || '/avatar-placeholder.png'}
-            alt={owner.name}
-            className={css.ownerAvatar}
-          />
+          {hasImage ? (
+            <img
+              src={avatarSrc}
+              alt={owner.name}
+              className={css.ownerAvatar}
+            />
+          ) : (
+            <div className={css.avatarPlaceholder} aria-hidden="true">
+              {owner.avatar}
+            </div>
+          )}
           <div className={css.ownerInfo}>
             <p className={css.ownerName}>{owner.name}</p>
             <Link

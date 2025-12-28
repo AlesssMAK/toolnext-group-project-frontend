@@ -74,6 +74,21 @@
   object-fit: cover;
 }
 
+.avatarPlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  font-weight: 700;
+  background-color: var(--color-electric-violet);
+  color: var(--color-white);
+  border: 2px solid var(--color-electric-violet);
+  object-fit: cover;
+  margin-right: 16px;
+}
+
 .ownerName {
   margin-bottom: 16px;
   font-weight: 600;
