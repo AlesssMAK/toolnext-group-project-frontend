@@ -36,7 +36,7 @@ const PublicProfile = async ({ params }: Props) => {
       ) : (
         <ProfilePlaceHolder isOwner={false} />
       )}
-      <FeedbacksBlock variant="tool" userId={user.id} isOwner={false} />
+      <FeedbacksBlock variant="tool" userId={user.id} isOwner={false} forProfile />
     </main>
   );
 };
