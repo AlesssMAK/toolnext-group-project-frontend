@@ -4,23 +4,27 @@ import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { createFeedback } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 import styles from './FeedbackFormModal.module.css';
 
 interface FeedbackFormModalProps {
   onClose: () => void;
-  onSubmit: (data: {name:string; description: string; rate: number }) => void;
+  onSubmit: (data: { description: string; rate: number }) => void;
   toolId: string;
 }
 
-const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps) => {
-  const [name, setName] = useState('');
+const FeedbackFormModal = ({
+  onClose,
+  onSubmit,
+  toolId,
+}: FeedbackFormModalProps) => {
+  const user = useAuthStore(state => state.user);
+
   const [description, setReview] = useState('');
   const [rate, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const queryClient = useQueryClient();
 
-  // !@@@
-  // const toolId = "692db3ffab59e437964311d4";
+  const queryClient = useQueryClient();
 
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1);
@@ -42,20 +46,32 @@ const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps
   }, []);
 
   const createFeedbackMutate = useMutation({
-    mutationFn: (data: {name: string; description: string; rate: number; toolId:string }) => createFeedback(data),
+    mutationFn: (data: {
+      description: string;
+      rate: number;
+      toolId: string;
+    }) => createFeedback(data),
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['feedback'] });
-      onSubmit({name, description, rate });
+      onSubmit({ description, rate });
       onClose();
     },
     onError(error: any) {
-      toast.error(error.message);
+      toast.error(error.message || 'Помилка при надсиланні відгуку');
     },
   });
 
   const handleSubmit = () => {
-    const feedbackData = { name, description, rate, toolId };
-    createFeedbackMutate.mutate(feedbackData);
+    if (!rate) {
+      toast.error('Оберіть оцінку');
+      return;
+    }
+
+    createFeedbackMutate.mutate({
+      description,
+      rate,
+      toolId,
+    });
   };
 
   return (
@@ -65,32 +81,41 @@ const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps
           <use href="/sprite.svg#close"></use>
         </svg>
       </button>
+
       <h2 className={styles.title}>Залишити відгук на товар</h2>
-      <form className={styles.form} onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+
+      <form
+        className={styles.form}
+        onSubmit={e => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        {/* NAME (AUTOFILL, DISABLED) */}
         <div className={styles.field}>
-          <label htmlFor="name" className={styles.label}>Ім'я</label>
+          <label className={styles.label}>Імʼя</label>
           <input
             type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={user?.name || ''}
             className={styles.input}
-            placeholder="Ваше ім'я"
-            required
+            disabled
           />
         </div>
+
+        {/* DESCRIPTION */}
         <div className={styles.field}>
-          <label htmlFor="description" className={styles.label}>Відгук</label>
+          <label className={styles.label}>Відгук</label>
           <textarea
-            id="description"
             value={description}
-            onChange={(e) => setReview(e.target.value)}
+            onChange={e => setReview(e.target.value)}
             className={styles.textarea}
             placeholder="Ваш відгук"
             rows={4}
             required
           />
         </div>
+
+        {/* RATING */}
         <div className={styles.field}>
           <label className={styles.label}>Оцінка</label>
           <div className={styles.starRating}>
@@ -98,7 +123,11 @@ const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps
               <button
                 key={index}
                 type="button"
-                className={`${styles.star} ${index < rate || index < hoverRating ? styles.selected : ''}`}
+                className={`${styles.star} ${
+                  index < rate || index < hoverRating
+                    ? styles.selected
+                    : ''
+                }`}
                 onClick={() => handleStarClick(index)}
                 onMouseEnter={() => handleStarHover(index)}
                 onMouseLeave={handleStarLeave}
@@ -110,6 +139,7 @@ const FeedbackFormModal = ({ onClose, onSubmit, toolId }: FeedbackFormModalProps
             ))}
           </div>
         </div>
+
         <button type="submit" className={styles.submitButton}>
           Надіслати
         </button>
