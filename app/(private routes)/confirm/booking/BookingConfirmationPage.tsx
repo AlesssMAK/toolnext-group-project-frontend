@@ -5,13 +5,14 @@ export default function BookingConfirmationPage() {
  
 
   return (
-    <section className={`${styles.containerConfirmation} container`}>
-      <h1 className={styles.title}>
+      <section className={styles.section} >
+        <div className='container'>
+           <h1 className={styles.title}>
         Інструмент успішно заброньовано
       </h1>
 
       <p className={styles.text}>
-        Власник інструмента скоро з вами звʼяжеться стововно деталей та оплати вашої броні
+        Власник інструмента скоро з вами звʼяжеться стоcовно деталей та оплати вашої броні
       </p>
 
       <Link
@@ -20,6 +21,7 @@ export default function BookingConfirmationPage() {
       >
         На головну
       </Link>
+        </div>
     </section>
   );
 }
