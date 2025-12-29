@@ -35,8 +35,10 @@ const EditToolsPage = async ({ params }: PageEditToolProps) => {
   };
 
   return (
-    <section className="container">
-      <AddEditToolForm initialData={initialData} isEditMode={true} />
+    <section >
+      <div className="container">
+        <AddEditToolForm initialData={initialData} isEditMode={true} />
+      </div>
     </section>
   );
 };

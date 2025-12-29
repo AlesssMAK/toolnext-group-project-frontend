@@ -18,9 +18,11 @@ export const metadata: Metadata = {
 const CreateToolPage = () => {
   return (
     <>
-      <section className="container">
-        <h1 className={css.titleText}>Публікація інструменту</h1>
+      <section >
+        <div className="container">
+          <h1 className={css.titleText}>Публікація інструменту</h1>
         <AddEditToolForm />
+        </div>
       </section>
     </>
   );

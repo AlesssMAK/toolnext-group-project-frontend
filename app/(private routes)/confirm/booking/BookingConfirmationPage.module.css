@@ -1,8 +1,9 @@
 /* Styles for Mobile devices */
-
-.containerConfirmation {
-  padding: 32px 20px;
+.section {
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
+
 
 .title {
   font-weight: 700;
@@ -24,21 +25,20 @@
 }
 
 .btn {
-  width: 335px;
+  width:100%;
 }
 
 /* Styles for Tablet devices */
 
 @media screen and (min-width: 768px) {
-  .containerConfirmation {
+  .section {
     padding-top: 138px;
-    padding-bottom: 215.61px;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-bottom: 219.61px;
   }
 
   .title {
     width: 704px;
+    font-size: 30px;
   }
   .text {
     width: 704px;
@@ -48,32 +48,27 @@
     margin: 0 auto;
     white-space: nowrap;
     padding: 0;
-    width: 120px;
-    height: 37px;
+    width: 129px;
+    height: 40px;
   }
 }
 
 /* Styles for Desktop devices */
 
 @media screen and (min-width: 1440px) {
-  .containerConfirmation {
-    padding-top: 154px;
-    padding-bottom: 200px;
-    padding-left: 64px;
-    padding-right: 64px;
-  }
+ .section {
+  padding-top: 154px;
+  padding-bottom: 208px;
+  /* min-height: calc(100vh - 72px - 322.6px); */
+ }
 
   .title {
     width: 1312px;
-    font-size: 48px;
+    font-size: 42px;
   }
+
   .text {
     width: 1312px;
     font-size: 18px;
-  }
-
-  .btn {
-    width: 131px;
-    height: 40px;
   }
 }
