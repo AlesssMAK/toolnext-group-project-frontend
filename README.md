@@ -40,6 +40,8 @@ ToolNext — це сучасний вебдодаток, який з'єднує 
 
 - **Runtime:** `Node.js`
 
+- **Framework:** `Express.js`
+  
 - **API Architecture:** `REST API`
 
 - **API Documentation:** `Swagger UI`
